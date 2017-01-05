@@ -1,4 +1,4 @@
-from lowerpines.endpoints.direct_message import Chat
+from lowerpines.endpoints.chat import Chat
 
 from lowerpines import AbstractManager
 
