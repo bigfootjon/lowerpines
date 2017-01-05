@@ -1,6 +1,10 @@
+from datetime import datetime
+
 from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
+from lowerpines.endpoints.message import Message
 from lowerpines.exceptions import InvalidOperationException
+from lowerpines.message import smart_split_complex_message
 
 
 class Group(AbstractObject):
@@ -66,6 +70,12 @@ class Group(AbstractObject):
 
     def member_rm(self, member_id):
         MembersRemoveRequest(self.gmi, self.group_id, member_id)
+
+    def post(self, message):
+        text, attachments = smart_split_complex_message(message)
+        obj = Message(self.gmi, self.group_id, str(datetime.now()), text, attachments)
+        obj.save()
+        return obj
 
     @staticmethod
     def get(gmi, group_id):
