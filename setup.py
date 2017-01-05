@@ -2,15 +2,12 @@ from distutils.core import setup
 
 import lowerpines
 
-with open('requirements.txt') as requirements_file:
-    requirements = requirements_file.read().splitlines()
-
 setup(
     name='lowerpines',
     packages=['lowerpines'],
     version=lowerpines.VERSION,
     description='lowerpines library wrapper for GroupMe API',
-    install_requires=requirements,
+    requires=['requests'],
     author='Jonathan Janzen',
     author_email='jjjonjanzen@gmail.com',
     url='https://github.com/bigfootjon/lowerpines',
