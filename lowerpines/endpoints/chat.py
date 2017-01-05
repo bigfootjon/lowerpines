@@ -20,6 +20,7 @@ class Chat(AbstractObject):
 
     def __init__(self, gmi):
         self.gmi = gmi
+        self.messages = ChatMessagesManager(self)
 
     @staticmethod
     def get_all(gmi):
@@ -112,6 +113,31 @@ class DirectMessageUser(AbstractObject):
 
     def __str__(self):
         return str(self.name)
+
+
+class ChatMessagesManager:
+    count = 0
+
+    last_id = str()
+    last_created_at = str()
+
+    def __init__(self, chat):
+        self.chat = chat
+
+    def all(self):
+        messages = self.recent()
+        while len(messages) < self.count:
+            messages.extend(self.before(messages[-1]))
+        return messages
+
+    def recent(self):
+        return DirectMessageIndexRequest(self.chat.gmi, self.chat.other_user.user_id).result
+
+    def before(self, message):
+        return DirectMessageIndexRequest(self.chat.gmi, self.chat.other_user.user_id, before_id=message.message_id).result
+
+    def since(self, message):
+        return DirectMessageIndexRequest(self.chat.gmi, self.chat.group_id, since_id=message.message_id).result
 
 
 class DirectMessageChatsRequest(Request):

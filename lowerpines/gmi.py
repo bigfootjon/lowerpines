@@ -16,14 +16,14 @@ class GMI:
     def __init__(self, api_key, cache=15):
         from lowerpines.group import GroupManager
         from lowerpines.bot import BotManager
-        from lowerpines.direct_message import DirectMessageManager
+        from lowerpines.chat import ChatManager
         from lowerpines.user import UserManager
 
         self.api_key = api_key
         self.cache = cache
         self.groups = GroupManager(self)
         self.bots = BotManager(self)
-        self.direct_messages = DirectMessageManager(self)
+        self.chats = ChatManager(self)
         self.user = UserManager(self)
 
     def convert_image_url(self, url):
