@@ -1,3 +1,6 @@
+VERSION = '0.1.0'
+
+
 class AbstractManager:
     def __len__(self):
         return self._content.__len__()
