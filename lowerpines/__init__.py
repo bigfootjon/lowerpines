@@ -8,12 +8,6 @@ class AbstractManager:
     def __getitem__(self, key):
         return self._content.__getitem__(key)
 
-    def __delitem__(self, key):
-        self._content.__delitem__(key)
-
-    def __setitem__(self, key, value):
-        self._content.__setitem__(key, value)
-
     def __iter__(self):
         return self._content.__iter__()
 
