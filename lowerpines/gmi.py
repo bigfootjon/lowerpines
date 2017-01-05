@@ -3,24 +3,23 @@ import requests
 _gmi_objects = []
 
 
-def get_gmi(api_key):
+def get_gmi(access_token):
     for gmi in _gmi_objects:
-        if gmi.api_key == api_key:
+        if gmi.api_key == access_token:
             return gmi
-    gmi = GMI(api_key)
+    gmi = GMI(access_token)
     _gmi_objects.append(gmi)
     return gmi
 
 
 class GMI:
-    def __init__(self, api_key, cache=15):
+    def __init__(self, access_token):
         from lowerpines.group import GroupManager
         from lowerpines.bot import BotManager
         from lowerpines.chat import ChatManager
         from lowerpines.user import UserManager
 
-        self.api_key = api_key
-        self.cache = cache
+        self.access_token = access_token
         self.groups = GroupManager(self)
         self.bots = BotManager(self)
         self.chats = ChatManager(self)
