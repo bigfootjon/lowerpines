@@ -1,32 +1,28 @@
 import json
-from typing import Dict, Any, Union
 
 import requests
-from requests import Response
-
-from lowerpines.gmi import GMI
 
 
 class Request:
-    def __init__(self, gmi: GMI) -> None:
+    def __init__(self, gmi):
         self.gmi = gmi
         self.result = self.parse(self.execute())
 
     base_url = "https://api.groupme.com/v3"
 
-    def url(self) -> str:
+    def url(self):
         raise NotImplementedError
 
-    def mode(self) -> str:
+    def mode(self):
         raise NotImplementedError
 
-    def parse(self, response: dict) -> Any:
+    def parse(self, response):
         raise NotImplementedError
 
-    def args(self) -> Dict[str, Any]:
+    def args(self):
         return {}
 
-    def execute(self) -> Union[None, dict]:
+    def execute(self):
         params = {}
         headers = {'X-Access-Token': self.gmi.api_key, 'User-Agent': 'GroupYouLibrary/1.0'}
         if self.mode() == "GET":
@@ -42,7 +38,7 @@ class Request:
         else:
             return r.json()["response"]
 
-    def error_check(self, request: Response) -> None:
+    def error_check(self, request):
         code = int(request.status_code)
         if 399 < code < 500:
             # noinspection PyBroadException
