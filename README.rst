@@ -10,15 +10,16 @@ This is very much a work-in-progress and is **not** intended to be used in produ
 Basic Usage
 ===========
 
-This requires a API key from the `GroupMe developers site <http://dev.groupme.com>`_
+This requires a Access Token from the `GroupMe developers site <http://dev.groupme.com>`_
 
 The first step to doing anything with this library is to create a ``GMI`` object::
 
-    from lowerpines.gmi import GMI
+    from lowerpines.gmi import get_gmi
 
-    gmi = GMI(api_key='API key here')
+    gmi = get_gmi(access_token='access token here')
 
-A GMI object stores a copy of the API key and serves as a context for various functions.
+A GMI object stores a copy of the Access Token and serves as a context for various functions.
+The ``get_gmi(access_token)`` method will get a GMI from the cache or create one if necessary.
 GMI objects also provide common functions::
 
     for group in gmi.groups:
