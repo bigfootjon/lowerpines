@@ -1,6 +1,5 @@
 from lowerpines.endpoints import Request
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
-from lowerpines.message import ComplexMessage, RefAttach
 
 
 class Message:
@@ -58,6 +57,7 @@ class Message:
 
     @classmethod
     def from_json(cls, gmi, json):
+        from lowerpines.message import ComplexMessage, RefAttach
         message = cls(gmi)
         message.message_id = json["id"]
         message.source_guid = json["source_guid"]
