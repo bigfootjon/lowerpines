@@ -1,7 +1,8 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints import Request, AbstractObject
+from lowerpines.exceptions import InvalidOperationException
 
 
-class Member:
+class Member(AbstractObject):
     member_id = None
     user_id = None
     nickname = None
@@ -46,6 +47,13 @@ class Member:
         self.group_id = other.group_id
         self.phone_number = other.phone_number
         self.email = other.email
+
+    def refresh(self):
+        raise InvalidOperationException('Nontrivial to implement')
+
+    @staticmethod
+    def get(gmi, member_id):
+        raise InvalidOperationException('Nontrivial to implement')
 
     @staticmethod
     def from_json(gmi, json, group_id):

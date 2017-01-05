@@ -1,9 +1,9 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
 from lowerpines.exceptions import InvalidOperationException
 
 
-class Group:
+class Group(AbstractObject):
     group_id = str()
     type = str()
     creator_user_id = str()

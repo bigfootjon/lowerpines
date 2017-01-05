@@ -50,4 +50,24 @@ class Request:
                 text = '(JSON): ' + str(request.json()['meta']['errors'])
             except:
                 text = '(TEXT): ' + str(request.text)
-            raise GroupMeApiException('Something has gone wrong ' + text + ' for ' + str(self.mode()) + ' ' + str(self.url()) + ' with data:\n' + str(self.args()))
+            raise GroupMeApiException('Something has gone wrong ' + text + ' for ' + str(self.mode()) + ' ' + str(
+                self.url()) + ' with data:\n' + str(self.args()))
+
+
+class AbstractObject:
+    def save(self):
+        raise NotImplementedError
+
+    def _refresh_from_other(self, other):
+        raise NotImplementedError
+
+    def refresh(self):
+        raise NotImplementedError
+
+    @staticmethod
+    def get(gmi, *args):
+        raise NotImplementedError
+
+    @classmethod
+    def from_json(cls, gmi, json):
+        raise NotImplementedError

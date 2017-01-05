@@ -1,8 +1,8 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.endpoints.sms import SmsCreateRequest, SmsDeleteRequest
 
 
-class User:
+class User(AbstractObject):
     user_id = None
     phone_number = None
     image_url = None

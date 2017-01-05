@@ -1,9 +1,9 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import ComplexMessage
 
 
-class Bot:
+class Bot(AbstractObject):
     bot_id = None
     group_id = None
     name = None

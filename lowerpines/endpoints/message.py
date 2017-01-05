@@ -1,9 +1,9 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
 from lowerpines.exceptions import InvalidOperationException
 
 
-class Message:
+class Message(AbstractObject):
     message_id = None
     source_guid = None
     created_at = None
