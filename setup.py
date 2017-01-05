@@ -1,13 +1,29 @@
 from distutils.core import setup
+
+import lowerpines
+
+with open('requirements.txt') as requirements_file:
+    requirements = requirements_file.read().splitlines()
+
 setup(
-  name='lowerpines',
-  packages=['lowerpines'],
-  version='0.1',
-  description='GroupMe API library',
-  author='Jonathan Janzen',
-  author_email='jjjonjanzen@gmail.com',
-  url='https://github.com/bigfootjon/lowerpines',
-  download_url='https://github.com/bigfootjon/lowerpines/tarball/0.1',
-  keywords=['api', 'groupme'],
-  classifiers=[],
+    name='lowerpines',
+    packages=['lowerpines'],
+    version=lowerpines.VERSION,
+    description='lowerpines library wrapper for GroupMe API',
+    install_requires=requirements,
+    author='Jonathan Janzen',
+    author_email='jjjonjanzen@gmail.com',
+    url='https://github.com/bigfootjon/lowerpines',
+    download_url='https://github.com/bigfootjon/lowerpines/tarball/' + lowerpines.VERSION,
+    keywords=['api', 'GroupMe'],
+    classifiers=[
+      'Development Status :: 3 - Alpha',
+      'Operating System :: OS Independent',
+      'Topic :: Communications :: Chat',
+      'Intended Audience :: Developers',
+      'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+      'Natural Language :: English',
+      'Programming Language :: Python',
+      'Programming Language :: Python :: 3',
+    ],
 )
