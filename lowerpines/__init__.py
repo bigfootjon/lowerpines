@@ -1,3 +1,5 @@
+from lowerpines.exceptions import MultipleFoundException, NoneFoundException
+
 VERSION = '0.1.1'
 
 
@@ -23,11 +25,11 @@ class AbstractManager:
     def get(self, **kwargs):
         filtered = self.filter(**kwargs)
         if len(filtered) == 0:
-            raise Exception('None found')
+            raise NoneFoundException()
         elif len(filtered) == 1:
             return filtered[0]
         else:
-            raise Exception('Too many found')
+            raise MultipleFoundException()
 
     def filter(self, **kwargs):
         filtered = self._content

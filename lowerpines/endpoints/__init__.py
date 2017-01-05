@@ -2,6 +2,8 @@ import json
 
 import requests
 
+from lowerpines.exceptions import InvalidOperationException, GroupMeApiException
+
 
 class Request:
     def __init__(self, gmi):
@@ -33,7 +35,7 @@ class Request:
         elif self.mode() == "POST_RAW":
             r = requests.post(url=self.url(), params=params, headers=headers, data=self.args())
         else:
-            raise Exception("Invalid mode!")
+            raise InvalidOperationException()
         self.error_check(r)
         if r.content.decode('utf-8').isspace():
             return None
@@ -48,4 +50,4 @@ class Request:
                 text = '(JSON): ' + str(request.json()['meta']['errors'])
             except:
                 text = '(TEXT): ' + str(request.text)
-            raise Exception('Something has gone wrong ' + text + ' for ' + str(self.mode()) + ' ' + str(self.url()) + ' with data:\n' + str(self.args()))
+            raise GroupMeApiException('Something has gone wrong ' + text + ' for ' + str(self.mode()) + ' ' + str(self.url()) + ' with data:\n' + str(self.args()))

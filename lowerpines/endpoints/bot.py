@@ -1,4 +1,5 @@
 from lowerpines.endpoints import Request
+from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import ComplexMessage
 
 
@@ -32,7 +33,7 @@ class Bot:
 
     def delete(self):
         if self.bot_id is None:
-            raise Exception('Cannot destroy a bot that isn\'t saved!')
+            raise InvalidOperationException('Cannot destroy a bot that isn\'t saved!')
         else:
             BotDestroyRequest(self.gmi, self.bot_id)
 
@@ -46,9 +47,9 @@ class Bot:
 
     def refresh(self):
         if self.bot_id is None:
-            raise Exception('This operation is not permitted')
+            raise InvalidOperationException('This operation is not permitted')
         else:
-            raise Exception('This is non trivial to implement')
+            raise InvalidOperationException('This is non trivial to implement')
 
     def post(self, text):
         if isinstance(text, ComplexMessage):

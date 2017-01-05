@@ -30,7 +30,7 @@ class LeaderboardIndexRequest(Request):
     def __init__(self, gmi, group_id, period):
         self.group_id = group_id
         if period not in ['day', 'week', 'month']:
-            raise Exception('Period must be one of: day, week, or month')
+            raise ValueError('Period must be one of: day, week, or month')
         self.period = period
         super().__init__(gmi)
 

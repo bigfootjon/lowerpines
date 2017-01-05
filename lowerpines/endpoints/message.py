@@ -1,5 +1,6 @@
 from lowerpines.endpoints import Request
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
+from lowerpines.exceptions import InvalidOperationException
 
 
 class Message:
@@ -27,7 +28,7 @@ class Message:
 
     def save(self):
         if self.message_id:
-            raise Exception("You cannot change a message that has already been sent")
+            raise InvalidOperationException("You cannot change a message that has already been sent")
         else:
             new_data = MessagesCreateRequest(self.gmi, self.group_id, self.source_guid, self.text,
                                              self.attachments).result
@@ -38,7 +39,7 @@ class Message:
             new_data = MessagesShowRequest(self.gmi, self.group_id, self.message_id).result
             self._refresh_from_other(new_data)
         else:
-            raise Exception("Must have a message_id to pull data from the server")
+            raise InvalidOperationException("Must have a message_id to pull data from the server")
 
     def _refresh_from_other(self, other):
         self.message_id = other.message_id
@@ -116,7 +117,7 @@ class MessagesIndexRequest(Request):
         self.after_id = after_id
         self.limit = limit
         if limit > 100:
-            raise Exception('Limit must be at or below 100')
+            raise ValueError('Limit must be at or below 100')
         arg_count = 0
         if before_id is not None:
             arg_count += 1
@@ -125,7 +126,7 @@ class MessagesIndexRequest(Request):
         if after_id is not None:
             arg_count += 1
         elif arg_count > 1:
-            raise Exception('Only one of before_id, since_id or after_id can be defined')
+            raise ValueError('Only one of before_id, since_id or after_id can be defined')
         super().__init__(gmi)
 
     def mode(self):

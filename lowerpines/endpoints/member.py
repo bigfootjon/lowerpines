@@ -30,7 +30,7 @@ class Member:
             elif self.email is not None:
                 MembersAddRequest(self.gmi, self.group_id, self.nickname, email=self.email)
             else:
-                raise Exception('Please define one of user_id, phone_number, email before saving')
+                raise ValueError('Please define one of user_id, phone_number, email before saving')
         else:  # Only works for current user
             new_data = MembersUpdateRequest(self.gmi, self.group_id, self.nickname).result
             self._refresh_from_other(new_data)
@@ -78,7 +78,7 @@ class MembersAddRequest(Request):
         self.phone_number = phone_number
 
         if user_id is None and email is not None and phone_number is not None:
-            raise Exception('Must provide user_id, email, or phone_number')
+            raise ValueError('Must provide user_id, email, or phone_number')
         super().__init__(gmi)
 
     def url(self):

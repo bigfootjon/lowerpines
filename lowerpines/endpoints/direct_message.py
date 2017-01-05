@@ -1,4 +1,5 @@
 from lowerpines.endpoints import Request
+from lowerpines.exceptions import InvalidOperationException
 
 
 class Chat:
@@ -67,7 +68,7 @@ class DirectMessage:
                                                   self.attachments).result
             self._refresh_from_other(new_data)
         else:
-            raise Exception("You cannot change a message that has already been sent")
+            raise InvalidOperationException("You cannot change a message that has already been sent")
 
     @classmethod
     def from_json(cls, gmi, json):
@@ -164,7 +165,7 @@ class DirectMessageIndexRequest(Request):
     def __init__(self, gmi, other_user_id, before_id=None, since_id=None):
         self.other_user_id = other_user_id
         if before_id and since_id:
-            raise Exception('Cannot define both before_id and since_id!')
+            raise ValueError('Cannot define both before_id and since_id!')
         self.before_id = before_id
         self.since_id = since_id
         super().__init__(gmi)

@@ -1,5 +1,6 @@
 from lowerpines.endpoints import Request
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
+from lowerpines.exceptions import InvalidOperationException
 
 
 class Group:
@@ -53,7 +54,7 @@ class Group:
 
     def delete(self):
         if self.group_id is None:
-            raise Exception('Cannot destroy a group that isn\'t saved!')
+            raise InvalidOperationException('Cannot destroy a group that isn\'t saved!')
         else:
             GroupsDestroyRequest(self.gmi, self.group_id)
 
@@ -72,7 +73,7 @@ class Group:
 
     def refresh(self):
         if self.group_id is None:
-            raise Exception('Must have an id to perform this operation')
+            raise InvalidOperationException('Must have an id to perform this operation')
         else:
             new_data = GroupsShowRequest(self.gmi, group_id=self.group_id).result
             self._refresh_from_other(new_data)
