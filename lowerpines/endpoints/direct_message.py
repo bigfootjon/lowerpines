@@ -1,14 +1,22 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
 
-class Chat:
-    created_at = None
-    updated_at = None
-    last_message = None
-    messages_count = None
-    other_user = None
+class Chat(AbstractObject):
+    def save(self):
+        raise InvalidOperationException('This does not make sense')
+
+    def refresh(self):
+        raise InvalidOperationException('This is non-trivial to implement')
+
+    field_map = {
+        'created_at': 'created_at',
+        'updated_at': 'updated_at',
+        'last_message_raw': 'last_message',
+        'messages_count': 'messages_count',
+        'other_user_raw': 'other_user',
+    }
 
     def __init__(self, gmi):
         self.gmi = gmi
@@ -22,19 +30,12 @@ class Chat:
 
     def post(self, message):
         text, attachments = smart_split_complex_message(message)
-        return DirectMessageCreateRequest(self.gmi, self.gmi.user.get().user_id, self.other_user.user_id, text, attachments).result
+        return DirectMessageCreateRequest(self.gmi, self.gmi.user.get().user_id, self.other_user.user_id, text,
+                                          attachments).result
 
-    @classmethod
-    def from_json(cls, gmi, json):
-        chat = cls(gmi)
-
-        chat.created_at = json['created_at']
-        chat.updated_at = json['updated_at']
-        chat.last_message = DirectMessage.from_json(gmi, json['last_message'])
-        chat.messages_count = json['messages_count']
-        chat.other_user = DirectMessageUser.from_json(gmi, json['other_user'])
-
-        return chat
+    def on_fields_loaded(self):
+        self.last_message = DirectMessage.from_json(self.gmi, self.last_message_raw)
+        self.other_user = DirectMessageUser.from_json(self.gmi, self.other_user_raw)
 
     def __str__(self):
         return "Chat with " + str(self.other_user)
@@ -43,20 +44,29 @@ class Chat:
         return "C:" + str(self.other_user)
 
 
-class DirectMessage:
-    attachments = None
-    avatar_url = None
-    conversation_id = None
-    created_at = None
-    favorited_by = None
-    direct_message_id = None
-    name = None
-    recipient_id = None
-    sender_id = None
-    sender_type = None
-    source_guid = None
-    text = None
-    user_id = None
+class DirectMessage(AbstractObject):
+    @staticmethod
+    def get(gmi, *args):
+        raise InvalidOperationException('This is non-trivial to implement')
+
+    def refresh(self):
+        raise InvalidOperationException('This is non-trivial to implement')
+
+    field_map = {
+        'attachments': 'attachments',
+        'avatar_url': 'avatar_url',
+        'conversation_id': 'conversation_id',
+        'created_at': 'created_at',
+        'favorited_by': 'favorited_by',
+        'direct_message_id': 'id',
+        'name': 'name',
+        'recipient_id': 'recipient_id',
+        'sender_id': 'sender_id',
+        'sender_type': 'sender_type',
+        'source_guid': 'source_guid',
+        'text': 'text',
+        'user_id': 'user_id',
+    }
 
     def __init__(self, gmi, source_guid=None, recipient_id=None, text=None, attachments=None):
         self.gmi = gmi
@@ -73,41 +83,6 @@ class DirectMessage:
         else:
             raise InvalidOperationException("You cannot change a message that has already been sent")
 
-    @classmethod
-    def from_json(cls, gmi, json):
-        dm = cls(gmi)
-
-        dm.attachments = json['attachments']
-        dm.avatar_url = json['avatar_url']
-        dm.conversation_id = json['conversation_id']
-        dm.created_at = json['created_at']
-        dm.favorited_by = json['favorited_by']
-        dm.direct_message_id = json['id']
-        dm.name = json['name']
-        dm.recipient_id = json['recipient_id']
-        dm.sender_id = json['sender_id']
-        dm.sender_type = json['sender_type']
-        dm.source_guid = json['source_guid']
-        dm.text = json['text']
-        dm.user_id = json['user_id']
-
-        return dm
-
-    def _refresh_from_other(self, other):
-        self.attachments = other.attachments
-        self.avatar_url = other.avatar_url
-        self.conversation_id = other.conversation_id
-        self.created_at = other.created_at
-        self.favorited_by = other.favorited_by
-        self.direct_message_id = other.direct_message_id
-        self.name = other.name
-        self.recipient_id = other.recipient_id
-        self.sender_id = other.sender_id
-        self.sender_type = other.sender_type
-        self.source_guid = other.source_guid
-        self.text = other.text
-        self.user_id = other.user_id
-
     def __str__(self):
         return self.text
 
@@ -115,23 +90,25 @@ class DirectMessage:
         return "M:" + str(self)
 
 
-class DirectMessageUser:
-    avatar_url = None
-    user_id = None
-    name = None
+class DirectMessageUser(AbstractObject):
+    def save(self):
+        raise InvalidOperationException('This operation is not permitted')
+
+    @staticmethod
+    def get(gmi, *args):
+        raise InvalidOperationException('This operation does not make sense')
+
+    def refresh(self):
+        raise InvalidOperationException('This operation is non-trivial to implement')
+
+    field_map = {
+        'avatar_url': 'avatar_url',
+        'user_id': 'id',
+        'name': 'name',
+    }
 
     def __init__(self, gmi):
         self.gmi = gmi
-
-    @classmethod
-    def from_json(cls, gmi, json):
-        user = cls(gmi)
-
-        user.avatar_url = json['avatar_url']
-        user.user_id = json['id']
-        user.name = json['name']
-
-        return user
 
     def __str__(self):
         return str(self.name)
