@@ -4,13 +4,21 @@ from lowerpines.exceptions import InvalidOperationException
 
 
 class Group(AbstractObject):
-    group_id = str()
-    type = str()
-    creator_user_id = str()
-    created_at = str()
-    updated_at = str()
-    members = list()
-    share_url = str()
+    field_map = {
+        'group_id': 'id',
+        'name': 'name',
+        'type': 'type',
+        'description': 'description',
+        'image_url': 'image_url',
+        'creator_user_id': 'creator_user_id',
+        'created_at': 'created_at',
+        'updated_at': 'updated_at',
+        'share_url': 'share_url',
+        'members_raw': 'members',
+        'messages_count_raw': 'messages.count',
+        'messages_last_message_id_raw': 'messages.last_message_id',
+        'messages_last_message_created_at_raw': 'messages.last_message_created_at',
+    }
 
     def __init__(self, gmi, name=None, description=None, image_url=None):
         self.gmi = gmi
@@ -18,31 +26,19 @@ class Group(AbstractObject):
         self.name = name
         self.description = description
         self.image_url = image_url
+        self.members = []
 
     @property
     def bots(self):
         return self.gmi.bots.filter(group_id=self.group_id)
 
-    @classmethod
-    def from_json(cls, gmi, json):
-        g = cls(gmi)
-
-        g.group_id = json["id"]
-        g.name = json["name"]
-        g.type = json['type']
-        g.description = json['description']
-        g.image_url = json['image_url']
-        g.creator_user_id = json['creator_user_id']
-        g.created_at = json['created_at']
-        g.updated_at = json['updated_at']
-        for member_json in json['members']:
-            g.members.append(Member.from_json(gmi, member_json, g.group_id))
-        g.share_url = json['share_url']
-        g.messages.count = json['messages']['count']
-        g.messages.last_id = json['messages']['last_message_id']
-        g.messages.last_created_at = json['messages']['last_message_created_at']
-
-        return g
+    def on_fields_loaded(self):
+        self.members = []
+        for member_json in self.members_raw:
+            self.members.append(Member.from_json(self.gmi, member_json, self.group_id))
+        self.messages.count = self.messages_count_raw
+        self.messages.last_id = self.messages_last_message_id_raw
+        self.messages.last_created_at = self.messages_last_message_created_at_raw
 
     def save(self):
         if self.group_id is None:
@@ -57,19 +53,6 @@ class Group(AbstractObject):
             raise InvalidOperationException('Cannot destroy a group that isn\'t saved!')
         else:
             GroupsDestroyRequest(self.gmi, self.group_id)
-
-    def _refresh_from_other(self, other_group):
-        self.group_id = other_group.group_id
-        self.name = other_group.name
-        self.type = other_group.type
-        self.description = other_group.description
-        self.image_url = other_group.image_url
-        self.creator_user_id = other_group.creator_user_id
-        self.created_at = other_group.created_at
-        self.updated_at = other_group.updated_at
-        self.members = other_group.members
-        self.share_url = other_group.share_url
-        self.messages = other_group.messages
 
     def refresh(self):
         if self.group_id is None:
@@ -132,15 +115,18 @@ class GroupMessagesManager:
 
     def before(self, message, count=100):
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count, before_id=message.message_id).result
+        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count,
+                                    before_id=message.message_id).result
 
     def since(self, message, count=100):
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count, since_id=message.message_id).result
+        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count,
+                                    since_id=message.message_id).result
 
     def after(self, message, count=100):
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count, after_id=message.message_id).result
+        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count,
+                                    after_id=message.message_id).result
 
 
 class GroupsIndexRequest(Request):

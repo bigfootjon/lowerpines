@@ -3,14 +3,16 @@ from lowerpines.endpoints.sms import SmsCreateRequest, SmsDeleteRequest
 
 
 class User(AbstractObject):
-    user_id = None
-    phone_number = None
-    image_url = None
-    name = None
-    created_at = None
-    updated_at = None
-    email = None
-    sms = None
+    field_map = {
+        'user_id': 'user_id',
+        'phone_number': 'phone_number',
+        'image_url': 'image_url',
+        'name': 'name',
+        'created_at': 'created_at',
+        'updated_at': 'updated_at',
+        'email': 'email',
+        'sms': 'sms',
+    }
 
     def __init__(self, gmi):
         self.gmi = gmi
@@ -27,31 +29,6 @@ class User(AbstractObject):
     def get(cls, gmi):
         user = cls(gmi)
         user.refresh()
-        return user
-
-    def _refresh_from_other(self, other):
-        self.user_id = other.user_id
-        self.phone_number = other.phone_number
-        self.image_url = other.image_url
-        self.name = other.name
-        self.created_at = other.created_at
-        self.updated_at = other.updated_at
-        self.email = other.email
-        self.sms = other.sms
-
-    @classmethod
-    def from_json(cls, gmi, json):
-        user = cls(gmi)
-
-        user.user_id = json['user_id']
-        user.phone_number = json['phone_number']
-        user.image_url = json['image_url']
-        user.name = json['name']
-        user.created_at = json['created_at']
-        user.updated_at = json['updated_at']
-        user.email = json['email']
-        user.sms = json['sms']
-
         return user
 
     def enable_sms(self, duration, registration_id):

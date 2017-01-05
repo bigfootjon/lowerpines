@@ -4,20 +4,21 @@ from lowerpines.exceptions import InvalidOperationException
 
 
 class Message(AbstractObject):
-    message_id = None
-    source_guid = None
-    created_at = None
-    user_id = None
-    group_id = None
-    name = None
-    avatar_url = None
-    text = None
-    system = None
-    favorited_by = None
-    attachments = None
-    sender_type = None
-    sender_id = None
-    complex_text = None
+    field_map = {
+        'message_id': 'id',
+        'source_guid': 'source_guid',
+        'created_at': 'created_at',
+        'user_id': 'user_id',
+        'group_id': 'group_id',
+        'name': 'name',
+        'avatar_url': 'avatar_url',
+        'text': 'text',
+        'system': 'system',
+        'favorited_by': 'favorited_by',
+        'attachments': 'attachments',
+        'sender_type': 'sender_type',
+        'sender_id': 'sender_id',
+    }
 
     def __init__(self, gmi, group_id=None, source_guid=None, text=None, attachments=list()):
         self.gmi = gmi
@@ -41,57 +42,25 @@ class Message(AbstractObject):
         else:
             raise InvalidOperationException("Must have a message_id to pull data from the server")
 
-    def _refresh_from_other(self, other):
-        self.message_id = other.message_id
-        self.source_guid = other.source_guid
-        self.created_at = other.created_at
-        self.user_id = other.user_id
-        self.group_id = other.group_id
-        self.name = other.name
-        self.avatar_url = other.avatar_url
-        self.text = other.text
-        self.system = other.system
-        self.favorited_by = other.favorited_by
-        self.attachments = other.attachments
-        self.sender_type = other.sender_type
-        self.sender_id = other.sender_id
-
-    @classmethod
-    def from_json(cls, gmi, json):
+    def on_fields_loaded(self):
+        if self.text is None:
+            self.text = ""
         from lowerpines.message import ComplexMessage, RefAttach
-        message = cls(gmi)
-        message.message_id = json["id"]
-        message.source_guid = json["source_guid"]
-        message.created_at = json["created_at"]
-        message.user_id = json["user_id"]
-        message.group_id = json["group_id"]
-        message.name = json["name"]
-        message.avatar_url = json["avatar_url"]
-        if json["text"] is None:
-            message.text = ""
-        else:
-            message.text = json["text"]
-        message.system = json["system"]
-        message.favorited_by = json.get("favorited_by", [])
-        message.complex_text = ComplexMessage('')
-        message.attachments = json['attachments']
+        self.complex_text = ComplexMessage('')
         doing_mentions = False
-        for attachment in message.attachments:
+        for attachment in self.attachments:
             if attachment['type'] == 'mentions':
                 doing_mentions = True
                 prev_index = 0
-                for i in range(len(message.text)):
+                for i in range(len(self.text)):
                     for loci, user_id in zip(attachment['loci'], attachment['user_ids']):
                         if loci[0] == i:
-                            message.complex_text += message.text[prev_index:loci[0]] + \
-                                                    RefAttach(user_id, message.text[loci[0]:loci[0] + loci[1]])
+                            self.complex_text += self.text[prev_index:loci[0]] + \
+                                                    RefAttach(user_id, self.text[loci[0]:loci[0] + loci[1]])
                             prev_index = loci[0] + loci[1]
-                message.complex_text = message.complex_text + message.text[prev_index:]
+                self.complex_text = self.complex_text + self.text[prev_index:]
         if not doing_mentions:
-            message.complex_text = ComplexMessage(message.text)
-        message.sender_type = json['sender_type']
-        message.sender_id = json['sender_id']
-        return message
+            self.complex_text = ComplexMessage(self.text)
 
     def __repr__(self):
         return str(self)

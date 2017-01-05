@@ -3,16 +3,18 @@ from lowerpines.exceptions import InvalidOperationException
 
 
 class Member(AbstractObject):
-    member_id = None
-    user_id = None
-    nickname = None
-    muted = None
-    image_url = None
-    autokicked = None
+    field_map = {
+        'member_id': 'id',
+        'user_id': 'user_id',
+        'nickname': 'nickname',
+        'muted': 'muted',
+        'image_url': 'image_url',
+        'autokicked': 'autokicked',
 
-    group_id = None
-    phone_number = None
-    email = None
+        'group_id': 'group_id',
+        'phone_number': 'phone_number',
+        'email': 'email',
+    }
 
     def __init__(self, gmi, group_id, nickname=None, user_id=None, phone_number=None, email=None):
         self.gmi = gmi
@@ -36,37 +38,12 @@ class Member(AbstractObject):
             new_data = MembersUpdateRequest(self.gmi, self.group_id, self.nickname).result
             self._refresh_from_other(new_data)
 
-    def _refresh_from_other(self, other):
-        self.member_id = other.member_id
-        self.user_id = other.user_id
-        self.nickname = other.nickname
-        self.muted = other.muted
-        self.image_url = other.image_url
-        self.autokicked = other.autokicked
-
-        self.group_id = other.group_id
-        self.phone_number = other.phone_number
-        self.email = other.email
-
     def refresh(self):
         raise InvalidOperationException('Nontrivial to implement')
 
     @staticmethod
     def get(gmi, member_id):
         raise InvalidOperationException('Nontrivial to implement')
-
-    @staticmethod
-    def from_json(gmi, json, group_id):
-        member = Member(gmi, group_id)
-
-        member.member_id = json['id']
-        member.user_id = json['user_id']
-        member.nickname = json['nickname']
-        member.muted = json['muted']
-        member.image_url = json['image_url']
-        member.autokicked = json['autokicked']
-
-        return member
 
     def __str__(self):
         return self.nickname

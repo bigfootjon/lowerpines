@@ -4,12 +4,14 @@ from lowerpines.message import ComplexMessage
 
 
 class Bot(AbstractObject):
-    bot_id = None
-    group_id = None
-    name = None
-    avatar_url = None
-    callback_url = None
-    dm_notification = None
+    field_map = {
+        'bot_id': 'bot_id',
+        'group_id': 'group_id',
+        'name': 'name',
+        'avatar_url': 'avatar_url',
+        'callback_url': 'callback_url',
+        'dm_notification': 'dm_notification',
+    }
 
     def __init__(self, gmi, group_id=None, name=None, avatar_url=None, callback_url=None, dm_notification=None):
         self.gmi = gmi
@@ -37,14 +39,6 @@ class Bot(AbstractObject):
         else:
             BotDestroyRequest(self.gmi, self.bot_id)
 
-    def _refresh_from_other(self, other):
-        self.bot_id = other.bot_id
-        self.group_id = other.group_id
-        self.name = other.name
-        self.avatar_url = other.avatar_url
-        self.callback_url = other.callback_url
-        self.dm_notification = other.dm_notification
-
     def refresh(self):
         if self.bot_id is None:
             raise InvalidOperationException('This operation is not permitted')
@@ -64,18 +58,6 @@ class Bot(AbstractObject):
     @staticmethod
     def get(gmi, bot_id):
         pass
-
-    @classmethod
-    def from_json(cls, gmi, json):
-        bot = cls(gmi)
-        bot.bot_id = json['bot_id']
-        bot.group_id = json['group_id']
-        bot.name = json['name']
-        bot.avatar_url = json['avatar_url']
-        bot.callback_url = json['callback_url']
-        bot.dm_notification = json['dm_notification']
-
-        return bot
 
     def __str__(self):
         return self.name + ':' + self.group_id
