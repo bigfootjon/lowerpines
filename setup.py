@@ -4,7 +4,7 @@ import lowerpines
 
 setup(
     name='lowerpines',
-    packages=['lowerpines'],
+    packages=['lowerpines', 'lowerpines.endpoints'],
     version=lowerpines.VERSION,
     description='lowerpines library wrapper for GroupMe API',
     requires=['requests'],
