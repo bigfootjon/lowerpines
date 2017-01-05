@@ -61,7 +61,7 @@ class DirectMessage:
         self.text = text
         self.attachments = attachments
 
-    def save(self) -> None:
+    def save(self):
         if self.direct_message_id is None:
             new_data = DirectMessageCreateRequest(self.gmi, self.source_guid, self.recipient_id, self.text,
                                                   self.attachments).result
@@ -139,7 +139,7 @@ class DirectMessageChatsRequest(Request):
         self.per_page = per_page
         super().__init__(gmi)
 
-    def url(self) -> str:
+    def url(self):
         return self.base_url + '/chats'
 
     def args(self):
