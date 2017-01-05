@@ -19,8 +19,6 @@ The first step to doing anything with this library is to create a ``GMI`` object
     gmi = GMI(api_key='API key here')
 
 A GMI object stores a copy of the API key and serves as a context for various functions.
-Current implementation will immediately download basic data about groups, bots, and user. This process can take some
-time, so don't worry if instantiation of GMI objects takes a little bit of time.
 GMI objects also provide common functions::
 
     for group in gmi.groups:
@@ -28,6 +26,9 @@ GMI objects also provide common functions::
 
     for bot in gmi.bots:
         print(bot, bot.group)
+
+    for chat in gmi.chats:
+        print(chat, chat.other_user)
 
     test_group = gmi.groups.get(name='Testing Group')
     test_bot = gmi.bots.filter(group_id=test_group.group_id)
