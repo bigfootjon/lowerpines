@@ -30,6 +30,8 @@ class Request:
             r = requests.get(url=self.url(), params=params, headers=headers)
         elif self.mode() == "POST":
             r = requests.post(url=self.url(), params=params, headers=headers, data=json.dumps(self.args()))
+        elif self.mode() == "POST_RAW":
+            r = requests.post(url=self.url(), params=params, headers=headers, data=self.args())
         else:
             raise Exception("Invalid mode!")
         self.error_check(r)

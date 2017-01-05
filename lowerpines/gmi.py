@@ -25,6 +25,6 @@ class GMI:
         self.user = UserManager(self)
 
     def convert_image_url(self, url):
-        service_url = 'https://image.groupme.com/pictures'
-        data = requests.get(url).content
-        return requests.post(service_url, data=data, headers={'X-Access-Token': self.api_key}).json()['payload']['url']
+        from lowerpines.endpoints.image import ImageConvertRequest
+        return ImageConvertRequest(self, requests.get(url).content).result
+
