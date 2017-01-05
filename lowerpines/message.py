@@ -159,3 +159,12 @@ class ComplexMessage:
 
     def just_str(self):
         return ''.join([s for s in self.contents if isinstance(s, str)])
+
+
+def smart_split_complex_message(message):
+    if isinstance(message, ComplexMessage):
+        return message.get_text(), message.get_attachments()
+    elif isinstance(message, str):
+        return message, []
+    else:
+        raise ValueError('Message object must be a str or ComplexMessage')
