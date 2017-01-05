@@ -31,6 +31,7 @@ class Request:
             params.update(self.args())
             r = requests.get(url=self.url(), params=params, headers=headers)
         elif self.mode() == "POST":
+            headers['Content-Type'] = 'application/json'
             r = requests.post(url=self.url(), params=params, headers=headers, data=json.dumps(self.args()))
         elif self.mode() == "POST_RAW":
             r = requests.post(url=self.url(), params=params, headers=headers, data=self.args())
