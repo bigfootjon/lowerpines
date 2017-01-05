@@ -10,7 +10,7 @@ This is very much a work-in-progress and is **not** intended to be used in produ
 Basic Usage
 ===========
 
-This requires a API key from the `GroupMe developers site <dev.groupme.com>`_
+This requires a API key from the `GroupMe developers site <http://dev.groupme.com>`_
 
 The first step to doing anything with this library is to create a ``GMI`` object::
 
