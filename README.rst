@@ -38,10 +38,11 @@ can be utilized through ``ComplexMessage`` objects::
 
     from lowerpines.message import ImageAttach
 
-    complex_message = ImageAttach('URL to GroupMe processed image here') + 'Look at my cool picture'  # This will dynamically create a ComplexMessage object
+    # This will dynamically create a ComplexMessage object:
+    complex_message = ImageAttach('URL to GroupMe processed image here') + 'Look at my cool picture'
     test_bot.post(complex_message)
 
-The various ``___Attach`` objects will automatically convert themselves into a ``ComplexMessage`` object when added to a ``str`` or to another ``MessageAttach`` object.
+The various ``MessageAttach`` objects (such as ``ImageAttach``, ``EmojiAttach``, etc.) will automatically convert themselves into a ``ComplexMessage`` object when added to a ``str`` or to another ``MessageAttach`` object.
 However, a ``MessageAttach`` object is **not** a ``ComplexMessage`` object, so the following is not allowed::
 
     test_bot.post(ImageAttach('URL here'))  # This will trigger an exception
