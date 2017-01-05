@@ -67,9 +67,10 @@ class Message(AbstractObject):
         message.group_id = json["group_id"]
         message.name = json["name"]
         message.avatar_url = json["avatar_url"]
-        message.text = json["text"]
-        if message.text is None:
+        if json["text"] is None:
             message.text = ""
+        else:
+            message.text = json["text"]
         message.system = json["system"]
         message.favorited_by = json.get("favorited_by", [])
         message.complex_text = ComplexMessage('')
