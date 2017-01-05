@@ -1,5 +1,6 @@
 from lowerpines.endpoints import Request
 from lowerpines.exceptions import InvalidOperationException
+from lowerpines.message import smart_split_complex_message
 
 
 class Chat:
@@ -12,14 +13,16 @@ class Chat:
     def __init__(self, gmi):
         self.gmi = gmi
 
-    def get_all(self):
-        return DirectMessageChatsRequest(self.gmi).result
+    @staticmethod
+    def get_all(gmi):
+        return DirectMessageChatsRequest(gmi).result
 
     def get(self, other_user_id):
         return DirectMessageIndexRequest(self.gmi, other_user_id).result
 
-    def post(self, source_guid, text, attachments=None):
-        return DirectMessageCreateRequest(self.gmi, source_guid, self.other_user.user_id, text, attachments).result
+    def post(self, message):
+        text, attachments = smart_split_complex_message(message)
+        return DirectMessageCreateRequest(self.gmi, self.gmi.user.get().user_id, self.other_user.user_id, text, attachments).result
 
     @classmethod
     def from_json(cls, gmi, json):
@@ -193,7 +196,6 @@ class DirectMessageIndexRequest(Request):
         return "GET"
 
 
-# This doesn't work. Don't know why
 class DirectMessageCreateRequest(Request):
     def __init__(self, gmi, sender_id, recipient_id, text, attachments=None):
         self.sender_id = sender_id
@@ -203,7 +205,9 @@ class DirectMessageCreateRequest(Request):
         super().__init__(gmi)
 
     def parse(self, response):
-        return DirectMessage.from_json(self.gmi, response['json'])
+        # return DirectMessage.from_json(self.gmi, response['direct_message'])
+        # TODO: Fix this
+        pass
 
     def url(self):
         return self.base_url + '/direct_messages'
@@ -215,7 +219,7 @@ class DirectMessageCreateRequest(Request):
         if self.attachments:
             direct_message['attachments'] = self.attachments
         return {
-            # 'message': direct_message,
+            'message': direct_message,
             'conversation_id': self.recipient_id + '+' + self.sender_id
         }
 
