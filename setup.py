@@ -8,6 +8,7 @@ setup(
     version=lowerpines.VERSION,
     description='lowerpines library wrapper for GroupMe API',
     requires=['requests'],
+    license='LGPLv3',
     author='Jonathan Janzen',
     author_email='jjjonjanzen@gmail.com',
     url='https://github.com/bigfootjon/lowerpines',
