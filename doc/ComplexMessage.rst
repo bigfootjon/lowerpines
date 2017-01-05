@@ -28,7 +28,7 @@ Many functions can take either a raw string or a ComplexMessage object, so there
     print(attachments)  # prints: "R:@world"
 
 However, all ``post(...)`` functions in the library will recognize and properly extract data from ComplexMessage objects.
-Use of the ``smart_split_complex_message(message)`` is purely for extended behaviour
+Use of the ``smart_split_complex_message(message)`` is not necessary for working with lowerpines library functions
 
 =====================
 MessageAttach Objects
