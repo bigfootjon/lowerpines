@@ -1,6 +1,6 @@
 from lowerpines.endpoints import Request, AbstractObject
 from lowerpines.exceptions import InvalidOperationException
-from lowerpines.message import ComplexMessage
+from lowerpines.message import smart_split_complex_message
 
 
 class Bot(AbstractObject):
@@ -46,10 +46,8 @@ class Bot(AbstractObject):
             raise InvalidOperationException('This is non trivial to implement')
 
     def post(self, text):
-        if isinstance(text, ComplexMessage):
-            BotPostRequest(self.gmi, self.bot_id, text.get_text(), text.get_attachments())
-        else:
-            BotPostRequest(self.gmi, self.bot_id, text)
+        text, attachments = smart_split_complex_message(text)
+        BotPostRequest(self.gmi, self.bot_id, text, attachments)
 
     @staticmethod
     def get_all(gmi):
