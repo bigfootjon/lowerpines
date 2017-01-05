@@ -26,6 +26,7 @@ class Message(AbstractObject):
         self.source_guid = source_guid
         self.text = text
         self.attachments = attachments
+        self.message_id = None
 
     def save(self):
         if self.message_id:
