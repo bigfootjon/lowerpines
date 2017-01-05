@@ -1,7 +1,4 @@
-from collections import MutableMapping
-
-
-class AbstractManager(MutableMapping):
+class AbstractManager:
     def __len__(self):
         return self._content.__len__()
 
