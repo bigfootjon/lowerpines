@@ -9,8 +9,8 @@ These objects can be found in the ``lowerpines.message`` module.
 ComplexMessage
 ==============
 
-ComplexMessage provides a way to encode text and attachments in a single object. It provides the methods ``text()`` and
-``attachments()`` to access the 2 components.
+ComplexMessage provides a way to encode text and attachments in a single object. It provides the methods ``get_text()`` and
+``get_attachments()`` to access the 2 components.
 
 ComplexMessage objects can be manually instantiated, or created dynamically::
 
