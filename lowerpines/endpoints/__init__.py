@@ -26,7 +26,7 @@ class Request:
 
     def execute(self):
         params = {}
-        headers = {'X-Access-Token': self.gmi.api_key, 'User-Agent': 'GroupYouLibrary/1.0'}
+        headers = {'X-Access-Token': self.gmi.access_token, 'User-Agent': 'GroupYouLibrary/1.0'}
         if self.mode() == "GET":
             params.update(self.args())
             r = requests.get(url=self.url(), params=params, headers=headers)
