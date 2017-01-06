@@ -5,7 +5,7 @@ _gmi_objects = []
 
 def get_gmi(access_token):
     for gmi in _gmi_objects:
-        if gmi.api_key == access_token:
+        if gmi.access_token == access_token:
             return gmi
     gmi = GMI(access_token)
     _gmi_objects.append(gmi)
