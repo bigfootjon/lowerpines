@@ -28,6 +28,7 @@ class AbstractObjectType(type):
 
 class AbstractObject(metaclass=AbstractObjectType):
     field_map = {}  # This is a dict of keys to values using: AbstractObject.KEY = json[VALUE]
+    _fields = []
 
     def save(self):
         raise NotImplementedError
