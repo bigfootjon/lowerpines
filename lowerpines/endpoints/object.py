@@ -36,7 +36,7 @@ class AbstractObject(metaclass=AbstractObjectType):
         raise NotImplementedError
 
     def _refresh_from_other(self, other):
-        for field in self.get_fields():
+        for field in self._fields:
             setattr(self, field.name, getattr(other, field.name))
         self.on_fields_loaded()
 
@@ -46,9 +46,6 @@ class AbstractObject(metaclass=AbstractObjectType):
     def refresh(self):
         raise NotImplementedError
 
-    def get_fields(self):
-        return self._fields
-
     @staticmethod
     def get(gmi, *args):
         raise NotImplementedError
@@ -57,7 +54,7 @@ class AbstractObject(metaclass=AbstractObjectType):
     def from_json(cls, gmi, json_dict, *args):
         obj = cls(gmi, *args)
 
-        for field in obj.get_fields():
+        for field in obj._fields:
             json_val = json_dict
             for val in field.api_name.split('.'):
                 json_val = json_val.get(val, None)
