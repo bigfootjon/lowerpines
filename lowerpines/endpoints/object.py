@@ -67,6 +67,6 @@ class AbstractObject(metaclass=AbstractObjectType):
             json_val = json_dict
             for val in field.api_name.split('.'):
                 json_val = json_val.get(val, None)
-            setattr(obj, field.name, json_val)
+            setattr(obj, field.name, field.klass(json_val))
         obj.on_fields_loaded()
         return obj
