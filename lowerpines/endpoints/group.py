@@ -26,6 +26,7 @@ class Group(AbstractObject):
     }
 
     def __init__(self, gmi, name=None, description=None, image_url=None):
+        super().__init__()
         self.gmi = gmi
         self.messages = GroupMessagesManager(self)
         self.name = name
