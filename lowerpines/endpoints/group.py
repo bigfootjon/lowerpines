@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from lowerpines.endpoints import Request, AbstractObject
+from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
 from lowerpines.endpoints.message import Message
 from lowerpines.exceptions import InvalidOperationException

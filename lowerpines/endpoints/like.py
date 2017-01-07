@@ -1,7 +1,7 @@
 from typing import Any
 
 from lowerpines.gmi import GMI
-from lowerpines.endpoints import Request
+from lowerpines.endpoints.request import Request
 
 
 class LikeCreateRequest(Request):

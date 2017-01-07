@@ -1,4 +1,5 @@
-from lowerpines.endpoints import Request, AbstractObject
+from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
 from lowerpines.exceptions import InvalidOperationException
 

@@ -1,4 +1,4 @@
-from lowerpines.endpoints import Request
+from lowerpines.endpoints.request import Request
 
 
 class Block:
