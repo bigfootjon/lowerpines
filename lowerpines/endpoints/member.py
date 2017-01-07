@@ -1,21 +1,19 @@
-from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.exceptions import InvalidOperationException
 
 
 class Member(AbstractObject):
-    field_map = {
-        'member_id': 'id',
-        'user_id': 'user_id',
-        'nickname': 'nickname',
-        'muted': 'muted',
-        'image_url': 'image_url',
-        'autokicked': 'autokicked',
+    member_id = Field(api_name='id')
+    user_id = Field()
+    nickname = Field()
+    muted = Field()
+    image_url = Field()
+    autokicked = Field()
 
-        'group_id': 'group_id',
-        'phone_number': 'phone_number',
-        'email': 'email',
-    }
+    group_id = Field()
+    phone_number = Field()
+    email = Field()
 
     def __init__(self, gmi, group_id, nickname=None, user_id=None, phone_number=None, email=None):
         self.gmi = gmi
