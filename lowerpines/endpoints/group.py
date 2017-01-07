@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
 from lowerpines.endpoints.message import Message
@@ -9,21 +9,19 @@ from lowerpines.message import smart_split_complex_message
 
 
 class Group(AbstractObject):
-    field_map = {
-        'group_id': 'id',
-        'name': 'name',
-        'type': 'type',
-        'description': 'description',
-        'image_url': 'image_url',
-        'creator_user_id': 'creator_user_id',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'share_url': 'share_url',
-        'members_raw': 'members',
-        'messages_count_raw': 'messages.count',
-        'messages_last_message_id_raw': 'messages.last_message_id',
-        'messages_last_message_created_at_raw': 'messages.last_message_created_at',
-    }
+    group_id = Field(api_name='id')
+    name = Field()
+    type = Field()
+    description = Field()
+    image_url = Field()
+    creator_user_id = Field()
+    created_at = Field()
+    updated_at = Field()
+    share_url = Field()
+    members_raw = Field(api_name='members', handler=None)
+    messages_count_raw = Field(api_name='messages.count', handler=None)
+    messages_last_message_id_raw = Field(api_name='messages.last_message_id', handler=None)
+    messages_last_message_created_at_raw = Field(api_name='messages.last_message_created_at', handler=None)
 
     def __init__(self, gmi, name=None, description=None, image_url=None):
         super().__init__()
