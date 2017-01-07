@@ -1,23 +1,24 @@
-from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
 
 class Chat(AbstractObject):
+    created_at = Field()
+    updated_at = Field()
+    messages_count = Field()
+    last_message_raw = Field(api_name='last_message', handler=dict)
+    other_user_raw = Field(api_name='other_user', handler=dict)
+
+    last_message = None
+    other_user = None
+
     def save(self):
         raise InvalidOperationException('This does not make sense')
 
     def refresh(self):
         raise InvalidOperationException('This is non-trivial to implement')
-
-    field_map = {
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'last_message_raw': 'last_message',
-        'messages_count': 'messages_count',
-        'other_user_raw': 'other_user',
-    }
 
     def __init__(self, gmi):
         self.gmi = gmi
