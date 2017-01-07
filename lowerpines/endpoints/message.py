@@ -1,25 +1,23 @@
-from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
 from lowerpines.exceptions import InvalidOperationException
 
 
 class Message(AbstractObject):
-    field_map = {
-        'message_id': 'id',
-        'source_guid': 'source_guid',
-        'created_at': 'created_at',
-        'user_id': 'user_id',
-        'group_id': 'group_id',
-        'name': 'name',
-        'avatar_url': 'avatar_url',
-        'text': 'text',
-        'system': 'system',
-        'favorited_by': 'favorited_by',
-        'attachments': 'attachments',
-        'sender_type': 'sender_type',
-        'sender_id': 'sender_id',
-    }
+    message_id = Field(api_name='id')
+    source_guid = Field()
+    created_at = Field()
+    user_id = Field()
+    group_id = Field()
+    name = Field()
+    avatar_url = Field()
+    text = Field()
+    system = Field()
+    favorited_by = Field()
+    attachments = Field()
+    sender_type = Field()
+    sender_id = Field()
 
     def __init__(self, gmi, group_id=None, source_guid=None, text=None, attachments=list()):
         self.gmi = gmi
