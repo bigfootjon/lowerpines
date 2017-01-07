@@ -33,8 +33,8 @@ class AbstractObject(metaclass=AbstractObjectType):
         raise NotImplementedError
 
     def _refresh_from_other(self, other):
-        for key, _ in self.get_fields():
-            setattr(self, key, getattr(other, key))
+        for field in self.get_fields():
+            setattr(self, field.name, getattr(other, field.name))
         self.on_fields_loaded()
 
     def on_fields_loaded(self):
@@ -62,10 +62,10 @@ class AbstractObject(metaclass=AbstractObjectType):
     def from_json(cls, gmi, json_dict, *args):
         obj = cls(gmi, *args)
 
-        for key, value_raw in obj.get_fields():
+        for field in obj.get_fields():
             json_val = json_dict
-            for val in value_raw.split('.'):
+            for val in field.api_name.split('.'):
                 json_val = json_val.get(val, None)
-            setattr(obj, key, json_val)
+            setattr(obj, field.name, json_val)
         obj.on_fields_loaded()
         return obj
