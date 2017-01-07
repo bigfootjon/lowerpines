@@ -44,7 +44,15 @@ class AbstractObject(metaclass=AbstractObjectType):
         raise NotImplementedError
 
     def get_fields(self):
-        return self.field_map.items()
+        if len(self.field_map) == 0:
+            return self._fields
+        else:
+            fields_converted = []
+            for attr_name, api_name in self.field_map.items():
+                field = Field(api_name=api_name)
+                field.set_name(attr_name)
+                fields_converted.append(field)
+            return fields_converted
 
     @staticmethod
     def get(gmi, *args):
