@@ -1,18 +1,16 @@
-from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
 
 class Bot(AbstractObject):
-    field_map = {
-        'bot_id': 'bot_id',
-        'group_id': 'group_id',
-        'name': 'name',
-        'avatar_url': 'avatar_url',
-        'callback_url': 'callback_url',
-        'dm_notification': 'dm_notification',
-    }
+    bot_id = Field()
+    group_id = Field()
+    name = Field()
+    avatar_url = Field()
+    callback_url = Field()
+    dm_notification = Field()
 
     def __init__(self, gmi, group_id=None, name=None, avatar_url=None, callback_url=None, dm_notification=None):
         self.gmi = gmi
