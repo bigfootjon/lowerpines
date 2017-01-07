@@ -32,9 +32,6 @@ class AbstractObjectType(type):
 class AbstractObject(metaclass=AbstractObjectType):
     _fields = []
 
-    def save(self):
-        raise NotImplementedError
-
     def _refresh_from_other(self, other):
         for field in self._fields:
             setattr(self, field.name, getattr(other, field.name))
@@ -42,13 +39,6 @@ class AbstractObject(metaclass=AbstractObjectType):
 
     def on_fields_loaded(self):
         pass
-
-    def refresh(self):
-        raise NotImplementedError
-
-    @staticmethod
-    def get(gmi, *args):
-        raise NotImplementedError
 
     @classmethod
     def from_json(cls, gmi, json_dict, *args):
@@ -65,3 +55,15 @@ class AbstractObject(metaclass=AbstractObjectType):
             setattr(obj, field.name, handled_val)
         obj.on_fields_loaded()
         return obj
+
+
+class RetrievableObject(AbstractObject):
+    def save(self):
+        raise NotImplementedError
+
+    def refresh(self):
+        raise NotImplementedError
+
+    @staticmethod
+    def get(gmi, *args):
+        raise NotImplementedError
