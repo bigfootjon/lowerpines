@@ -1,10 +1,11 @@
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 
 
-class Block:
-    user_id = None
-    blocked_user_id = None
-    created_at = None
+class Block(AbstractObject):
+    user_id = Field()
+    blocked_user_id = Field()
+    created_at = Field()
 
     def __init__(self, gmi):
         self.gmi = gmi
@@ -23,16 +24,6 @@ class Block:
     @staticmethod
     def unblock(gmi, user_id, other_user_id):
         BlockUnblockRequest(gmi, user_id, other_user_id)
-
-    @classmethod
-    def from_json(cls, gmi, json):
-        block = cls(gmi)
-
-        block.user_id = json['user_id']
-        block.blocked_user_id = json['blocked_user_id']
-        block.created_at = json['created_at']
-
-        return block
 
 
 class BlockIndexRequest(Request):
