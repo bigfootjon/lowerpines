@@ -77,11 +77,11 @@ class AbstractObject:
         raise NotImplementedError
 
     @classmethod
-    def from_json(cls, gmi, json, *args):
+    def from_json(cls, gmi, json_dict, *args):
         obj = cls(gmi, *args)
 
         for key, value_raw in obj.field_map.items():
-            json_val = json
+            json_val = json_dict
             for val in value_raw.split('.'):
                 json_val = json_val.get(val, None)
             setattr(obj, key, json_val)
