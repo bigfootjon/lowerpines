@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from lowerpines.endpoints.object import AbstractObject, Field
+from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
 from lowerpines.endpoints.message import Message
@@ -8,7 +8,7 @@ from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
 
-class Group(AbstractObject):
+class Group(AbstractObject, RetrievableObject):
     group_id = Field(api_name='id')
     name = Field()
     type = Field()

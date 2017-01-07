@@ -1,9 +1,9 @@
-from lowerpines.endpoints.object import AbstractObject, Field
+from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.sms import SmsCreateRequest, SmsDeleteRequest
 
 
-class User(AbstractObject):
+class User(AbstractObject, RetrievableObject):
     user_id = Field()
     phone_number = Field()
     image_url = Field()

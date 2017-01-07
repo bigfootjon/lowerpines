@@ -1,10 +1,10 @@
-from lowerpines.endpoints.object import AbstractObject, Field
+from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
 from lowerpines.exceptions import InvalidOperationException
 
 
-class Message(AbstractObject):
+class Message(AbstractObject, RetrievableObject):
     message_id = Field(api_name='id')
     source_guid = Field()
     created_at = Field()

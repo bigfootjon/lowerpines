@@ -1,10 +1,10 @@
-from lowerpines.endpoints.object import AbstractObject, Field
+from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
 
-class Bot(AbstractObject):
+class Bot(AbstractObject, RetrievableObject):
     bot_id = Field()
     group_id = Field()
     name = Field()

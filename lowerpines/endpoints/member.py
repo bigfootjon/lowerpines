@@ -1,9 +1,9 @@
-from lowerpines.endpoints.object import AbstractObject, Field
+from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request
 from lowerpines.exceptions import InvalidOperationException
 
 
-class Member(AbstractObject):
+class Member(AbstractObject, RetrievableObject):
     member_id = Field(api_name='id')
     user_id = Field()
     nickname = Field()
