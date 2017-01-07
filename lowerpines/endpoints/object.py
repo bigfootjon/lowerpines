@@ -1,7 +1,7 @@
 class Field:
-    def __init__(self, name=None, klass=str, api_name=None):
+    def __init__(self, name=None, handler=str, api_name=None):
         self.name = name
-        self.klass = klass
+        self.handler = handler
         self.api_name = api_name
 
     def set_name(self, name):
@@ -18,7 +18,7 @@ class AbstractObjectType(type):
             if type(attr_value) == Field:
                 attr_value.set_name(attr_name)
                 fields.append(attr_value)
-                new_attrs[attr_name] = attr_value.klass()
+                new_attrs[attr_name] = attr_value.handler()
             else:
                 new_attrs[attr_name] = attr_value
         new_attrs['_fields'] = fields
@@ -67,6 +67,6 @@ class AbstractObject(metaclass=AbstractObjectType):
             json_val = json_dict
             for val in field.api_name.split('.'):
                 json_val = json_val.get(val, None)
-            setattr(obj, field.name, field.klass(json_val))
+            setattr(obj, field.name, field.handler(json_val))
         obj.on_fields_loaded()
         return obj
