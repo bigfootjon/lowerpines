@@ -1,19 +1,17 @@
-from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.sms import SmsCreateRequest, SmsDeleteRequest
 
 
 class User(AbstractObject):
-    field_map = {
-        'user_id': 'user_id',
-        'phone_number': 'phone_number',
-        'image_url': 'image_url',
-        'name': 'name',
-        'created_at': 'created_at',
-        'updated_at': 'updated_at',
-        'email': 'email',
-        'sms': 'sms',
-    }
+    user_id = Field()
+    phone_number = Field()
+    image_url = Field()
+    name = Field()
+    created_at = Field()
+    updated_at = Field()
+    email = Field()
+    sms = Field()
 
     def __init__(self, gmi):
         self.gmi = gmi
