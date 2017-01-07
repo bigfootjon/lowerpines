@@ -47,6 +47,11 @@ class SmartSplitComplexMessage(TestCase):
             'user_ids': ['user_id_here']
         }])
 
+    def test_str_message(self):
+        text, attachments = smart_split_complex_message('Hello!')
+        self.assertEqual(text, 'Hello!')
+        self.assertEqual(attachments, [])
+
 
 class MessageAttachTest(TestCase):
     def test_mixing_together(self):
