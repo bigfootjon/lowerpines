@@ -1,6 +1,6 @@
 from lowerpines.endpoints.chat import Chat
 
-from lowerpines import AbstractManager
+from lowerpines.manager import AbstractManager
 
 
 class ChatManager(AbstractManager):

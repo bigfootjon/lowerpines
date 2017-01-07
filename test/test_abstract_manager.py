@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from lowerpines.exceptions import NoneFoundException, MultipleFoundException
 
-from lowerpines import AbstractManager
+from lowerpines.manager import AbstractManager
 from lowerpines.gmi import GMI
 
 

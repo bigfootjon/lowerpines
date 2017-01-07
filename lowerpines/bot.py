@@ -1,4 +1,4 @@
-from lowerpines import AbstractManager
+from lowerpines.manager import AbstractManager
 from lowerpines.endpoints.bot import Bot
 
 
