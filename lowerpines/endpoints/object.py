@@ -57,7 +57,7 @@ class AbstractObject(metaclass=AbstractObjectType):
         return obj
 
 
-class RetrievableObject(AbstractObject):
+class RetrievableObject:
     def save(self):
         raise NotImplementedError
 
