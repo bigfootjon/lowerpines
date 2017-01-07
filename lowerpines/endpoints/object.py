@@ -1,8 +1,8 @@
 class Field:
-    def __init__(self, klass=str, api_name=None):
-        self.api_name = api_name
+    def __init__(self, name=None, klass=str, api_name=None):
+        self.name = name
         self.klass = klass
-        self.name = None
+        self.api_name = api_name
 
     def set_name(self, name):
         self.name = name
