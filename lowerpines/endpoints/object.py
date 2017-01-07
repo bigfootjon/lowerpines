@@ -18,7 +18,10 @@ class AbstractObjectType(type):
             if type(attr_value) == Field:
                 attr_value.set_name(attr_name)
                 fields.append(attr_value)
-                new_attrs[attr_name] = attr_value.handler()
+                if attr_value.handler is None:
+                    new_attrs[attr_name] = None
+                else:
+                    new_attrs[attr_name] = attr_value.handler()
             else:
                 new_attrs[attr_name] = attr_value
         new_attrs['_fields'] = fields
@@ -67,6 +70,10 @@ class AbstractObject(metaclass=AbstractObjectType):
             json_val = json_dict
             for val in field.api_name.split('.'):
                 json_val = json_val.get(val, None)
-            setattr(obj, field.name, field.handler(json_val))
+            if field.handler is not None:
+                handled_val = field.handler(json_val)
+            else:
+                handled_val = json_val
+            setattr(obj, field.name, handled_val)
         obj.on_fields_loaded()
         return obj
