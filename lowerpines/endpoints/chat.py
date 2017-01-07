@@ -14,12 +14,6 @@ class Chat(AbstractObject):
     last_message = None
     other_user = None
 
-    def save(self):
-        raise InvalidOperationException('This does not make sense')
-
-    def refresh(self):
-        raise InvalidOperationException('This is non-trivial to implement')
-
     def __init__(self, gmi):
         self.gmi = gmi
         self.messages = ChatMessagesManager(self)
