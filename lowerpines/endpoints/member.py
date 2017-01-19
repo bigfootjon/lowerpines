@@ -11,7 +11,6 @@ class Member(AbstractObject, RetrievableObject):
     image_url = Field()
     autokicked = Field()
 
-    group_id = Field()
     phone_number = Field()
     email = Field()
 
