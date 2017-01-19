@@ -15,7 +15,7 @@ class Message(AbstractObject, RetrievableObject):
     text = Field()
     system = Field()
     favorited_by = Field()
-    attachments = Field()
+    attachments = Field(handler=dict)
     sender_type = Field()
     sender_id = Field()
 
