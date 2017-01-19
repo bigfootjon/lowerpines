@@ -35,7 +35,7 @@ class AbstractManager:
         filtered = self._content
         for arg, value in kwargs.items():
             filtered = [item for item in filtered if getattr(item, arg) == value]
-        return filtered
+        return self.__class__(self.gmi, filtered)
 
     def lazy_fill_content(self):
         if self._content is None:
