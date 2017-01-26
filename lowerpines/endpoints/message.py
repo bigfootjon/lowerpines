@@ -14,7 +14,7 @@ class Message(AbstractObject, RetrievableObject):
     avatar_url = Field()
     text = Field()
     system = Field()
-    favorited_by = Field()
+    favorited_by = Field(handler=None)
     attachments = Field(handler=None)
     sender_type = Field()
     sender_id = Field()
