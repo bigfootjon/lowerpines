@@ -55,8 +55,8 @@ class TestAbstractManager(TestCase):
             self.cmm_multiple.get(val=14)
 
     def test_filter_single(self):
-        self.assertEqual(self.cmm.filter(val=3), [self.mt])
+        self.assertEqual(self.cmm.filter(val=3)._content, [self.mt])
 
     def test_filter_multiple(self):
-        self.assertEqual(self.cmm_multiple.filter(val=14), [self.cmm_multiple[0], self.cmm_multiple[1]])
+        self.assertEqual(self.cmm_multiple.filter(val=14)._content, [self.cmm_multiple[0], self.cmm_multiple[1]])
 
