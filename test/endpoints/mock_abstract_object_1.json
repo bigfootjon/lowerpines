@@ -1,0 +1,8 @@
+{
+  "field1": "field1_data",
+  "field2": 2,
+  "id": "id_data",
+  "foo": {
+    "bar": "foo.bar_data"
+  }
+}

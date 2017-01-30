@@ -1,0 +1,8 @@
+{
+  "field1": "field1_data_old",
+  "field2": 3,
+  "id": "id_data_old",
+  "foo": {
+    "bar": "foo.bar_data_old"
+  }
+}
