@@ -14,12 +14,21 @@ def get_gmi(access_token):
 
 class GMI:
     def __init__(self, access_token):
+        self.access_token = access_token
+
+        self.groups = None
+        self.bots = None
+        self.chats = None
+        self.user = None
+
+        self.refresh()
+
+    def refresh(self):
         from lowerpines.group import GroupManager
         from lowerpines.bot import BotManager
         from lowerpines.chat import ChatManager
         from lowerpines.user import UserManager
 
-        self.access_token = access_token
         self.groups = GroupManager(self)
         self.bots = BotManager(self)
         self.chats = ChatManager(self)
