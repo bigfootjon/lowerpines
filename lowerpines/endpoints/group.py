@@ -97,6 +97,9 @@ class Group(AbstractObject, RetrievableObject):
     def rejoin(gmi, group_id):
         return GroupsRejoinRequest(gmi, group_id).result
 
+    def change_owner(self, owner_id):
+        return GroupsChangeOwnersRequest(self.gmi, [{'group_id': self.group_id, 'owner_id': owner_id}]).result
+
     def __str__(self):
         return self.name
 
@@ -311,4 +314,24 @@ class GroupsRejoinRequest(Request):
     def args(self):
         return {
             'group_id': self.group_id
+        }
+
+
+class GroupsChangeOwnersRequest(Request):
+    def __init__(self, gmi, requests):
+        self.requests = requests
+        super().__init__(gmi)
+
+    def mode(self):
+        return "POST"
+
+    def url(self):
+        return self.base_url + '/groups/change_owners'
+
+    def parse(self, response):
+        return response
+
+    def args(self):
+        return {
+            'requests': self.requests
         }
