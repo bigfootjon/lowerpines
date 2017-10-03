@@ -8,6 +8,7 @@ This file contains documentation for usage of the main objects of this library:
 - Bot
 
 This file is a work in progress so the following will be added eventually:
+
 - Chat
 - Group
 - Message
