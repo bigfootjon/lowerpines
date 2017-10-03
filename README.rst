@@ -62,3 +62,5 @@ Viewing messages for groups is also available::
         print(message.text)
 
 Each message's text is also available as a ``ComplexMessage`` object through ``message.complex_text``
+
+Please see the ``doc/`` directory for more information.
