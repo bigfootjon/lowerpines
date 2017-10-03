@@ -20,12 +20,19 @@ ComplexMessage objects can be manually instantiated, or created dynamically::
     # Dynamically:
     message = 'Hello, ' + RefAttach('user_id_here', '@world')
 
-The ``RefAttach`` object above is explained in the MessageAttach Objects section
+The ``RefAttach`` object above is explained in the MessageAttach Objects section.
 Many functions can take either a raw string or a ComplexMessage object, so there is a helper function to do the hard work::
+
+    from lowerpines.message import smart_split_complex_message
 
     text, attachments = smart_split_complex_message(message)
     print(text)  # prints: "Hello, @world"
     print(attachments)  # prints: "R:@world"
+
+    # This function also handles plain str objects:
+    text, attachments = smart_split_complex_message("Howdy, partner")
+    print(text) # prints: "Howdy, partner"
+    print(attachments) # prints: []
 
 However, all ``post(...)`` functions in the library will recognize and properly extract data from ComplexMessage objects.
 Use of the ``smart_split_complex_message(message)`` is not necessary for working with lowerpines library functions
