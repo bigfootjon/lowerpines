@@ -7,7 +7,7 @@ setup(
     packages=['lowerpines', 'lowerpines.endpoints'],
     version=lowerpines.VERSION,
     description='Library wrapper for GroupMe API',
-    requires=['requests'],
+    install_requires=['requests'],
     license='GNU Lesser General Public License v3 (LGPLv3)',
     author='Jonathan Janzen',
     author_email='jjjonjanzen@gmail.com',
