@@ -56,8 +56,8 @@ class SmartSplitComplexMessage(TestCase):
 class MessageAttachTest(TestCase):
     def test_mixing_together(self):
         message = RefAttach('user1') + ImageAttach('http://image.url') + LocationAttach('home', 32, 83) + SplitAttach(
-            'token') + EmojiAttach(13)
-        self.assertEqual(message.get_text(), 'hometoken\u200b')
+            'token') + EmojiAttach(13, 9)
+        self.assertEqual(message.get_text(), 'hometoken\ufffd')
         self.assertEqual(message.get_attachments(), [
             {
                 'type': 'mentions',
@@ -81,7 +81,7 @@ class MessageAttachTest(TestCase):
             {
                 'type': 'emoji',
                 'charmap': [[13, 9]],
-                'placeholder': '\u200b',
+                'placeholder': '\ufffd',
             }
         ])
 

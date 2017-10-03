@@ -107,11 +107,13 @@ EmojiAttach
 ===========
 
 GroupMe has extended emoji with GroupMe specific "packs" that can be used in the app. This attachment will encode a single emoji from
-their extended set. It takes a single ``pack_id`` parameter encoded as an int. This feature depends on an invisible
-character (``\u200B`` is used by this library) being present in the message and swapping it out client-side with the Emoji given by ``pack_id``. For example::
+their extended set. It takes a two int parameters - ``pack_id`` and ``emoji_id``, where ``pack_id`` is the ID of the pack of emojis,
+and ``emoji_id`` is the ID of the emoji within the given pack. This feature depends on an invisible
+character (``\ufffd`` is used by this library) being present in the message and swapping it out client-side with the Emoji given by the ``(pack_id, emoji_id)`` pair.
+For example::
 
-    message = 'Hope everyone is doing alright' + EmojiAttach(1)
+    message = 'Hope everyone is doing alright' + EmojiAttach(1, 1)
 
-    message.get_text() == 'Hope everyone is doing alright\u200B'
-    message.get_attachments() == [EmojiAttach(1)]
+    message.get_text() == 'Hope everyone is doing alright\ufffd'
+    message.get_attachments() == [EmojiAttach(1, 1)]
 

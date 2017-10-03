@@ -73,12 +73,13 @@ class SplitAttach(MessageAttach):
         return 'S:' + str(self)
 
 
-EMOJI_PLACEHOLDER = '\u200B'
+EMOJI_PLACEHOLDER = '\ufffd'
 
 
 class EmojiAttach(MessageAttach):
-    def __init__(self, pack_id):
+    def __init__(self, pack_id, emoji_id):
         self.pack_id = pack_id
+        self.emoji_id = emoji_id
 
     def __str__(self):
         return EMOJI_PLACEHOLDER
@@ -151,7 +152,7 @@ class ComplexMessage:
                     'token': part.token
                 })
             elif isinstance(part, EmojiAttach):
-                emojis['charmap'].append([part.pack_id, len(content_frag)])
+                emojis['charmap'].append([part.pack_id, part.emoji_id])
                 if emojis not in attach_list:
                     attach_list.append(emojis)
             content_frag += str(part)
