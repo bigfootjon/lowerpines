@@ -18,3 +18,6 @@ class ImageConvertRequest(Request):
     def parse(self, response):
         return response['payload']['url']
 
+    def extract_response(self, response):
+        return response.json()
+

@@ -41,7 +41,7 @@ class Request:
         if r.content.decode('utf-8').isspace():
             return None
         else:
-            return r.json()["response"]
+            return self.extract_response(r)
 
     def error_check(self, request):
         code = int(request.status_code)
@@ -53,3 +53,6 @@ class Request:
                 text = '(TEXT): ' + str(request.text)
             raise GroupMeApiException('Something has gone wrong ' + text + ' for ' + str(self.mode()) + ' ' + str(
                 self.url()) + ' with data:\n' + str(self.args()))
+
+    def extract_response(self, response):
+        return response.json()["response"]
