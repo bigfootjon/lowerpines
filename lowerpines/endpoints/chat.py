@@ -71,7 +71,7 @@ class DirectMessage(AbstractObject):
         self.attachments = attachments
 
     def save(self):
-        if self.direct_message_id is None:
+        if self.direct_message_id == '':
             new_data = DirectMessageCreateRequest(self.gmi, self.source_guid, self.recipient_id, self.text,
                                                   self.attachments).result
             self._refresh_from_other(new_data)
