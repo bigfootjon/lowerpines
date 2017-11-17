@@ -33,8 +33,9 @@ class AbstractObject(metaclass=AbstractObjectType):
     _fields = []
 
     def _refresh_from_other(self, other):
-        for field in self._fields:
-            setattr(self, field.name, getattr(other, field.name))
+        if other is not None:
+            for field in self._fields:
+                setattr(self, field.name, getattr(other, field.name))
         self.on_fields_loaded()
 
     def on_fields_loaded(self):
