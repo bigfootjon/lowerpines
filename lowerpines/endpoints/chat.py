@@ -49,21 +49,19 @@ class DirectMessage(AbstractObject):
     def refresh(self):
         raise InvalidOperationException('This is non-trivial to implement')
 
-    field_map = {
-        'attachments': 'attachments',
-        'avatar_url': 'avatar_url',
-        'conversation_id': 'conversation_id',
-        'created_at': 'created_at',
-        'favorited_by': 'favorited_by',
-        'direct_message_id': 'id',
-        'name': 'name',
-        'recipient_id': 'recipient_id',
-        'sender_id': 'sender_id',
-        'sender_type': 'sender_type',
-        'source_guid': 'source_guid',
-        'text': 'text',
-        'user_id': 'user_id',
-    }
+    attachments = Field()
+    avatar_url = Field()
+    conversation_id = Field()
+    created_at = Field()
+    favorited_by = Field()
+    direct_message_id = Field(api_name='id')
+    name = Field()
+    recipient_id = Field()
+    sender_id = Field()
+    sender_type = Field()
+    source_guid = Field()
+    text = Field()
+    user_id = Field()
 
     def __init__(self, gmi, source_guid=None, recipient_id=None, text=None, attachments=None):
         self.gmi = gmi
