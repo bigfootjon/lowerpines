@@ -88,6 +88,24 @@ class EmojiAttach(MessageAttach):
         return 'E:' + str(self)
 
 
+# Undocumented feature
+class QueuedAttach(MessageAttach):
+    def __init__(self, url, queue):
+        self.url = url
+        self.queue = queue
+
+    def __str__(self):
+        return self.url
+
+    def __repr__(self):
+        return 'Q: ' + str(self)
+
+
+class LinkedImageAttach(QueuedAttach):
+    def __init__(self, url):
+        super().__init__(url, 'linked_image')
+
+
 class ComplexMessage:
     def __init__(self, data):
         if isinstance(data, list):
@@ -127,6 +145,10 @@ class ComplexMessage:
             'placeholder': EMOJI_PLACEHOLDER,
             'charmap': []
         }
+        queued = {
+            'type': 'postprocessing',
+            'queues': []
+        }
         content_frag = ""
         for part in self.contents:
             if isinstance(part, RefAttach):
@@ -155,6 +177,11 @@ class ComplexMessage:
                 emojis['charmap'].append([part.pack_id, part.emoji_id])
                 if emojis not in attach_list:
                     attach_list.append(emojis)
+            elif isinstance(part, QueuedAttach):
+                if part.queue not in queued['queues']:
+                    queued['queues'].append(part.queue)
+                if queued not in attach_list:
+                    attach_list.append(queued)
             content_frag += str(part)
         return attach_list
 
