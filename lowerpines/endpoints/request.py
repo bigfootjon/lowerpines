@@ -2,7 +2,8 @@ import json
 
 import requests
 
-from lowerpines.exceptions import InvalidOperationException, GroupMeApiException
+from lowerpines.exceptions import InvalidOperationException, GroupMeApiException, TimeoutException, \
+    UnauthorizedException
 
 
 class Request:
@@ -46,13 +47,17 @@ class Request:
     def error_check(self, request):
         code = int(request.status_code)
         if 399 < code < 500:
-            # noinspection PyBroadException
+            request_string = str(self.mode()) + ' ' + str(self.url()) + ' with data:\n' + str(self.args())
             try:
-                text = '(JSON): ' + str(request.json()['meta']['errors'])
-            except:
+                errors = request.json()['meta']['errors']
+                if "request timeout" in errors:
+                    raise TimeoutException("Timeout for " + request_string)
+                elif "unauthorized" in errors:
+                    raise UnauthorizedException("Not authorized to perform " + request_string)
+                text = '(JSON): ' + str(errors)
+            except ValueError:
                 text = '(TEXT): ' + str(request.text)
-            raise GroupMeApiException('Something has gone wrong ' + text + ' for ' + str(self.mode()) + ' ' + str(
-                self.url()) + ' with data:\n' + str(self.args()))
+            raise GroupMeApiException('Unknown error ' + text + ' for ' + request_string)
 
     def extract_response(self, response):
         return response.json()["response"]

@@ -12,3 +12,11 @@ class MultipleFoundException(Exception):
 
 class GroupMeApiException(Exception):
     pass
+
+
+class TimeoutException(GroupMeApiException):
+    pass
+
+
+class UnauthorizedException(GroupMeApiException):
+    pass
