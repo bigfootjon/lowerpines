@@ -96,11 +96,9 @@ class DirectMessageUser(AbstractObject):
     def refresh(self):
         raise InvalidOperationException('This operation is non-trivial to implement')
 
-    field_map = {
-        'avatar_url': 'avatar_url',
-        'user_id': 'id',
-        'name': 'name',
-    }
+    avatar_url = Field()
+    user_id = Field()
+    name = Field()
 
     def __init__(self, gmi):
         self.gmi = gmi
