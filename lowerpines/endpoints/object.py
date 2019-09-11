@@ -1,5 +1,5 @@
 class Field:
-    def __init__(self, handler=str, api_name=None):
+    def __init__(self, handler=None, api_name=None):
         self.name = ''
         self.handler = handler
         self.api_name = api_name

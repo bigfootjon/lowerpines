@@ -19,13 +19,13 @@ class TestField(TestCase):
         self.basic_field.set_name(self.name_varname)
         self.assertEqual(self.basic_field.name, self.name_varname)
         self.assertEqual(self.basic_field.api_name, self.name_varname)
-        self.assertEqual(self.basic_field.handler, str)
+        self.assertEqual(self.basic_field.handler, None)
 
     def test_api_field(self):
         self.api_field.set_name(self.name_varname)
         self.assertEqual(self.api_field.name, self.name_varname)
         self.assertEqual(self.api_field.api_name, self.name_api_field)
-        self.assertEqual(self.api_field.handler, str)
+        self.assertEqual(self.api_field.handler, None)
 
     def test_handler_field(self):
         self.handler_field.set_name(self.name_varname)
@@ -45,20 +45,20 @@ class TestAbstractObjectType(TestCase):
         self.mock = MockAbstractObjectTypeObject()
 
     def test_object_values(self):
-        self.assertEqual(self.mock.field1, str())
+        self.assertEqual(self.mock.field1, None)
         self.assertEqual(self.mock.field2, int())
-        self.assertEqual(self.mock.field3, str())
+        self.assertEqual(self.mock.field3, None)
 
     def test_fields_set(self):
         for f in self.mock._fields:
             if f.name == 'field1':
-                self.assertEqual(f.handler, str)
+                self.assertEqual(f.handler, None)
                 self.assertEqual(f.api_name, 'field1')
             elif f.name == 'field2':
                 self.assertEqual(f.handler, int)
                 self.assertEqual(f.api_name, 'field2')
             elif f.name == 'field3':
-                self.assertEqual(f.handler, str)
+                self.assertEqual(f.handler, None)
                 self.assertEqual(f.api_name, 'id')
             else:
                 self.assertFalse(True)  # There shouldn't be any other fields

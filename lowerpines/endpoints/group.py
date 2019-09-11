@@ -18,10 +18,10 @@ class Group(AbstractObject, RetrievableObject):
     created_at = Field()
     updated_at = Field()
     share_url = Field()
-    members_raw = Field(api_name='members', handler=None)
-    messages_count_raw = Field(api_name='messages.count', handler=None)
-    messages_last_message_id_raw = Field(api_name='messages.last_message_id', handler=None)
-    messages_last_message_created_at_raw = Field(api_name='messages.last_message_created_at', handler=None)
+    members_raw = Field(api_name='members')
+    messages_count_raw = Field(api_name='messages.count')
+    messages_last_message_id_raw = Field(api_name='messages.last_message_id')
+    messages_last_message_created_at_raw = Field(api_name='messages.last_message_created_at')
 
     def __init__(self, gmi, name=None, description=None, image_url=None):
         super().__init__()
