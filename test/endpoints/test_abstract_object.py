@@ -7,7 +7,7 @@ from lowerpines.gmi import GMI
 
 
 class TestField(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.name_api_field = 'test'
         self.name_varname = 'varname'
 
@@ -31,7 +31,7 @@ class MockAbstractObjectTypeObject(metaclass=AbstractObjectType):
 
 
 class TestAbstractObjectType(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.mock = MockAbstractObjectTypeObject()
 
     def test_object_values(self):
@@ -67,7 +67,7 @@ JSON_TEST_DATA_2 = os.path.join(os.path.dirname(__file__), 'mock_abstract_object
 
 
 class TestAbstractObject(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.gmi = GMI('mock_api_key')
         with open(JSON_TEST_DATA_1) as file:
             self.mock_obj = MockAbstractObject.from_json(self.gmi, json.load(file))
