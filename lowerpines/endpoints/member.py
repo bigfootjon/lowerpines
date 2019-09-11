@@ -10,6 +10,8 @@ class Member(AbstractObject, RetrievableObject):
     muted = Field()
     image_url = Field()
     autokicked = Field()
+    app_installed = Field()
+    guid = Field()
 
     phone_number = Field()
     email = Field()

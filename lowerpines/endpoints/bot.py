@@ -5,7 +5,7 @@ from lowerpines.message import smart_split_complex_message
 
 
 class Bot(AbstractObject, RetrievableObject):
-    bot_id = Field(handler=None)
+    bot_id = Field()
     group_id = Field()
     name = Field()
     avatar_url = Field()

@@ -14,17 +14,17 @@ class Message(AbstractObject, RetrievableObject):
     avatar_url = Field()
     text = Field()
     system = Field()
-    favorited_by = Field(handler=None)
-    attachments = Field(handler=None)
+    favorited_by = Field()
+    attachments = Field()
     sender_type = Field()
     sender_id = Field()
 
-    def __init__(self, gmi, group_id=None, source_guid=None, text=None, attachments=list()):
+    def __init__(self, gmi, group_id=None, source_guid=None, text=None, attachments=None):
         self.gmi = gmi
         self.group_id = group_id
         self.source_guid = source_guid
         self.text = text
-        self.attachments = attachments
+        self.attachments = attachments or []
         self.message_id = None
 
     def save(self):
