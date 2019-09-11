@@ -8,8 +8,8 @@ class Chat(AbstractObject):
     created_at = Field()
     updated_at = Field()
     messages_count = Field()
-    last_message_raw = Field(api_name='last_message', handler=dict)
-    other_user_raw = Field(api_name='other_user', handler=dict)
+    last_message_raw = Field(api_name='last_message')
+    other_user_raw = Field(api_name='other_user')
 
     last_message = None
     other_user = None
