@@ -1,3 +1,6 @@
+.. image:: https://circleci.com/gh/Bigfootjon/lowerpines.svg?style=svg
+    :target: https://circleci.com/gh/Bigfootjon/lowerpines
+
 ==================
 LowerPines Project
 ==================
