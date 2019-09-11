@@ -2,8 +2,15 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.4
+      - image: circleci/python:3.5
     steps:
       - checkout
-      - run: pip3 install --user --verbose --requirement requirements.txt
-      - run: python3 -m unittest --verbose
+      - run:
+          name: Install Dependencies
+          command: sudo pip3 install --requirement requirements.txt
+      - run:
+          name: Run Tests
+          command: python3 -m unittest --verbose
+      - run:
+          name: Run Pyre
+          command: pyre check

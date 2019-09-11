@@ -21,7 +21,7 @@ def mm_instance(content=None):
 
 
 class TestAbstractManager(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.mm = mm_instance()
         self.mt = MockType(3)
         self.cmm = mm_instance([self.mt])
