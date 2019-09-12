@@ -15,5 +15,8 @@ jobs:
           name: Check Types - Pyre
           command: pyre check
       - run:
+          name: Check Lint - Flake8
+          command: flake8
+      - run:
           name: Check Format - Black
           command: black --check .

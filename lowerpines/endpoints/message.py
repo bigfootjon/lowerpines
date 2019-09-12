@@ -132,7 +132,7 @@ class MessagesIndexRequest(Request):
             args_dict["since_id"] = self.since_id
         if self.after_id is not None:
             args_dict["after_id"] = self.after_id
-        if self.limit is not 20:
+        if self.limit != 20:
             args_dict["limit"] = self.limit
         return args_dict
 
