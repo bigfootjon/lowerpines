@@ -4,7 +4,21 @@ Contributing
 
 We accept patches through Github pull requests.
 
-The Black formatter is the only code style we follow, other than that try and match the style of existing code.
+==========
+Code Style
+==========
+
+Please run the following commands and ensure they continue to pass::
+
+    pyre check
+    flake8
+    black .
+
+Other than that, use the style of the code surrounding your change as a guide to code style.
+
+=====
+Tests
+=====
 
 Before making a pull request, please verify that the test suite passes.
 The test suite can be run with ``python3 -m unittest discover test`` from the project root directory.
