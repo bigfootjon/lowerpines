@@ -4,7 +4,7 @@ Contributing
 
 We accept patches through Github pull requests.
 
-There are no hard code style requirements but try and match the style of the code you are modifying.
+The Black formatter is the only code style we follow, other than that try and match the style of existing code.
 
 Before making a pull request, please verify that the test suite passes.
 The test suite can be run with ``python3 -m unittest discover test`` from the project root directory.

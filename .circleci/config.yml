@@ -12,5 +12,8 @@ jobs:
           name: Run Tests
           command: python3 -m unittest --verbose
       - run:
-          name: Run Pyre
+          name: Check Types - Pyre
           command: pyre check
+      - run:
+          name: Check Format - Black
+          command: black --check .
