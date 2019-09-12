@@ -7,7 +7,7 @@ class ImageConvertRequest(Request):
         super().__init__(gmi)
 
     def url(self):
-        return 'https://image.groupme.com/pictures'
+        return "https://image.groupme.com/pictures"
 
     def mode(self):
         return "POST_RAW"
@@ -16,8 +16,7 @@ class ImageConvertRequest(Request):
         return self.data
 
     def parse(self, response):
-        return response['payload']['url']
+        return response["payload"]["url"]
 
     def extract_response(self, response):
         return response.json()
-

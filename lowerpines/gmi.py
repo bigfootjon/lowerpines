@@ -36,5 +36,5 @@ class GMI:
 
     def convert_image_url(self, url):
         from lowerpines.endpoints.image import ImageConvertRequest
-        return ImageConvertRequest(self, requests.get(url).content).result
 
+        return ImageConvertRequest(self, requests.get(url).content).result

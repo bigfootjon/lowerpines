@@ -36,17 +36,15 @@ class BlockIndexRequest(Request):
 
     def parse(self, response):
         blocks = list()
-        for block_json in response['blocks']:
+        for block_json in response["blocks"]:
             blocks.append(Block.from_json(self.gmi, block_json))
         return blocks
 
     def args(self):
-        return {
-            'user': self.user_id
-        }
+        return {"user": self.user_id}
 
     def url(self):
-        return self.base_url + '/blocks'
+        return self.base_url + "/blocks"
 
 
 class BlockBetweenRequest(Request):
@@ -59,16 +57,13 @@ class BlockBetweenRequest(Request):
         return "GET"
 
     def parse(self, response):
-        return response['between']
+        return response["between"]
 
     def args(self):
-        return {
-            'user': self.user_id,
-            'otherUser': self.other_user_id
-        }
+        return {"user": self.user_id, "otherUser": self.other_user_id}
 
     def url(self):
-        return self.base_url + '/blocks/between'
+        return self.base_url + "/blocks/between"
 
 
 class BlockCreateRequest(Request):
@@ -84,13 +79,10 @@ class BlockCreateRequest(Request):
         return None
 
     def args(self):
-        return {
-            'user': self.user_id,
-            'otherUser': self.other_user_id
-        }
+        return {"user": self.user_id, "otherUser": self.other_user_id}
 
     def url(self):
-        return self.base_url + '/blocks'
+        return self.base_url + "/blocks"
 
 
 class BlockUnblockRequest(Request):
@@ -106,10 +98,7 @@ class BlockUnblockRequest(Request):
         return None
 
     def args(self):
-        return {
-            'user': self.user_id,
-            'otherUser': self.other_user_id
-        }
+        return {"user": self.user_id, "otherUser": self.other_user_id}
 
     def url(self):
-        return self.base_url + '/blocks/delete'
+        return self.base_url + "/blocks/delete"

@@ -17,7 +17,9 @@ class User(AbstractObject, RetrievableObject):
         self.gmi = gmi
 
     def save(self):
-        new_data = UserUpdateRequest(self.gmi, self.image_url, self.name, self.email).result
+        new_data = UserUpdateRequest(
+            self.gmi, self.image_url, self.name, self.email
+        ).result
         self._refresh_from_other(new_data)
 
     def refresh(self):
@@ -45,7 +47,7 @@ class UserMeRequest(Request):
         return User.from_json(self.gmi, response)
 
     def url(self):
-        return self.base_url + '/users/me'
+        return self.base_url + "/users/me"
 
 
 class UserUpdateRequest(Request):
@@ -63,18 +65,18 @@ class UserUpdateRequest(Request):
         return User.from_json(self.gmi, response)
 
     def url(self):
-        return self.base_url + '/users/update'
+        return self.base_url + "/users/update"
 
     def args(self):
         arg_dict = dict()
 
         if self.avatar_url:
-            arg_dict['avatar_url'] = self.avatar_url
+            arg_dict["avatar_url"] = self.avatar_url
         if self.name:
-            arg_dict['name'] = self.name
+            arg_dict["name"] = self.name
         if self.email:
-            arg_dict['email'] = self.email
+            arg_dict["email"] = self.email
         if self.zip_code:
-            arg_dict['zip_code'] = self.zip_code
+            arg_dict["zip_code"] = self.zip_code
 
         return arg_dict

@@ -14,7 +14,14 @@ class LikeCreateRequest(Request):
         return None
 
     def url(self) -> str:
-        return self.base_url + '/messages/' + self.conversation_id + '/' + self.message_id + '/like'
+        return (
+            self.base_url
+            + "/messages/"
+            + self.conversation_id
+            + "/"
+            + self.message_id
+            + "/like"
+        )
 
     def mode(self) -> str:
         return "POST"
@@ -30,7 +37,14 @@ class LikeDestroyRequest(Request):
         return None
 
     def url(self) -> str:
-        return self.base_url + '/messages/' + self.conversation_id + '/' + self.message_id + '/unlike'
+        return (
+            self.base_url
+            + "/messages/"
+            + self.conversation_id
+            + "/"
+            + self.message_id
+            + "/unlike"
+        )
 
     def mode(self) -> str:
         return "POST"
