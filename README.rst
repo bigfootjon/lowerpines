@@ -9,6 +9,14 @@ This project provides a Python wrapper around the `GroupMe <http://groupme.com>`
 
 This is very much a work-in-progress and is **not** intended to be used in production environments.
 
+============
+Installation
+============
+
+Use ``pip`` to install::
+
+    pip3 install lowerpines
+
 ===========
 Basic Usage
 ===========
