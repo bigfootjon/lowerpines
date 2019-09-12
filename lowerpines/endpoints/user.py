@@ -1,73 +1,94 @@
+# pyre-strict
+from typing import Optional, TYPE_CHECKING
+
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
-from lowerpines.endpoints.request import Request
+from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.endpoints.sms import SmsCreateRequest, SmsDeleteRequest
+
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
 
 
 class User(AbstractObject, RetrievableObject):
-    user_id = Field()
-    phone_number = Field()
-    image_url = Field()
-    name = Field()
-    created_at = Field()
-    updated_at = Field()
-    email = Field()
-    sms = Field()
+    # pyre-ignore
+    user_id: str = Field()
+    # pyre-ignore
+    phone_number: str = Field()
+    # pyre-ignore
+    image_url: str = Field()
+    # pyre-ignore
+    name: str = Field()
+    # pyre-ignore
+    created_at: str = Field()
+    # pyre-ignore
+    updated_at: str = Field()
+    # pyre-ignore
+    email: str = Field()
+    # pyre-ignore
+    sms: str = Field()
 
-    def __init__(self, gmi):
+    def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
 
-    def save(self):
+    def save(self) -> None:
         new_data = UserUpdateRequest(
             self.gmi, self.image_url, self.name, self.email
         ).result
         self._refresh_from_other(new_data)
 
-    def refresh(self):
+    def refresh(self) -> None:
         new_data = UserMeRequest(self.gmi).result
         self._refresh_from_other(new_data)
 
     @classmethod
-    def get(cls, gmi):
+    def get(cls, gmi: "GMI") -> "User":
         user = cls(gmi)
         user.refresh()
         return user
 
-    def enable_sms(self, duration, registration_id):
+    def enable_sms(self, duration: int, registration_id: str) -> None:
         SmsCreateRequest(self.gmi, duration, registration_id)
 
-    def disable_sms(self):
+    def disable_sms(self) -> None:
         SmsDeleteRequest(self.gmi)
 
 
-class UserMeRequest(Request):
-    def mode(self):
+class UserMeRequest(Request[User]):
+    def mode(self) -> str:
         return "GET"
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> User:
         return User.from_json(self.gmi, response)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/users/me"
 
 
-class UserUpdateRequest(Request):
-    def __init__(self, gmi, avatar_url=None, name=None, email=None, zip_code=None):
+class UserUpdateRequest(Request[User]):
+    def __init__(
+        self,
+        gmi: "GMI",
+        avatar_url: Optional[str] = None,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        zip_code: Optional[str] = None,
+    ) -> None:
         self.avatar_url = avatar_url
         self.name = name
         self.email = email
         self.zip_code = zip_code
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> User:
         return User.from_json(self.gmi, response)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/users/update"
 
-    def args(self):
+    def args(self) -> JsonType:
         arg_dict = dict()
 
         if self.avatar_url:

@@ -1,32 +1,57 @@
+# pyre-strict
+from typing import TYPE_CHECKING, List, Optional
+
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
-from lowerpines.endpoints.request import Request
+from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.exceptions import InvalidOperationException
+
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
 
 
 class Member(AbstractObject, RetrievableObject):
-    member_id = Field(api_name="id")
-    user_id = Field()
-    nickname = Field()
-    muted = Field()
-    image_url = Field()
-    autokicked = Field()
-    app_installed = Field()
-    guid = Field()
-
-    phone_number = Field()
-    email = Field()
+    # pyre-ignore
+    member_id: str = Field(api_name="id")
+    # pyre-ignore
+    user_id: str = Field()
+    # pyre-ignore
+    nickname: str = Field()
+    # pyre-ignore
+    muted: str = Field()
+    # pyre-ignore
+    image_url: str = Field()
+    # pyre-ignore
+    autokicked: str = Field()
+    # pyre-ignore
+    app_installed: str = Field()
+    # pyre-ignore
+    guid: str = Field()
+    # pyre-ignore
+    phone_number: str = Field()
+    # pyre-ignore
+    email: str = Field()
 
     def __init__(
-        self, gmi, group_id, nickname=None, user_id=None, phone_number=None, email=None
-    ):
+        self,
+        gmi: "GMI",
+        group_id: str,
+        nickname: Optional[str] = None,
+        user_id: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        email: Optional[str] = None,
+    ) -> None:
         self.gmi = gmi
         self.group_id = group_id
+        # pyre-ignore
         self.nickname = nickname
+        # pyre-ignore
         self.user_id = user_id
+        # pyre-ignore
         self.phone_number = phone_number
+        # pyre-ignore
         self.email = email
 
-    def save(self):
+    def save(self) -> None:
         if self.member_id is None:
             if self.user_id is not None:
                 MembersAddRequest(
@@ -53,31 +78,31 @@ class Member(AbstractObject, RetrievableObject):
             ).result
             self._refresh_from_other(new_data)
 
-    def refresh(self):
+    def refresh(self) -> None:
         raise InvalidOperationException("Nontrivial to implement")
 
     @staticmethod
-    def get(gmi, member_id):
+    def get(gmi: "GMI", member_id: str) -> None:
         raise InvalidOperationException("Nontrivial to implement")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nickname
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)
 
 
-class MembersAddRequest(Request):
+class MembersAddRequest(Request[str]):
     def __init__(
         self,
-        gmi,
-        group_id,
-        nickname,
-        user_id=None,
-        phone_number=None,
-        email=None,
-        guid=None,
-    ):
+        gmi: "GMI",
+        group_id: str,
+        nickname: str,
+        user_id: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        email: Optional[str] = None,
+        guid: Optional[str] = None,
+    ) -> None:
         self.group_id = group_id
         self.nickname = nickname
         self.guid = guid
@@ -90,31 +115,31 @@ class MembersAddRequest(Request):
             raise ValueError("Must provide user_id, email, or phone_number")
         super().__init__(gmi)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups/" + str(self.group_id) + "/members/add"
 
-    def args(self):
+    def args(self) -> JsonType:
         add_dict = {"members": [{"nickname": self.nickname, "user_id": self.user_id}]}
         return add_dict
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> str:
         return response["results_id"]
 
 
 # Not used
-class MembersResultsRequest(Request):
-    def __init__(self, gmi, group_id, results_id):
+class MembersResultsRequest(Request[List[Member]]):
+    def __init__(self, gmi: "GMI", group_id: str, results_id: str) -> None:
         self.group_id = group_id
         self.results_id = results_id
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def url(self):
+    def url(self) -> str:
         return (
             self.base_url
             + "/groups/"
@@ -123,23 +148,23 @@ class MembersResultsRequest(Request):
             + str(self.results_id)
         )
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> List[Member]:
         members = []
         for member_json in response["members"]:
             members.append(Member.from_json(self.gmi, member_json, self.group_id))
         return members
 
 
-class MembersRemoveRequest(Request):
-    def __init__(self, gmi, group_id, member_id):
+class MembersRemoveRequest(Request[None]):
+    def __init__(self, gmi: "GMI", group_id: str, member_id: str) -> None:
         self.group_id = group_id
         self.member_id = member_id
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
+    def url(self) -> str:
         return (
             self.base_url
             + "/groups/"
@@ -149,24 +174,24 @@ class MembersRemoveRequest(Request):
             + "/remove"
         )
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> None:
         return None
 
 
-class MembersUpdateRequest(Request):
-    def __init__(self, gmi, group_id, nickname):
+class MembersUpdateRequest(Request[Member]):
+    def __init__(self, gmi: "GMI", group_id: str, nickname: str) -> None:
         self.group_id = group_id
         self.nickname = nickname
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups/" + str(self.group_id) + "/memberships/update"
 
-    def args(self):
+    def args(self) -> JsonType:
         return {"membership": {"nickname": self.nickname}}
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> Member:
         return Member.from_json(self.gmi, response, self.group_id)

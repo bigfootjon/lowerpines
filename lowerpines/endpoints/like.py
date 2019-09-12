@@ -1,16 +1,20 @@
-from typing import Any
+# pyre-strict
 
-from lowerpines.gmi import GMI
-from lowerpines.endpoints.request import Request
+from typing import TYPE_CHECKING
+
+from lowerpines.endpoints.request import Request, JsonType
+
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
 
 
-class LikeCreateRequest(Request):
-    def __init__(self, gmi: GMI, conversation_id: str, message_id: str) -> None:
+class LikeCreateRequest(Request[None]):
+    def __init__(self, gmi: "GMI", conversation_id: str, message_id: str) -> None:
         self.conversation_id = conversation_id
         self.message_id = message_id
         super().__init__(gmi)
 
-    def parse(self, response: dict) -> Any:
+    def parse(self, response: JsonType) -> None:
         return None
 
     def url(self) -> str:
@@ -27,13 +31,13 @@ class LikeCreateRequest(Request):
         return "POST"
 
 
-class LikeDestroyRequest(Request):
-    def __init__(self, gmi: GMI, conversation_id: str, message_id: str) -> None:
+class LikeDestroyRequest(Request[None]):
+    def __init__(self, gmi: "GMI", conversation_id: str, message_id: str) -> None:
         self.conversation_id = conversation_id
         self.message_id = message_id
         super().__init__(gmi)
 
-    def parse(self, response: dict) -> Any:
+    def parse(self, response: JsonType) -> None:
         return None
 
     def url(self) -> str:

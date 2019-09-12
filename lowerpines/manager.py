@@ -1,27 +1,35 @@
+# pyre-strict
+from typing import List, TypeVar, Generic, Iterator, Optional, TYPE_CHECKING, Any
+
 from lowerpines.exceptions import NoneFoundException, MultipleFoundException
 
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
 
-class AbstractManager:
-    def __len__(self):
-        self.lazy_fill_content()
-        return self._content.__len__()
+T = TypeVar("T")
 
-    def __getitem__(self, key):
-        self.lazy_fill_content()
-        return self._content.__getitem__(key)
 
-    def __iter__(self):
-        self.lazy_fill_content()
-        return self._content.__iter__()
+class AbstractManager(Generic[T]):
+    def __len__(self) -> int:
+        content = self.lazy_fill_content()
+        return content.__len__()
 
-    def __init__(self, gmi, content=None):
+    def __getitem__(self, key: int) -> T:
+        content = self.lazy_fill_content()
+        return content.__getitem__(key)
+
+    def __iter__(self) -> Iterator[T]:
+        content = self.lazy_fill_content()
+        return content.__iter__()
+
+    def __init__(self, gmi: "GMI", content: Optional[List[T]] = None) -> None:
         self.gmi = gmi
         self._content = content
 
-    def _all(self):
+    def _all(self) -> List[T]:
         raise NotImplementedError
 
-    def get(self, **kwargs):
+    def get(self, **kwargs: Any) -> T:
         filtered = self.filter(**kwargs)
         if len(filtered) == 0:
             raise NoneFoundException()
@@ -30,13 +38,14 @@ class AbstractManager:
         else:
             raise MultipleFoundException()
 
-    def filter(self, **kwargs):
+    def filter(self, **kwargs: Any) -> "AbstractManager[T]":
         self.lazy_fill_content()
         filtered = self._content
         for arg, value in kwargs.items():
             filtered = [item for item in filtered if getattr(item, arg) == value]
         return self.__class__(self.gmi, filtered)
 
-    def lazy_fill_content(self):
+    def lazy_fill_content(self) -> List[T]:
         if self._content is None:
             self._content = self._all()
+        return self._content

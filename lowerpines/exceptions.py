@@ -1,3 +1,6 @@
+# pyre-strict
+
+
 class InvalidOperationException(Exception):
     pass
 
