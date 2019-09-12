@@ -8,8 +8,8 @@ from lowerpines.gmi import GMI
 
 class TestField(TestCase):
     def setUp(self) -> None:
-        self.name_api_field = 'test'
-        self.name_varname = 'varname'
+        self.name_api_field = "test"
+        self.name_varname = "varname"
 
         self.basic_field = Field()
         self.api_field = Field(api_name=self.name_api_field)
@@ -27,7 +27,7 @@ class TestField(TestCase):
 
 class MockAbstractObjectTypeObject(metaclass=AbstractObjectType):
     field1 = Field()
-    field2 = Field(api_name='id')
+    field2 = Field(api_name="id")
 
 
 class TestAbstractObjectType(TestCase):
@@ -40,10 +40,10 @@ class TestAbstractObjectType(TestCase):
 
     def test_fields_set(self):
         for f in self.mock._fields:
-            if f.name == 'field1':
-                self.assertEqual(f.api_name, 'field1')
-            elif f.name == 'field2':
-                self.assertEqual(f.api_name, 'id')
+            if f.name == "field1":
+                self.assertEqual(f.api_name, "field1")
+            elif f.name == "field2":
+                self.assertEqual(f.api_name, "id")
             else:
                 self.assertFalse(True)  # There shouldn't be any other fields
 
@@ -51,8 +51,8 @@ class TestAbstractObjectType(TestCase):
 class MockAbstractObject(AbstractObject):
     field1 = Field()
     field2 = Field()
-    field3 = Field(api_name='id')
-    field4 = Field(api_name='foo.bar')
+    field3 = Field(api_name="id")
+    field4 = Field(api_name="foo.bar")
 
     def __init__(self, gmi):
         self.gmi = gmi
@@ -62,30 +62,34 @@ class MockAbstractObject(AbstractObject):
         self.fields_loaded = True
 
 
-JSON_TEST_DATA_1 = os.path.join(os.path.dirname(__file__), 'mock_abstract_object_1.json')
-JSON_TEST_DATA_2 = os.path.join(os.path.dirname(__file__), 'mock_abstract_object_2.json')
+JSON_TEST_DATA_1 = os.path.join(
+    os.path.dirname(__file__), "mock_abstract_object_1.json"
+)
+JSON_TEST_DATA_2 = os.path.join(
+    os.path.dirname(__file__), "mock_abstract_object_2.json"
+)
 
 
 class TestAbstractObject(TestCase):
     def setUp(self) -> None:
-        self.gmi = GMI('mock_api_key')
+        self.gmi = GMI("mock_api_key")
         with open(JSON_TEST_DATA_1) as file:
             self.mock_obj = MockAbstractObject.from_json(self.gmi, json.load(file))
         with open(JSON_TEST_DATA_2) as file:
             self.for_overwrite = MockAbstractObject.from_json(self.gmi, json.load(file))
 
     def test_fields(self):
-        self.assertEqual(self.mock_obj.field1, 'field1_data')
+        self.assertEqual(self.mock_obj.field1, "field1_data")
         self.assertEqual(self.mock_obj.field2, 2)
-        self.assertEqual(self.mock_obj.field3, 'id_data')
-        self.assertEqual(self.mock_obj.field4, 'foo.bar_data')
+        self.assertEqual(self.mock_obj.field3, "id_data")
+        self.assertEqual(self.mock_obj.field4, "foo.bar_data")
 
     def test_on_fields_loaded_called(self):
         self.assertTrue(self.mock_obj.fields_loaded)
 
     def test_refresh_from_other(self):
         self.for_overwrite._refresh_from_other(self.mock_obj)
-        self.assertEqual(self.for_overwrite.field1, 'field1_data')
+        self.assertEqual(self.for_overwrite.field1, "field1_data")
         self.assertEqual(self.for_overwrite.field2, 2)
-        self.assertEqual(self.for_overwrite.field3, 'id_data')
-        self.assertEqual(self.for_overwrite.field4, 'foo.bar_data')
+        self.assertEqual(self.for_overwrite.field3, "id_data")
+        self.assertEqual(self.for_overwrite.field4, "foo.bar_data")

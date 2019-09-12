@@ -26,7 +26,7 @@ class MessageAttach:
 
 
 class RefAttach(MessageAttach):
-    def __init__(self, user_id, display=''):
+    def __init__(self, user_id, display=""):
         self.display = display
         self.user_id = user_id
 
@@ -34,7 +34,7 @@ class RefAttach(MessageAttach):
         return self.display
 
     def __repr__(self):
-        return 'R:' + self.display
+        return "R:" + self.display
 
 
 class ImageAttach(MessageAttach):
@@ -42,10 +42,10 @@ class ImageAttach(MessageAttach):
         self.image_url = image_url
 
     def __str__(self):
-        return ''
+        return ""
 
     def __repr__(self):
-        return 'I:' + str(self)
+        return "I:" + str(self)
 
 
 class LocationAttach(MessageAttach):
@@ -58,7 +58,7 @@ class LocationAttach(MessageAttach):
         return self.name
 
     def __repr__(self):
-        return 'L:' + str(self)
+        return "L:" + str(self)
 
 
 # This feature is not supported anymore but it still exists in the API
@@ -70,10 +70,10 @@ class SplitAttach(MessageAttach):
         return self.token
 
     def __repr__(self):
-        return 'S:' + str(self)
+        return "S:" + str(self)
 
 
-EMOJI_PLACEHOLDER = '\ufffd'
+EMOJI_PLACEHOLDER = "\ufffd"
 
 
 class EmojiAttach(MessageAttach):
@@ -85,7 +85,7 @@ class EmojiAttach(MessageAttach):
         return EMOJI_PLACEHOLDER
 
     def __repr__(self):
-        return 'E:' + str(self)
+        return "E:" + str(self)
 
 
 # Undocumented feature
@@ -98,12 +98,12 @@ class QueuedAttach(MessageAttach):
         return self.url
 
     def __repr__(self):
-        return 'Q: ' + str(self)
+        return "Q: " + str(self)
 
 
 class LinkedImageAttach(QueuedAttach):
     def __init__(self, url):
-        super().__init__(url, 'linked_image')
+        super().__init__(url, "linked_image")
 
 
 class ComplexMessage:
@@ -131,62 +131,47 @@ class ComplexMessage:
         return str(self.contents)
 
     def get_text(self):
-        return ''.join([str(part) for part in self.contents])
+        return "".join([str(part) for part in self.contents])
 
     def get_attachments(self):
         attach_list = []
-        mentions = {
-            'type': 'mentions',
-            'user_ids': list(),
-            'loci': list()
-        }
-        emojis = {
-            'type': 'emoji',
-            'placeholder': EMOJI_PLACEHOLDER,
-            'charmap': []
-        }
-        queued = {
-            'type': 'postprocessing',
-            'queues': []
-        }
+        mentions = {"type": "mentions", "user_ids": list(), "loci": list()}
+        emojis = {"type": "emoji", "placeholder": EMOJI_PLACEHOLDER, "charmap": []}
+        queued = {"type": "postprocessing", "queues": []}
         content_frag = ""
         for part in self.contents:
             if isinstance(part, RefAttach):
-                mentions['user_ids'].append(part.user_id)
-                mentions['loci'].append([len(content_frag), len(part.display)])
+                mentions["user_ids"].append(part.user_id)
+                mentions["loci"].append([len(content_frag), len(part.display)])
                 if mentions not in attach_list:
                     attach_list.append(mentions)
             elif isinstance(part, ImageAttach):
-                attach_list.append({
-                    'type': 'image',
-                    'url': part.image_url
-                })
+                attach_list.append({"type": "image", "url": part.image_url})
             elif isinstance(part, LocationAttach):
-                attach_list.append({
-                    'type': 'location',
-                    'name': part.name,
-                    'lat': part.lat,
-                    'long': part.long
-                })
+                attach_list.append(
+                    {
+                        "type": "location",
+                        "name": part.name,
+                        "lat": part.lat,
+                        "long": part.long,
+                    }
+                )
             elif isinstance(part, SplitAttach):
-                attach_list.append({
-                    'type': 'split',
-                    'token': part.token
-                })
+                attach_list.append({"type": "split", "token": part.token})
             elif isinstance(part, EmojiAttach):
-                emojis['charmap'].append([part.pack_id, part.emoji_id])
+                emojis["charmap"].append([part.pack_id, part.emoji_id])
                 if emojis not in attach_list:
                     attach_list.append(emojis)
             elif isinstance(part, QueuedAttach):
-                if part.queue not in queued['queues']:
-                    queued['queues'].append(part.queue)
+                if part.queue not in queued["queues"]:
+                    queued["queues"].append(part.queue)
                 if queued not in attach_list:
                     attach_list.append(queued)
             content_frag += str(part)
         return attach_list
 
     def just_str(self):
-        return ''.join([s for s in self.contents if isinstance(s, str)])
+        return "".join([s for s in self.contents if isinstance(s, str)])
 
 
 def smart_split_complex_message(message):
@@ -195,4 +180,4 @@ def smart_split_complex_message(message):
     elif isinstance(message, str):
         return message, []
     else:
-        raise ValueError('Message object must be a str or ComplexMessage')
+        raise ValueError("Message object must be a str or ComplexMessage")
