@@ -57,7 +57,7 @@ class Group(AbstractObject, RetrievableObject):
         self.members = []
 
     @property
-    def bots(self) -> "AbstractManager"["Bot"]:
+    def bots(self) -> "AbstractManager[Bot]":
         # pyre-ignore
         return self.gmi.bots.filter(group_id=self.group_id)
 

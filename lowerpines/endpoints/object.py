@@ -17,7 +17,7 @@ class Field:
 
 class AbstractObjectType(type):
     def __new__(
-        mcs, name: str, bases: Any, attrs: Dict[Any]
+        mcs, name: str, bases: Any, attrs: Dict[str, Any]
     ) -> Type["AbstractObjectType"]:
         new_attrs = {}
         fields = []

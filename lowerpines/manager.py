@@ -15,7 +15,6 @@ from lowerpines.exceptions import NoneFoundException, MultipleFoundException
 
 if TYPE_CHECKING:
     from lowerpines.gmi import GMI
-    from lowerpines.endpoints.group import Group
 
 T = TypeVar("T")
 
@@ -54,7 +53,7 @@ class AbstractManager(Sized, Generic[T]):
         else:
             raise MultipleFoundException()
 
-    def filter(self, **kwargs: Dict[str, str]) -> "AbstractManager"[T]:
+    def filter(self, **kwargs: Dict[str, str]) -> "AbstractManager[T]":
         self.lazy_fill_content()
         filtered = self._content
         for arg, value in kwargs.items():
