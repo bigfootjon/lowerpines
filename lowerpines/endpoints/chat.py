@@ -1,3 +1,6 @@
+# pyre-strict
+from typing import List
+
 from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request
 from lowerpines.exceptions import InvalidOperationException
@@ -8,8 +11,8 @@ class Chat(AbstractObject):
     created_at = Field()
     updated_at = Field()
     messages_count = Field()
-    last_message_raw = Field(api_name='last_message')
-    other_user_raw = Field(api_name='other_user')
+    last_message_raw = Field(api_name="last_message")
+    other_user_raw = Field(api_name="other_user")
 
     last_message = None
     other_user = None
@@ -27,8 +30,13 @@ class Chat(AbstractObject):
 
     def post(self, message):
         text, attachments = smart_split_complex_message(message)
-        return DirectMessageCreateRequest(self.gmi, self.gmi.user.get().user_id, self.other_user.user_id, text,
-                                          attachments).result
+        return DirectMessageCreateRequest(
+            self.gmi,
+            self.gmi.user.get().user_id,
+            self.other_user.user_id,
+            text,
+            attachments,
+        ).result
 
     def on_fields_loaded(self):
         self.last_message = DirectMessage.from_json(self.gmi, self.last_message_raw)
@@ -44,17 +52,17 @@ class Chat(AbstractObject):
 class DirectMessage(AbstractObject):
     @staticmethod
     def get(gmi, *args):
-        raise InvalidOperationException('This is non-trivial to implement')
+        raise InvalidOperationException("This is non-trivial to implement")
 
     def refresh(self):
-        raise InvalidOperationException('This is non-trivial to implement')
+        raise InvalidOperationException("This is non-trivial to implement")
 
     attachments = Field()
     avatar_url = Field()
     conversation_id = Field()
     created_at = Field()
     favorited_by = Field()
-    direct_message_id = Field(api_name='id')
+    direct_message_id = Field(api_name="id")
     name = Field()
     recipient_id = Field()
     sender_id = Field()
@@ -63,7 +71,9 @@ class DirectMessage(AbstractObject):
     text = Field()
     user_id = Field()
 
-    def __init__(self, gmi, source_guid=None, recipient_id=None, text=None, attachments=None):
+    def __init__(
+        self, gmi, source_guid=None, recipient_id=None, text=None, attachments=None
+    ):
         self.gmi = gmi
         self.source_guid = source_guid
         self.recipient_id = recipient_id
@@ -71,12 +81,19 @@ class DirectMessage(AbstractObject):
         self.attachments = attachments
 
     def save(self):
-        if self.direct_message_id == '':
-            new_data = DirectMessageCreateRequest(self.gmi, self.source_guid, self.recipient_id, self.text,
-                                                  self.attachments).result
+        if self.direct_message_id == "":
+            new_data = DirectMessageCreateRequest(
+                self.gmi,
+                self.source_guid,
+                self.recipient_id,
+                self.text,
+                self.attachments,
+            ).result
             self._refresh_from_other(new_data)
         else:
-            raise InvalidOperationException("You cannot change a message that has already been sent")
+            raise InvalidOperationException(
+                "You cannot change a message that has already been sent"
+            )
 
     def __str__(self):
         return self.text
@@ -87,14 +104,14 @@ class DirectMessage(AbstractObject):
 
 class DirectMessageUser(AbstractObject):
     def save(self):
-        raise InvalidOperationException('This operation is not permitted')
+        raise InvalidOperationException("This operation is not permitted")
 
     @staticmethod
     def get(gmi, *args):
-        raise InvalidOperationException('This operation does not make sense')
+        raise InvalidOperationException("This operation does not make sense")
 
     def refresh(self):
-        raise InvalidOperationException('This operation is non-trivial to implement')
+        raise InvalidOperationException("This operation is non-trivial to implement")
 
     avatar_url = Field()
     user_id = Field()
@@ -123,75 +140,79 @@ class ChatMessagesManager:
         return messages
 
     def recent(self):
-        return DirectMessageIndexRequest(self.chat.gmi, self.chat.other_user.user_id).result
+        return DirectMessageIndexRequest(
+            self.chat.gmi, self.chat.other_user.user_id
+        ).result
 
     def before(self, message):
-        return DirectMessageIndexRequest(self.chat.gmi, self.chat.other_user.user_id, before_id=message.message_id).result
+        return DirectMessageIndexRequest(
+            self.chat.gmi, self.chat.other_user.user_id, before_id=message.message_id
+        ).result
 
     def since(self, message):
-        return DirectMessageIndexRequest(self.chat.gmi, self.chat.group_id, since_id=message.message_id).result
+        return DirectMessageIndexRequest(
+            self.chat.gmi, self.chat.group_id, since_id=message.message_id
+        ).result
 
 
-class DirectMessageChatsRequest(Request):
+class DirectMessageChatsRequest(Request[List[Chat]]):
     def __init__(self, gmi, page=None, per_page=None):
         self.page = page
         self.per_page = per_page
         super().__init__(gmi)
 
-    def url(self):
-        return self.base_url + '/chats'
+    def url(self) -> str:
+        return self.base_url + "/chats"
 
     def args(self):
         arg_dict = {}
         if self.page is not None:
-            arg_dict['page'] = self.page
+            arg_dict["page"] = self.page
         if self.per_page is not None:
-            arg_dict['per_page'] = self.per_page
+            arg_dict["per_page"] = self.per_page
         return arg_dict
 
-    def parse(self, response):
+    def parse(self, response) -> List[Chat]:
         chats = []
         for chat_json in response:
             chats.append(Chat.from_json(self.gmi, chat_json))
         return chats
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
 
-class DirectMessageIndexRequest(Request):
+class DirectMessageIndexRequest(Request[List[DirectMessage]]):
     def __init__(self, gmi, other_user_id, before_id=None, since_id=None):
         self.other_user_id = other_user_id
         if before_id and since_id:
-            raise ValueError('Cannot define both before_id and since_id!')
+            raise ValueError("Cannot define both before_id and since_id!")
         self.before_id = before_id
         self.since_id = since_id
         super().__init__(gmi)
 
-    def url(self):
-        return self.base_url + '/direct_messages'
+    def url(self) -> str:
+        return self.base_url + "/direct_messages"
 
     def args(self):
-        arg_dict = {
-            'other_user_id': self.other_user_id
-        }
+        arg_dict = {"other_user_id": self.other_user_id}
         if self.before_id:
-            arg_dict['before_id'] = self.before_id
+            arg_dict["before_id"] = self.before_id
         elif self.since_id:
-            arg_dict['since_id'] = self.since_id
+            arg_dict["since_id"] = self.since_id
         return arg_dict
 
-    def parse(self, response):
+    def parse(self, response) -> List[DirectMessage]:
         dms = []
-        for dm_json in response['direct_messages']:
+        for dm_json in response["direct_messages"]:
             dms.append(DirectMessage.from_json(self.gmi, dm_json))
         return dms
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
 
-class DirectMessageCreateRequest(Request):
+class DirectMessageCreateRequest(Request[None]):
     def __init__(self, gmi, sender_id, recipient_id, text, attachments=None):
         self.sender_id = sender_id
         self.recipient_id = recipient_id
@@ -199,24 +220,22 @@ class DirectMessageCreateRequest(Request):
         self.attachments = attachments
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response) -> None:
         # return DirectMessage.from_json(self.gmi, response['direct_message'])
         # TODO: Fix this
         pass
 
-    def url(self):
-        return self.base_url + '/direct_messages'
+    def url(self) -> str:
+        return self.base_url + "/direct_messages"
 
     def args(self):
-        direct_message = {
-            'text': self.text,
-        }
+        direct_message = {"text": self.text}
         if self.attachments:
-            direct_message['attachments'] = self.attachments
+            direct_message["attachments"] = self.attachments
         return {
-            'message': direct_message,
-            'conversation_id': self.recipient_id + '+' + self.sender_id
+            "message": direct_message,
+            "conversation_id": self.recipient_id + "+" + self.sender_id,
         }
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"

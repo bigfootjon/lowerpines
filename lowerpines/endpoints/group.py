@@ -1,29 +1,53 @@
+# pyre-strict
 from datetime import datetime
+from typing import TYPE_CHECKING, Dict, List, Union
 
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.member import MembersAddRequest, MembersRemoveRequest, Member
 from lowerpines.endpoints.message import Message
 from lowerpines.exceptions import InvalidOperationException
-from lowerpines.message import smart_split_complex_message
+from lowerpines.message import smart_split_complex_message, ComplexMessage
+
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
+    from lowerpines.endpoints.bot import Bot
+    from lowerpines.manager import AbstractManager
 
 
 class Group(AbstractObject, RetrievableObject):
-    group_id = Field(api_name='id')
-    name = Field()
-    type = Field()
-    description = Field()
-    image_url = Field()
-    creator_user_id = Field()
-    created_at = Field()
-    updated_at = Field()
-    share_url = Field()
-    members_raw = Field(api_name='members')
-    messages_count_raw = Field(api_name='messages.count')
-    messages_last_message_id_raw = Field(api_name='messages.last_message_id')
-    messages_last_message_created_at_raw = Field(api_name='messages.last_message_created_at')
+    # pyre-ignore
+    group_id: str = Field(api_name="id")
+    # pyre-ignore
+    name: str = Field()
+    # pyre-ignore
+    type: str = Field()
+    # pyre-ignore
+    description: str = Field()
+    # pyre-ignore
+    image_url: str = Field()
+    # pyre-ignore
+    creator_user_id: str = Field()
+    # pyre-ignore
+    created_at: str = Field()
+    # pyre-ignore
+    updated_at: str = Field()
+    # pyre-ignore
+    share_url: str = Field()
+    # pyre-ignore
+    members_raw: str = Field(api_name="members")
+    # pyre-ignore
+    messages_count_raw: int = Field(api_name="messages.count")
+    # pyre-ignore
+    messages_last_message_id_raw: str = Field(api_name="messages.last_message_id")
+    # pyre-ignore
+    messages_last_message_created_at_raw: str = Field(
+        api_name="messages.last_message_created_at"
+    )
 
-    def __init__(self, gmi, name=None, description=None, image_url=None):
+    members: List[str]
+
+    def __init__(self, gmi: "GMI", name: str, description: str, image_url: str) -> None:
         super().__init__()
         self.gmi = gmi
         self.messages = GroupMessagesManager(self)
@@ -33,10 +57,11 @@ class Group(AbstractObject, RetrievableObject):
         self.members = []
 
     @property
-    def bots(self):
+    def bots(self) -> "AbstractManager"["Bot"]:
+        # pyre-ignore
         return self.gmi.bots.filter(group_id=self.group_id)
 
-    def on_fields_loaded(self):
+    def on_fields_loaded(self) -> None:
         self.members = []
         for member_json in self.members_raw:
             self.members.append(Member.from_json(self.gmi, member_json, self.group_id))
@@ -44,66 +69,80 @@ class Group(AbstractObject, RetrievableObject):
         self.messages.last_id = self.messages_last_message_id_raw
         self.messages.last_created_at = self.messages_last_message_created_at_raw
 
-    def save(self):
+    def save(self) -> None:
         if self.group_id is None:
-            new_data = GroupsCreateRequest(self.gmi, self.name, self.description, self.image_url).result
+            new_data = GroupsCreateRequest(
+                self.gmi, self.name, self.description, self.image_url, self.share_url
+            ).result
         else:
-            new_data = GroupsUpdateRequest(self.gmi, self.group_id, self.name, self.description, self.image_url).result
+            new_data = GroupsUpdateRequest(
+                self.gmi,
+                self.group_id,
+                self.name,
+                self.description,
+                self.image_url,
+                "",
+                self.share_url,
+            ).result
 
         self._refresh_from_other(new_data)
 
-    def delete(self):
+    def delete(self) -> None:
         if self.group_id is None:
-            raise InvalidOperationException('Cannot destroy a group that isn\'t saved!')
+            raise InvalidOperationException(
+                "Cannot destroy a group that hasn't been created yet!"
+            )
         else:
             GroupsDestroyRequest(self.gmi, self.group_id)
 
-    def refresh(self):
+    def refresh(self) -> None:
         if self.group_id is None:
-            raise InvalidOperationException('Must have an id to perform this operation')
+            raise InvalidOperationException("Must have an id to perform this operation")
         else:
             new_data = GroupsShowRequest(self.gmi, group_id=self.group_id).result
             self._refresh_from_other(new_data)
 
-    def member_add(self, name, user_id):
+    def member_add(self, name: str, user_id: str) -> None:
         MembersAddRequest(self.gmi, self.group_id, name, user_id=user_id)
 
-    def member_rm(self, member_id):
+    def member_rm(self, member_id: str) -> None:
         MembersRemoveRequest(self.gmi, self.group_id, member_id)
 
-    def post(self, message):
+    def post(self, message: Union[ComplexMessage, str]) -> Message:
         text, attachments = smart_split_complex_message(message)
         obj = Message(self.gmi, self.group_id, str(datetime.now()), text, attachments)
         obj.save()
         return obj
 
     @staticmethod
-    def get(gmi, group_id):
+    def get(gmi: "GMI", group_id: str) -> "Group":
         return GroupsShowRequest(gmi, group_id).result
 
     @staticmethod
-    def get_all(gmi):
+    def get_all(gmi: "GMI") -> List["Group"]:
         return GroupsIndexRequest(gmi, per_page=100).result
 
     @staticmethod
-    def get_former(gmi):
+    def get_former(gmi: "GMI") -> List["Group"]:
         return GroupsFormerRequest(gmi).result
 
     @staticmethod
-    def join(gmi, group_id, share_token):
+    def join(gmi: "GMI", group_id: str, share_token: str) -> "Group":
         return GroupsJoinRequest(gmi, group_id, share_token).result
 
     @staticmethod
-    def rejoin(gmi, group_id):
+    def rejoin(gmi: "GMI", group_id: str) -> "Group":
         return GroupsRejoinRequest(gmi, group_id).result
 
-    def change_owner(self, owner_id):
-        return GroupsChangeOwnersRequest(self.gmi, [{'group_id': self.group_id, 'owner_id': owner_id}]).result
+    def change_owner(self, owner_id: str) -> str:
+        return GroupsChangeOwnersRequest(
+            self.gmi, [{"group_id": self.group_id, "owner_id": owner_id}]
+        ).result
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)
 
 
@@ -113,127 +152,151 @@ class GroupMessagesManager:
     last_id = str()
     last_created_at = str()
 
-    def __init__(self, group):
+    def __init__(self, group: Group) -> None:
         self.group = group
 
-    def all(self):
+    def all(self) -> List[Message]:
         messages = self.recent()
         while len(messages) < self.count:
             messages.extend(self.before(messages[-1]))
         return messages
 
-    def recent(self, count=100):
+    def recent(self, count: int = 100) -> List[Message]:
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count).result
 
-    def before(self, message, count=100):
+        return MessagesIndexRequest(
+            self.group.gmi, self.group.group_id, limit=count
+        ).result
+
+    def before(self, message: Message, count: int = 100) -> List[Message]:
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count,
-                                    before_id=message.message_id).result
 
-    def since(self, message, count=100):
+        return MessagesIndexRequest(
+            self.group.gmi,
+            self.group.group_id,
+            limit=count,
+            before_id=message.message_id,
+        ).result
+
+    def since(self, message: Message, count: int = 100) -> List[Message]:
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count,
-                                    since_id=message.message_id).result
 
-    def after(self, message, count=100):
+        return MessagesIndexRequest(
+            self.group.gmi,
+            self.group.group_id,
+            limit=count,
+            since_id=message.message_id,
+        ).result
+
+    def after(self, message: Message, count: int = 100) -> List[Message]:
         from lowerpines.endpoints.message import MessagesIndexRequest
-        return MessagesIndexRequest(self.group.gmi, self.group.group_id, limit=count,
-                                    after_id=message.message_id).result
+
+        return MessagesIndexRequest(
+            self.group.gmi,
+            self.group.group_id,
+            limit=count,
+            after_id=message.message_id,
+        ).result
 
 
-class GroupsIndexRequest(Request):
-    def __init__(self, gmi, page=1, per_page=10):
+class GroupsIndexRequest(Request[List[Group]]):
+    def __init__(self, gmi: "GMI", page: int = 1, per_page: int = 10) -> None:
         self.page = page
         self.per_page = per_page
         super().__init__(gmi)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups"
 
-    def args(self):
-        return {
-            'page': self.page,
-            'per_page': self.per_page
-        }
+    def args(self) -> Dict[str, int]:
+        return {"page": self.page, "per_page": self.per_page}
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def parse(self, response):
+    def parse(self, response: str) -> List[Group]:
         groups = []
         for group_json in response:
             groups.append(Group.from_json(self.gmi, group_json))
         return groups
 
 
-class GroupsFormerRequest(Request):
-    def url(self):
+class GroupsFormerRequest(Request[List[Group]]):
+    def url(self) -> str:
         return self.base_url + "/groups/former"
 
-    def args(self):
+    def args(self) -> Dict[str, str]:
         return {}
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def parse(self, response):
+    def parse(self, response: str) -> List[Group]:
         groups = []
         for group_json in response:
             groups.append(Group.from_json(self.gmi, group_json))
         return groups
 
 
-class GroupsShowRequest(Request):
-    def __init__(self, gmi, group_id):
+class GroupsShowRequest(Request[Group]):
+    def __init__(self, gmi: "GMI", group_id: str) -> None:
         self.group_id = group_id
         super().__init__(gmi)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups/" + str(self.group_id)
 
-    def args(self):
+    def args(self) -> Dict[str, str]:
         return {}
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def parse(self, response):
+    def parse(self, response: str) -> Group:
         return Group.from_json(self.gmi, response)
 
 
-class GroupsCreateRequest(Request):
-    def parse(self, response):
+class GroupsCreateRequest(Request[Group]):
+    def parse(self, response: str) -> Group:
         return Group.from_json(self.gmi, response)
 
-    def __init__(self, gmi, name, description=None, image_url=None, share=None):
+    def __init__(
+        self, gmi: "GMI", name: str, description: str, image_url: str, share: str
+    ) -> None:
         self.name = name
         self.description = description
         self.image_url = image_url
         self.share = share
         super().__init__(gmi)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups"
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def args(self):
-        post_args = {
-            'name': self.name
-        }
+    def args(self) -> Dict[str, str]:
+        post_args = {"name": self.name}
         if self.description is not None:
-            post_args['description'] = self.description
+            post_args["description"] = self.description
         if self.image_url is not None:
-            post_args['image_url'] = self.image_url
+            post_args["image_url"] = self.image_url
         if self.share is not None:
-            post_args['share'] = self.share
+            post_args["share"] = self.share
         return post_args
 
 
-class GroupsUpdateRequest(Request):
-    def __init__(self, gmi, group_id, name=None, description=None, image_url=None, office_mode=None, share=None):
+class GroupsUpdateRequest(Request[Group]):
+    def __init__(
+        self,
+        gmi: "GMI",
+        group_id: str,
+        name: str,
+        description: str,
+        image_url: str,
+        office_mode: str,
+        share: str,
+    ) -> None:
         self.group_id = group_id
         self.name = name
         self.description = description
@@ -242,96 +305,98 @@ class GroupsUpdateRequest(Request):
         self.share = share
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: str) -> Group:
         return Group.from_json(self.gmi, response)
 
-    def url(self):
-        return self.base_url + "/groups/" + str(self.group_id) + '/update'
+    def url(self) -> str:
+        return self.base_url + "/groups/" + str(self.group_id) + "/update"
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def args(self):
+    def args(self) -> Dict[str, str]:
         arg_dict = {}
         if self.name is not None:
-            arg_dict['name'] = self.name
+            arg_dict["name"] = self.name
         if self.description is not None:
-            arg_dict['description'] = self.description
+            arg_dict["description"] = self.description
         if self.image_url is not None:
-            arg_dict['image_url'] = self.image_url
+            arg_dict["image_url"] = self.image_url
         if self.office_mode is not None:
-            arg_dict['office_mode'] = self.office_mode
+            arg_dict["office_mode"] = self.office_mode
         if self.share is not None:
-            arg_dict['share'] = self.share
+            arg_dict["share"] = self.share
         return arg_dict
 
 
-class GroupsDestroyRequest(Request):
-    def __init__(self, gmi, group_id):
+class GroupsDestroyRequest(Request[str]):
+    def __init__(self, gmi: "GMI", group_id: str) -> None:
         self.group_id = group_id
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: str) -> str:
         pass
 
-    def url(self):
-        return self.base_url + '/groups/' + str(self.group_id) + '/destroy'
+    def url(self) -> str:
+        return self.base_url + "/groups/" + str(self.group_id) + "/destroy"
 
-    def mode(self):
-        return 'POST'
+    def mode(self) -> str:
+        return "POST"
 
 
-class GroupsJoinRequest(Request):
-    def __init__(self, gmi, group_id, share_token):
+class GroupsJoinRequest(Request[Group]):
+    def __init__(self, gmi: "GMI", group_id: str, share_token: str) -> None:
         self.group_id = group_id
         self.share_token = share_token
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: str) -> Group:
         return Group.from_json(self.gmi, response)
 
-    def url(self):
-        return self.base_url + '/groups/' + str(self.group_id) + '/join/' + str(self.share_token)
+    def url(self) -> str:
+        return (
+            self.base_url
+            + "/groups/"
+            + str(self.group_id)
+            + "/join/"
+            + str(self.share_token)
+        )
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
 
-class GroupsRejoinRequest(Request):
-    def __init__(self, gmi, group_id):
+class GroupsRejoinRequest(Request[Group]):
+    def __init__(self, gmi: "GMI", group_id: str) -> None:
         self.group_id = group_id
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: str) -> Group:
         return Group.from_json(self.gmi, response)
 
-    def url(self):
-        return self.base_url + '/groups/join'
+    def url(self) -> str:
+        return self.base_url + "/groups/join"
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def args(self):
-        return {
-            'group_id': self.group_id
-        }
+    def args(self) -> Dict[str, str]:
+        return {"group_id": self.group_id}
 
 
-class GroupsChangeOwnersRequest(Request):
-    def __init__(self, gmi, requests):
+class GroupsChangeOwnersRequest(Request[str]):
+    def __init__(self, gmi: "GMI", requests: List[Dict[str, str]]) -> None:
         self.requests = requests
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
-        return self.base_url + '/groups/change_owners'
+    def url(self) -> str:
+        return self.base_url + "/groups/change_owners"
 
-    def parse(self, response):
+    def parse(self, response: str) -> str:
         return response
 
-    def args(self):
-        return {
-            'requests': self.requests
-        }
+    def args(self) -> Dict[str, List[Dict[str, str]]]:
+        return {"requests": self.requests}

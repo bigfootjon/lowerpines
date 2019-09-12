@@ -17,7 +17,7 @@ class MockType:
 
 
 def mm_instance(content=None):
-    return MockManager(GMI('access_token_here'), content)
+    return MockManager(GMI("access_token_here"), content)
 
 
 class TestAbstractManager(TestCase):
@@ -58,5 +58,7 @@ class TestAbstractManager(TestCase):
         self.assertEqual(self.cmm.filter(val=3)._content, [self.mt])
 
     def test_filter_multiple(self):
-        self.assertEqual(self.cmm_multiple.filter(val=14)._content, [self.cmm_multiple[0], self.cmm_multiple[1]])
-
+        self.assertEqual(
+            self.cmm_multiple.filter(val=14)._content,
+            [self.cmm_multiple[0], self.cmm_multiple[1]],
+        )

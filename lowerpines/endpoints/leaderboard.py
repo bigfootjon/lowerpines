@@ -1,83 +1,91 @@
+# pyre-strict
+from typing import Dict, List, TYPE_CHECKING, Union
+
+from requests import Response
+
 from lowerpines.endpoints.request import Request
 from lowerpines.endpoints.message import Message
 
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
+
 
 class Leaderboard:
-    def __init__(self, gmi, group_id):
+    def __init__(self, gmi: "GMI", group_id: str) -> None:
         self.gmi = gmi
         self.group_id = group_id
 
-    def _for_period(self, period):
+    def _for_period(self, period: str) -> List[Message]:
         return LeaderboardIndexRequest(self.gmi, self.group_id, period).result
 
-    def for_today(self):
-        return self._for_period('day')
+    def for_today(self) -> List[Message]:
+        return self._for_period("day")
 
-    def for_week(self):
-        return self._for_period('week')
+    def for_week(self) -> List[Message]:
+        return self._for_period("week")
 
-    def for_month(self):
-        return self._for_period('month')
+    def for_month(self) -> List[Message]:
+        return self._for_period("month")
 
-    def my_likes(self):
+    def my_likes(self) -> List[Message]:
         return LeaderboardMyLikesRequest(self.gmi, self.group_id).result
 
-    def my_hits(self):
+    def my_hits(self) -> List[Message]:
         return LeaderboardMyHitsRequest(self.gmi, self.group_id).result
 
 
-class LeaderboardIndexRequest(Request):
-    def __init__(self, gmi, group_id, period):
+class LeaderboardIndexRequest(Request[List[Message]]):
+    def __init__(self, gmi: "GMI", group_id: str, period: str) -> None:
         self.group_id = group_id
-        if period not in ['day', 'week', 'month']:
-            raise ValueError('Period must be one of: day, week, or month')
+        if period not in ["day", "week", "month"]:
+            raise ValueError("Period must be one of: day, week, or month")
         self.period = period
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: Dict[str, str]) -> List[Message]:
         messages = []
-        for message_json in response['messages']:
+        for message_json in response["messages"]:
             messages.append(Message.from_json(self.gmi, message_json))
         return messages
 
-    def url(self):
-        return self.base_url + '/groups/' + self.group_id + '/likes'
+    def url(self) -> str:
+        return self.base_url + "/groups/" + self.group_id + "/likes"
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
 
-class LeaderboardMyLikesRequest(Request):
-    def __init__(self, gmi, group_id):
+class LeaderboardMyLikesRequest(Request[List[Message]]):
+    def __init__(self, gmi: "GMI", group_id: str) -> None:
         self.group_id = group_id
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: Dict[str, str]) -> List[Message]:
         messages = []
-        for message_json in response['messages']:
+        for message_json in response["messages"]:
             messages.append(Message.from_json(self.gmi, message_json))
         return messages
 
-    def url(self):
-        return self.base_url + '/groups/' + self.group_id + '/likes/mine'
+    def url(self) -> str:
+        return self.base_url + "/groups/" + self.group_id + "/likes/mine"
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
 
-class LeaderboardMyHitsRequest(Request):
-    def __init__(self, gmi, group_id):
+class LeaderboardMyHitsRequest(Request[List[Message]]):
+    def __init__(self, gmi: "GMI", group_id: str) -> None:
         self.group_id = group_id
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: Dict[str, List[str]]) -> List[Message]:
         messages = []
-        for message_json in response['messages']:
+        for message_json in response["messages"]:
             messages.append(Message.from_json(self.gmi, message_json))
         return messages
 
-    def url(self):
-        return self.base_url + '/groups/' + self.group_id + '/likes/for_me'
+    def url(self) -> str:
+        return self.base_url + "/groups/" + self.group_id + "/likes/for_me"
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
