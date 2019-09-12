@@ -12,20 +12,27 @@ if TYPE_CHECKING:
 
 
 class User(AbstractObject, RetrievableObject):
-    user_id = Field()
-    phone_number = Field()
-    image_url = Field()
-    name = Field()
-    created_at = Field()
-    updated_at = Field()
-    email = Field()
-    sms = Field()
+    # pyre-ignore
+    user_id: str = Field()
+    # pyre-ignore
+    phone_number: str = Field()
+    # pyre-ignore
+    image_url: str = Field()
+    # pyre-ignore
+    name: str = Field()
+    # pyre-ignore
+    created_at: str = Field()
+    # pyre-ignore
+    updated_at: str = Field()
+    # pyre-ignore
+    email: str = Field()
+    # pyre-ignore
+    sms: str = Field()
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
 
     def save(self) -> None:
-        # pyre-ignore
         new_data = UserUpdateRequest(
             self.gmi, self.image_url, self.name, self.email
         ).result

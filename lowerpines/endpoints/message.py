@@ -33,7 +33,7 @@ class Message(AbstractObject, RetrievableObject):
     # pyre-ignore
     favorited_by: str = Field()
     # pyre-ignore
-    attachments: List[Dict[str, str]] = Field()
+    attachments: List[Dict[str, Union[List[str], str]]] = Field()
     # pyre-ignore
     sender_type: str = Field()
     # pyre-ignore
@@ -48,7 +48,7 @@ class Message(AbstractObject, RetrievableObject):
         group_id: str,
         source_guid: str,
         text: str,
-        attachments: Optional[List[Dict[str, str]]] = None,
+        attachments: Optional[List[Dict[str, Union[List[str], str]]]] = None,
     ) -> None:
         self.gmi = gmi
         self.group_id = group_id
@@ -70,9 +70,11 @@ class Message(AbstractObject, RetrievableObject):
 
     def refresh(self) -> None:
         if self.message_id:
-            # pyre-ignore
             new_data = MessagesShowRequest(
-                self.gmi, self.group_id, self.message_id
+                self.gmi,
+                self.group_id,
+                # pyre-ignore
+                self.message_id,
             ).result
             self._refresh_from_other(new_data)
         else:
@@ -138,9 +140,9 @@ class MessagesIndexRequest(Request[List[Message]]):
         self,
         gmi: "GMI",
         group_id: str,
-        before_id: str,
-        since_id: str,
-        after_id: str,
+        before_id: Optional[str] = None,
+        since_id: Optional[str] = None,
+        after_id: Optional[str] = None,
         limit: int = 20,
     ) -> None:
         self.group_id = group_id

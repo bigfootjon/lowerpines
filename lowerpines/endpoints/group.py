@@ -48,7 +48,7 @@ class Group(AbstractObject, RetrievableObject):
     members: List[str]
 
     def __init__(self, gmi: "GMI", name: str, description: str, image_url: str) -> None:
-        super().__init__()
+        super().__init__(gmi)
         self.gmi = gmi
         self.messages = GroupMessagesManager(self)
         self.name = name
