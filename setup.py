@@ -4,9 +4,6 @@ import setuptools
 
 import lowerpines
 
-with open('requirements.txt') as requirements_file:
-    requirements = requirements_file.read().splitlines()
-
 with open("README.rst", "r") as readme_file:
     long_description = readme_file.read()
 
