@@ -72,4 +72,4 @@ Viewing messages for groups is also available::
 
 Each message's text is also available as a ``ComplexMessage`` object through ``message.complex_text``
 
-Please see the `doc/ <doc/>`_ directory for more information.
+Please see the `doc <doc/>`_ directory for more information.
