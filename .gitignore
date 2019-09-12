@@ -4,3 +4,4 @@ MANIFEST
 dist/*
 *.egg-info/
 .pyre/
+build/

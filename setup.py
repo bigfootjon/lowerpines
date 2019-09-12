@@ -1,13 +1,23 @@
 from distutils.core import setup
 
+import setuptools
+
 import lowerpines
+
+with open('requirements.txt') as requirements_file:
+    requirements = requirements_file.read().splitlines()
+
+with open("README.rst", "r") as readme_file:
+    long_description = readme_file.read()
 
 setup(
     name='lowerpines',
-    packages=['lowerpines', 'lowerpines.endpoints'],
+    packages=setuptools.find_packages(),
     version=lowerpines.VERSION,
     python_requires='>=3.6',
     description='Library wrapper for GroupMe API',
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     install_requires=['requests'],
     license='GNU Lesser General Public License v3 (LGPLv3)',
     author='Jonathan Janzen',
