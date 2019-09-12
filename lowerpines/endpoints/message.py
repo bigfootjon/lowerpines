@@ -90,6 +90,7 @@ class Message(AbstractObject, RetrievableObject):
         self.complex_text = ComplexMessage("")
         doing_mentions = False
         for attachment in self.attachments:
+            # pyre-ignore
             if attachment["type"] == "mentions":
                 doing_mentions = True
                 prev_index = 0
@@ -198,7 +199,7 @@ class MessagesCreateRequest(Request[Message]):
         group_id: str,
         source_guid: str,
         text: str,
-        attachments: Optional[List[Dict[str, str]]] = None,
+        attachments: Optional[List[Dict[str, Union[List[str], str]]]] = None,
     ) -> None:
         self.group_id = group_id
         self.source_guid = source_guid
@@ -213,6 +214,7 @@ class MessagesCreateRequest(Request[Message]):
         return self.base_url + "/groups/" + str(self.group_id) + "/messages"
 
     def args(self) -> Dict[str, Dict[str, Optional[Union[List[Dict[str, str]], str]]]]:
+        # pyre-ignore
         return {
             "message": {
                 "source_guid": self.source_guid,
