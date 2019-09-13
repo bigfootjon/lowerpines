@@ -10,22 +10,14 @@ if TYPE_CHECKING:
 
 
 class User(AbstractObject, RetrievableObject):
-    # pyre-ignore
-    user_id: str = Field()
-    # pyre-ignore
-    phone_number: str = Field()
-    # pyre-ignore
-    image_url: str = Field()
-    # pyre-ignore
-    name: str = Field()
-    # pyre-ignore
-    created_at: str = Field()
-    # pyre-ignore
-    updated_at: str = Field()
-    # pyre-ignore
-    email: str = Field()
-    # pyre-ignore
-    sms: str = Field()
+    user_id: str = Field()  # type: ignore
+    phone_number: str = Field()  # type: ignore
+    image_url: str = Field()  # type: ignore
+    name: str = Field()  # type: ignore
+    created_at: str = Field()  # type: ignore
+    updated_at: str = Field()  # type: ignore
+    email: str = Field()  # type: ignore
+    sms: str = Field()  # type: ignore
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
@@ -41,7 +33,7 @@ class User(AbstractObject, RetrievableObject):
         self._refresh_from_other(new_data)
 
     @classmethod
-    def get(cls, gmi: "GMI") -> "User":
+    def get(cls, gmi: "GMI") -> "User":  # type: ignore
         user = cls(gmi)
         user.refresh()
         return user

@@ -41,8 +41,7 @@ class TestAbstractObjectType(TestCase):
         self.assertEqual(self.mock.field2, None)
 
     def test_fields_set(self) -> None:
-        # pyre-ignore
-        for f in self.mock._fields:
+        for f in self.mock._fields:  # type: ignore
             if f.name == "field1":
                 self.assertEqual(f.api_name, "field1")
             elif f.name == "field2":

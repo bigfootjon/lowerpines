@@ -13,20 +13,14 @@ if TYPE_CHECKING:
 
 
 class Chat(AbstractObject):
-    # pyre-ignore
-    created_at: str = Field()
-    # pyre-ignore
-    updated_at: str = Field()
-    # pyre-ignore
-    messages_count: str = Field()
-    # pyre-ignore
-    last_message_raw: JsonType = Field(api_name="last_message")
-    # pyre-ignore
-    other_user_raw: JsonType = Field(api_name="other_user")
+    created_at: str = Field()  # type: ignore
+    updated_at: str = Field()  # type: ignore
+    messages_count: str = Field()  # type: ignore
+    last_message_raw: JsonType = Field(api_name="last_message")  # type: ignore
+    other_user_raw: JsonType = Field(api_name="other_user")  # type: ignore
 
     last_message: Optional["DirectMessage"] = None
-    # pyre-ignore
-    other_user: "DirectMessageUser" = None
+    other_user: "DirectMessageUser" = None  # type: ignore
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
@@ -68,32 +62,19 @@ class DirectMessage(AbstractObject):
     def refresh(self) -> None:
         raise InvalidOperationException("This is non-trivial to implement")
 
-    # pyre-ignore
-    attachments: List[AttachmentType] = Field()
-    # pyre-ignore
-    avatar_url: str = Field()
-    # pyre-ignore
-    conversation_id: str = Field()
-    # pyre-ignore
-    created_at: str = Field()
-    # pyre-ignore
-    favorited_by: str = Field()
-    # pyre-ignore
-    direct_message_id: str = Field(api_name="id")
-    # pyre-ignore
-    name: str = Field()
-    # pyre-ignore
-    recipient_id: str = Field()
-    # pyre-ignore
-    sender_id: str = Field()
-    # pyre-ignore
-    sender_type: str = Field()
-    # pyre-ignore
-    source_guid: str = Field()
-    # pyre-ignore
-    text: str = Field()
-    # pyre-ignore
-    user_id: str = Field()
+    attachments: List[AttachmentType] = Field()  # type: ignore
+    avatar_url: str = Field()  # type: ignore
+    conversation_id: str = Field()  # type: ignore
+    created_at: str = Field()  # type: ignore
+    favorited_by: str = Field()  # type: ignore
+    direct_message_id: str = Field(api_name="id")  # type: ignore
+    name: str = Field()  # type: ignore
+    recipient_id: str = Field()  # type: ignore
+    sender_id: str = Field()  # type: ignore
+    sender_type: str = Field()  # type: ignore
+    source_guid: str = Field()  # type: ignore
+    text: str = Field()  # type: ignore
+    user_id: str = Field()  # type: ignore
 
     def __init__(
         self,
@@ -103,13 +84,10 @@ class DirectMessage(AbstractObject):
         text: Optional[str] = None,
         attachments: Optional[List[AttachmentType]] = None,
     ) -> None:
-        self.gmi = gmi
-        # pyre-ignore
-        self.source_guid = source_guid
-        # pyre-ignore
-        self.recipient_id = recipient_id
-        # pyre-ignore
-        self.text = text
+        self.gmi = gmi  # type: ignore
+        self.source_guid = source_guid  # type: ignore
+        self.recipient_id = recipient_id  # type: ignore
+        self.text = text  # type: ignore
         self.attachments = attachments or []
 
     def save(self) -> None:
@@ -145,12 +123,9 @@ class DirectMessageUser(AbstractObject):
     def refresh(self) -> None:
         raise InvalidOperationException("This operation is non-trivial to implement")
 
-    # pyre-ignore
-    avatar_url: str = Field()
-    # pyre-ignore
-    user_id: str = Field()
-    # pyre-ignore
-    name: str = Field()
+    avatar_url: str = Field()  # type: ignore
+    user_id: str = Field()  # type: ignore
+    name: str = Field()  # type: ignore
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
@@ -183,16 +158,14 @@ class ChatMessagesManager:
         return DirectMessageIndexRequest(
             self.chat.gmi,
             self.chat.other_user.user_id,
-            # pyre-ignore
-            before_id=message.message_id,
+            before_id=message.message_id,  # type: ignore
         ).result
 
     def since(self, message: DirectMessage) -> List[DirectMessage]:
         return DirectMessageIndexRequest(
             self.chat.gmi,
             self.chat.other_user.user_id,
-            # pyre-ignore
-            since_id=message.message_id,
+            since_id=message.message_id,  # type: ignore
         ).result
 
 
@@ -218,8 +191,7 @@ class DirectMessageChatsRequest(Request[List[Chat]]):
     def parse(self, response: JsonType) -> List[Chat]:
         chats = []
         for chat_json in response:
-            # pyre-ignore
-            chats.append(Chat.from_json(self.gmi, chat_json))
+            chats.append(Chat.from_json(self.gmi, chat_json))  # type: ignore
         return chats
 
     def mode(self) -> str:
@@ -282,8 +254,7 @@ class DirectMessageCreateRequest(Request[DirectMessage]):
     def parse(self, response: JsonType) -> DirectMessage:
         # return DirectMessage.from_json(self.gmi, response['direct_message'])
         # TODO: Fix this
-        # pyre-ignore
-        return None
+        return None  # type: ignore
 
     def url(self) -> str:
         return self.base_url + "/direct_messages"

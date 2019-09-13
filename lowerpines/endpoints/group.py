@@ -1,7 +1,7 @@
 # pyre-strict
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, Optional, List, Union
 
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request, JsonType
@@ -18,33 +18,22 @@ if TYPE_CHECKING:
 
 
 class Group(AbstractObject, RetrievableObject):
-    # pyre-ignore
-    group_id: str = Field(api_name="id")
-    # pyre-ignore
-    name: str = Field()
-    # pyre-ignore
-    type: str = Field()
-    # pyre-ignore
-    description: Optional[str] = Field()
-    # pyre-ignore
-    image_url: Optional[str] = Field()
-    # pyre-ignore
-    creator_user_id: str = Field()
-    # pyre-ignore
-    created_at: str = Field()
-    # pyre-ignore
-    updated_at: str = Field()
-    # pyre-ignore
-    share_url: str = Field()
+    group_id: str = Field(api_name="id")  # type: ignore
+    name: str = Field()  # type: ignore
+    type: str = Field()  # type: ignore
+    description: Optional[str] = Field()  # type: ignore
+    image_url: Optional[str] = Field()  # type: ignore
+    creator_user_id: str = Field()  # type: ignore
+    created_at: str = Field()  # type: ignore
+    updated_at: str = Field()  # type: ignore
+    share_url: str = Field()  # type: ignore
     members: List[Member]
-    # pyre-ignore
-    members_raw: List[JsonType] = Field(api_name="members")
-    # pyre-ignore
-    messages_count_raw: int = Field(api_name="messages.count")
-    # pyre-ignore
-    messages_last_message_id_raw: str = Field(api_name="messages.last_message_id")
-    # pyre-ignore
-    messages_last_message_created_at_raw: str = Field(
+    members_raw: List[JsonType] = Field(api_name="members")  # type: ignore
+    messages_count_raw: int = Field(api_name="messages.count")  # type: ignore
+    messages_last_message_id_raw: str = Field(  # type: ignore
+        api_name="messages.last_message_id"
+    )
+    messages_last_message_created_at_raw: str = Field(  # type: ignore
         api_name="messages.last_message_created_at"
     )
 
@@ -58,8 +47,7 @@ class Group(AbstractObject, RetrievableObject):
         super().__init__(gmi)
         self.gmi = gmi
         self.messages = GroupMessagesManager(self)
-        # pyre-ignore
-        self.name = name
+        self.name = name  # type: ignore
         self.description = description
         self.image_url = image_url
         self.members = []
@@ -107,14 +95,14 @@ class Group(AbstractObject, RetrievableObject):
     def member_rm(self, member_id: str) -> None:
         MembersRemoveRequest(self.gmi, self.group_id, member_id)
 
-    def post(self, message: "ComplexMessage") -> Message:
+    def post(self, message: Union["ComplexMessage", str]) -> Message:
         text, attachments = smart_split_complex_message(message)
         obj = Message(self.gmi, self.group_id, str(datetime.now()), text, attachments)
         obj.save()
         return obj
 
     @staticmethod
-    def get(gmi: "GMI", group_id: str) -> "Group":
+    def get(gmi: "GMI", group_id: str) -> "Group":  # type: ignore
         return GroupsShowRequest(gmi, group_id).result
 
     @staticmethod
@@ -134,7 +122,7 @@ class Group(AbstractObject, RetrievableObject):
         return GroupsRejoinRequest(gmi, group_id).result
 
     def change_owner(self, owner_id: str) -> JsonType:
-        return GroupsChangeOwnersRequest(
+        return GroupsChangeOwnersRequest(  # type: ignore
             # TODO use proper schema here
             self.gmi,
             # pyre-ignore
@@ -219,8 +207,7 @@ class GroupsIndexRequest(Request[List[Group]]):
     def parse(self, response: JsonType) -> List[Group]:
         groups = []
         for group_json in response:
-            # pyre-ignore
-            groups.append(Group.from_json(self.gmi, group_json))
+            groups.append(Group.from_json(self.gmi, group_json))  # type: ignore
         return groups
 
 
@@ -237,8 +224,7 @@ class GroupsFormerRequest(Request[List[Group]]):
     def parse(self, response: JsonType) -> List[Group]:
         groups = []
         for group_json in response:
-            # pyre-ignore
-            groups.append(Group.from_json(self.gmi, group_json))
+            groups.append(Group.from_json(self.gmi, group_json))  # type: ignore
         return groups
 
 

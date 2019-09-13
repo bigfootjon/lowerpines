@@ -8,37 +8,25 @@ from lowerpines.exceptions import InvalidOperationException
 
 if TYPE_CHECKING:
     from lowerpines.gmi import GMI
+    from lowerpines.message import ComplexMessage
 
 AttachmentType = Dict[str, Any]
 
 
 class Message(AbstractObject, RetrievableObject):
-    # pyre-ignore
-    message_id: Optional[str] = Field(api_name="id")
-    # pyre-ignore
-    source_guid: str = Field()
-    # pyre-ignore
-    created_at: str = Field()
-    # pyre-ignore
-    user_id: str = Field()
-    # pyre-ignore
-    group_id: str = Field()
-    # pyre-ignore
-    name: str = Field()
-    # pyre-ignore
-    avatar_url: str = Field()
-    # pyre-ignore
-    text: str = Field()
-    # pyre-ignore
-    system: str = Field()
-    # pyre-ignore
-    favorited_by: str = Field()
-    # pyre-ignore
-    attachments: List[AttachmentType] = Field()
-    # pyre-ignore
-    sender_type: Optional[str] = Field()
-    # pyre-ignore
-    sender_id: str = Field()
+    message_id: Optional[str] = Field(api_name="id")  # type: ignore
+    source_guid: str = Field()  # type: ignore
+    created_at: str = Field()  # type: ignore
+    user_id: str = Field()  # type: ignore
+    group_id: str = Field()  # type: ignore
+    name: str = Field()  # type: ignore
+    avatar_url: str = Field()  # type: ignore
+    text: str = Field()  # type: ignore
+    system: str = Field()  # type: ignore
+    favorited_by: str = Field()  # type: ignore
+    attachments: List[AttachmentType] = Field()  # type: ignore
+    sender_type: Optional[str] = Field()  # type: ignore
+    sender_id: str = Field()  # type: ignore
 
     complex_text: Optional["ComplexMessage"] = None
 
@@ -51,12 +39,9 @@ class Message(AbstractObject, RetrievableObject):
         attachments: Optional[List[AttachmentType]] = None,
     ) -> None:
         self.gmi = gmi
-        # pyre-ignore
-        self.group_id = group_id
-        # pyre-ignore
-        self.source_guid = source_guid
-        # pyre-ignore
-        self.text = text
+        self.group_id = group_id  # type: ignore
+        self.source_guid = source_guid  # type: ignore
+        self.text = text  # type: ignore
         self.attachments = attachments or []
         self.message_id = None
 
@@ -114,7 +99,7 @@ class Message(AbstractObject, RetrievableObject):
         return self.text
 
     @staticmethod
-    def get(gmi: "GMI", group_id: str, message_id: str) -> "Message":
+    def get(gmi: "GMI", group_id: str, message_id: str) -> "Message":  # type: ignore
         return MessagesShowRequest(gmi, group_id, message_id).result
 
     def like(self) -> None:
@@ -175,7 +160,7 @@ class MessagesIndexRequest(Request[List[Message]]):
         if self.after_id is not None:
             args_dict["after_id"] = self.after_id
         if self.limit != 20:
-            args_dict["limit"] = self.limit
+            args_dict["limit"] = self.limit  # type: ignore
         return args_dict
 
     def parse(self, response: JsonType) -> List[Message]:

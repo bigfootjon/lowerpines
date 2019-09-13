@@ -106,4 +106,4 @@ class Request(Generic[T]):
 
             dump_json(json_dump_dir, self, response)
 
-        return response
+        return response  # type: ignore

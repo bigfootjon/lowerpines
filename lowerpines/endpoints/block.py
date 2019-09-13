@@ -9,12 +9,9 @@ if TYPE_CHECKING:
 
 
 class Block(AbstractObject):
-    # pyre-ignore
-    user_id: str = Field()
-    # pyre-ignore
-    blocked_user_id: str = Field()
-    # pyre-ignore
-    created_at: str = Field()
+    user_id: str = Field()  # type: ignore
+    blocked_user_id: str = Field()  # type: ignore
+    created_at: str = Field()  # type: ignore
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi

@@ -133,7 +133,7 @@ class ComplexMessage:
         if isinstance(other, self.__class__):
             self.contents.extend(other.contents)
         else:
-            self.contents.append(other)
+            self.contents.append(other)  # type: ignore
         return self
 
     def __radd__(
@@ -142,7 +142,7 @@ class ComplexMessage:
         if isinstance(other, self.__class__):
             self.contents = other.contents + self.contents
         else:
-            self.contents.insert(0, other)
+            self.contents.insert(0, other)  # type: ignore
         return self
 
     def __str__(self) -> str:
@@ -152,7 +152,7 @@ class ComplexMessage:
         return "".join([str(part) for part in self.contents])
 
     def get_attachments(self) -> List[Dict[str, str]]:
-        attach_list = []
+        attach_list = []  # type: ignore
         mentions = {"type": "mentions", "user_ids": list(), "loci": list()}
         emojis = {"type": "emoji", "placeholder": EMOJI_PLACEHOLDER, "charmap": []}
         queued = {"type": "postprocessing", "queues": []}
@@ -160,15 +160,15 @@ class ComplexMessage:
         for part in self.contents:
             if isinstance(part, RefAttach):
                 # pyre-ignore
-                mentions["user_ids"].append(part.user_id)
-                mentions["loci"].append([len(content_frag), len(part.display)])
+                mentions["user_ids"].append(part.user_id)  # type: ignore
+                mentions["loci"].append([len(content_frag), len(part.display)])  # type: ignore
                 if mentions not in attach_list:
                     attach_list.append(mentions)
             elif isinstance(part, ImageAttach):
                 attach_list.append({"type": "image", "url": part.image_url})
             elif isinstance(part, LocationAttach):
                 attach_list.append(
-                    {
+                    {  # type: ignore
                         "type": "location",
                         "name": part.name,
                         "lat": part.lat,
@@ -178,16 +178,16 @@ class ComplexMessage:
             elif isinstance(part, SplitAttach):
                 attach_list.append({"type": "split", "token": part.token})
             elif isinstance(part, EmojiAttach):
-                emojis["charmap"].append([part.pack_id, part.emoji_id])
+                emojis["charmap"].append([part.pack_id, part.emoji_id])  # type: ignore
                 if emojis not in attach_list:
                     attach_list.append(emojis)
             elif isinstance(part, QueuedAttach):
                 if part.queue not in queued["queues"]:
-                    queued["queues"].append(part.queue)
+                    queued["queues"].append(part.queue)  # type: ignore
                 if queued not in attach_list:
                     attach_list.append(queued)
             content_frag += str(part)
-        return attach_list
+        return attach_list  # type: ignore
 
     def just_str(self) -> str:
         return "".join([s for s in self.contents if isinstance(s, str)])

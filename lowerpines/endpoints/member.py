@@ -10,26 +10,16 @@ if TYPE_CHECKING:
 
 
 class Member(AbstractObject, RetrievableObject):
-    # pyre-ignore
-    member_id: str = Field(api_name="id")
-    # pyre-ignore
-    user_id: str = Field()
-    # pyre-ignore
-    nickname: str = Field()
-    # pyre-ignore
-    muted: str = Field()
-    # pyre-ignore
-    image_url: str = Field()
-    # pyre-ignore
-    autokicked: str = Field()
-    # pyre-ignore
-    app_installed: str = Field()
-    # pyre-ignore
-    guid: str = Field()
-    # pyre-ignore
-    phone_number: str = Field()
-    # pyre-ignore
-    email: str = Field()
+    member_id: str = Field(api_name="id")  # type: ignore
+    user_id: str = Field()  # type: ignore
+    nickname: str = Field()  # type: ignore
+    muted: str = Field()  # type: ignore
+    image_url: str = Field()  # type: ignore
+    autokicked: str = Field()  # type: ignore
+    app_installed: str = Field()  # type: ignore
+    guid: str = Field()  # type: ignore
+    phone_number: str = Field()  # type: ignore
+    email: str = Field()  # type: ignore
 
     def __init__(
         self,
@@ -41,15 +31,11 @@ class Member(AbstractObject, RetrievableObject):
         email: Optional[str] = None,
     ) -> None:
         self.gmi = gmi
-        self.group_id = group_id
-        # pyre-ignore
-        self.nickname = nickname
-        # pyre-ignore
-        self.user_id = user_id
-        # pyre-ignore
-        self.phone_number = phone_number
-        # pyre-ignore
-        self.email = email
+        self.group_id = group_id  # type: ignore
+        self.nickname = nickname  # type: ignore
+        self.user_id = user_id  # type: ignore
+        self.phone_number = phone_number  # type: ignore
+        self.email = email  # type: ignore
 
     def save(self) -> None:
         if self.member_id is None:
@@ -82,7 +68,7 @@ class Member(AbstractObject, RetrievableObject):
         raise InvalidOperationException("Nontrivial to implement")
 
     @staticmethod
-    def get(gmi: "GMI", member_id: str) -> None:
+    def get(gmi: "GMI", member_id: str) -> None:  # type: ignore
         raise InvalidOperationException("Nontrivial to implement")
 
     def __str__(self) -> str:

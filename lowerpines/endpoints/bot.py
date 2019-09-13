@@ -1,5 +1,5 @@
 # pyre-strict
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, Optional, List, Union
 
 from lowerpines.endpoints.message import AttachmentType
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
@@ -14,18 +14,12 @@ if TYPE_CHECKING:
 
 
 class Bot(AbstractObject, RetrievableObject):
-    # pyre-ignore
-    bot_id: str = Field()
-    # pyre-ignore
-    group_id: str = Field()
-    # pyre-ignore
-    name: str = Field()
-    # pyre-ignore
-    avatar_url: Optional[str] = Field()
-    # pyre-ignore
-    callback_url: Optional[str] = Field()
-    # pyre-ignore
-    dm_notification: Optional[str] = Field()
+    bot_id: str = Field()  # type: ignore
+    group_id: str = Field()  # type: ignore
+    name: str = Field()  # type: ignore
+    avatar_url: Optional[str] = Field()  # type: ignore
+    callback_url: Optional[str] = Field()  # type: ignore
+    dm_notification: Optional[str] = Field()  # type: ignore
 
     def __init__(
         self,
@@ -37,10 +31,8 @@ class Bot(AbstractObject, RetrievableObject):
         dm_notification: Optional[str] = None,
     ) -> None:
         self.gmi = gmi
-        # pyre-ignore
-        self.group_id = group_id
-        # pyre-ignore
-        self.name = name
+        self.group_id = group_id  # type: ignore
+        self.name = name  # type: ignore
         self.avatar_url = avatar_url
         self.callback_url = callback_url
         self.dm_notification = dm_notification
@@ -83,7 +75,7 @@ class Bot(AbstractObject, RetrievableObject):
         else:
             raise InvalidOperationException("This is non trivial to implement")
 
-    def post(self, message: "ComplexMessage") -> None:
+    def post(self, message: Union["ComplexMessage", str]) -> None:
         text, attachments = smart_split_complex_message(message)
         BotPostRequest(self.gmi, self.bot_id, text, attachments)
 
@@ -92,7 +84,7 @@ class Bot(AbstractObject, RetrievableObject):
         return BotIndexRequest(gmi).result
 
     @staticmethod
-    def get(gmi: "GMI", bot_id: str) -> None:
+    def get(gmi: "GMI", bot_id: str) -> None:  # type: ignore
         raise InvalidOperationException("This is non trivial to implement")
 
     def __str__(self) -> str:
@@ -158,8 +150,7 @@ class BotPostRequest(Request[None]):
     def args(self) -> JsonType:
         post_dict = {"bot_id": self.bot_id, "text": str(self.text)}
         if self.attachments is not None:
-            # pyre-ignore
-            post_dict["attachments"] = self.attachments
+            post_dict["attachments"] = self.attachments  # type: ignore
         return post_dict
 
     def mode(self) -> str:
@@ -173,8 +164,7 @@ class BotIndexRequest(Request[List[Bot]]):
     def parse(self, response: JsonType) -> List[Bot]:
         bots = []
         for bot_json in response:
-            # pyre-ignore
-            bots.append(Bot.from_json(self.gmi, bot_json))
+            bots.append(Bot.from_json(self.gmi, bot_json))  # type: ignore
         return bots
 
     def mode(self) -> str:
