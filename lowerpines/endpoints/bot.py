@@ -1,38 +1,47 @@
+# pyre-strict
+from typing import TYPE_CHECKING, Optional, List, Union
+
+from lowerpines.endpoints.message import AttachmentType
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
-from lowerpines.endpoints.request import Request
+from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
+    from lowerpines.message import ComplexMessage  # noqa: F401
+    from lowerpines.endpoints.group import Group
+
 
 class Bot(AbstractObject, RetrievableObject):
-    bot_id = Field()
-    group_id = Field()
-    name = Field()
-    avatar_url = Field()
-    callback_url = Field()
-    dm_notification = Field()
+    bot_id: str = Field()  # type: ignore
+    group_id: str = Field()  # type: ignore
+    name: str = Field()  # type: ignore
+    avatar_url: Optional[str] = Field()  # type: ignore
+    callback_url: Optional[str] = Field()  # type: ignore
+    dm_notification: Optional[str] = Field()  # type: ignore
 
     def __init__(
         self,
-        gmi,
-        group_id=None,
-        name=None,
-        avatar_url=None,
-        callback_url=None,
-        dm_notification=None,
-    ):
+        gmi: "GMI",
+        group_id: Optional[str] = None,
+        name: Optional[str] = None,
+        avatar_url: Optional[str] = None,
+        callback_url: Optional[str] = None,
+        dm_notification: Optional[str] = None,
+    ) -> None:
         self.gmi = gmi
-        self.group_id = group_id
-        self.name = name
+        self.group_id = group_id  # type: ignore
+        self.name = name  # type: ignore
         self.avatar_url = avatar_url
         self.callback_url = callback_url
         self.dm_notification = dm_notification
 
     @property
-    def group(self):
+    def group(self) -> "Group":
         return self.gmi.groups.get(group_id=self.group_id)
 
-    def save(self):
+    def save(self) -> None:
         if self.bot_id is None:
             new_data = BotCreateRequest(
                 self.gmi,
@@ -54,44 +63,44 @@ class Bot(AbstractObject, RetrievableObject):
                 self.dm_notification,
             )
 
-    def delete(self):
+    def delete(self) -> None:
         if self.bot_id is None:
             raise InvalidOperationException("Cannot destroy a bot that isn't saved!")
         else:
             BotDestroyRequest(self.gmi, self.bot_id)
 
-    def refresh(self):
+    def refresh(self) -> None:
         if self.bot_id is None:
             raise InvalidOperationException("This operation is not permitted")
         else:
             raise InvalidOperationException("This is non trivial to implement")
 
-    def post(self, text):
-        text, attachments = smart_split_complex_message(text)
+    def post(self, message: Union["ComplexMessage", str]) -> None:
+        text, attachments = smart_split_complex_message(message)
         BotPostRequest(self.gmi, self.bot_id, text, attachments)
 
     @staticmethod
-    def get_all(gmi):
+    def get_all(gmi: "GMI") -> List["Bot"]:
         return BotIndexRequest(gmi).result
 
     @staticmethod
-    def get(gmi, bot_id):
-        pass
+    def get(gmi: "GMI", bot_id: str) -> None:  # type: ignore
+        raise InvalidOperationException("This is non trivial to implement")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name + ":" + self.group_id
 
 
-class BotCreateRequest(Request):
+class BotCreateRequest(Request[Bot]):
     def __init__(
         self,
-        gmi,
-        group_id,
-        name,
-        callback_url=None,
-        avatar_url=None,
-        dm_notification=None,
-    ):
+        gmi: "GMI",
+        group_id: str,
+        name: str,
+        callback_url: Optional[str] = None,
+        avatar_url: Optional[str] = None,
+        dm_notification: Optional[str] = None,
+    ) -> None:
         self.name = name
         self.group_id = group_id
         self.dm_notification = dm_notification
@@ -99,95 +108,104 @@ class BotCreateRequest(Request):
         self.avatar_url = avatar_url
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> Bot:
         return Bot.from_json(self.gmi, response["bot"])
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/bots"
 
-    def args(self):
+    def args(self) -> JsonType:
         post_dict = {"bot": {"name": self.name, "group_id": self.group_id}}
-        if self.avatar_url is not None:
-            post_dict["bot"]["avatar_url"] = self.avatar_url
-        if self.callback_url is not None:
-            post_dict["bot"]["callback_url"] = self.callback_url
-        if self.dm_notification is not None:
-            post_dict["bot"]["dm_notification"] = self.dm_notification
+        avatar_url = self.avatar_url
+        if avatar_url is not None:
+            post_dict["bot"]["avatar_url"] = avatar_url
+        callback_url = self.callback_url
+        if callback_url is not None:
+            post_dict["bot"]["callback_url"] = callback_url
+        dm_notification = self.dm_notification
+        if dm_notification is not None:
+            post_dict["bot"]["dm_notification"] = dm_notification
         return post_dict
 
 
-class BotPostRequest(Request):
-    def __init__(self, gmi, bot_id, text, attachments=None):
+class BotPostRequest(Request[None]):
+    def __init__(
+        self,
+        gmi: "GMI",
+        bot_id: str,
+        text: str,
+        attachments: Optional[List[AttachmentType]] = None,
+    ) -> None:
         self.bot_id = bot_id
         self.text = text
         self.attachments = attachments
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> None:
         return None
 
-    def args(self):
+    def args(self) -> JsonType:
         post_dict = {"bot_id": self.bot_id, "text": str(self.text)}
         if self.attachments is not None:
-            post_dict["attachments"] = self.attachments
+            post_dict["attachments"] = self.attachments  # type: ignore
         return post_dict
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/bots/post"
 
 
-class BotIndexRequest(Request):
-    def parse(self, response):
+class BotIndexRequest(Request[List[Bot]]):
+    def parse(self, response: JsonType) -> List[Bot]:
         bots = []
         for bot_json in response:
-            bots.append(Bot.from_json(self.gmi, bot_json))
+            bots.append(Bot.from_json(self.gmi, bot_json))  # type: ignore
         return bots
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/bots"
 
 
-class BotDestroyRequest(Request):
-    def __init__(self, gmi, bot_id):
+class BotDestroyRequest(Request[None]):
+    def __init__(self, gmi: "GMI", bot_id: str) -> None:
         self.bot_id = bot_id
         super().__init__(gmi)
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> None:
         return None
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/bots/destroy"
 
-    def args(self):
+    def args(self) -> JsonType:
         return {"bot_id": self.bot_id}
 
 
 # --- Undocumented ---
 
 
-class BotsUpdateRequest(Request):
+class BotsUpdateRequest(Request[None]):
     def __init__(
         self,
-        gmi,
-        bot_id,
-        group_id=None,
-        name=None,
-        callback_url=None,
-        avatar_url=None,
-        dm_notification=None,
-    ):
+        gmi: "GMI",
+        bot_id: str,
+        group_id: Optional[str] = None,
+        name: Optional[str] = None,
+        callback_url: Optional[str] = None,
+        avatar_url: Optional[str] = None,
+        dm_notification: Optional[str] = None,
+    ) -> None:
         self.group_id = group_id
         self.name = name
         self.avatar_url = avatar_url
@@ -196,27 +214,33 @@ class BotsUpdateRequest(Request):
         self.bot_id = bot_id
         super().__init__(gmi)
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/bots/update"
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def args(self):
+    def args(self) -> JsonType:
         post_dict = {"bot": {"bot_id": self.bot_id}}
-        if self.group_id is not None:
-            post_dict["bot"]["group_id"] = self.group_id
-        if self.name is not None:
-            post_dict["bot"]["name"] = self.name
-        if self.avatar_url is not None:
-            post_dict["bot"]["avatar_url"] = self.avatar_url
-        if self.callback_url is not None:
-            post_dict["bot"]["callback_url"] = self.callback_url
-        if self.dm_notification is not None:
-            post_dict["bot"]["dm_notification"] = self.dm_notification
-        if self.bot_id is not None:
-            post_dict["bot"]["bot_id"] = self.bot_id
+        group_id = self.group_id
+        if group_id is not None:
+            post_dict["bot"]["group_id"] = group_id
+        name = self.name
+        if name is not None:
+            post_dict["bot"]["name"] = name
+        avatar_url = self.avatar_url
+        if avatar_url is not None:
+            post_dict["bot"]["avatar_url"] = avatar_url
+        callback_url = self.callback_url
+        if callback_url is not None:
+            post_dict["bot"]["callback_url"] = callback_url
+        dm_notification = self.dm_notification
+        if dm_notification is not None:
+            post_dict["bot"]["dm_notification"] = dm_notification
+        bot_id = self.bot_id
+        if bot_id is not None:
+            post_dict["bot"]["bot_id"] = bot_id
         return post_dict
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> None:
         pass

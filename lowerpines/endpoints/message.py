@@ -1,35 +1,51 @@
+# pyre-strict
+from typing import TYPE_CHECKING, Optional, Dict, List, Any
+
 from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
-from lowerpines.endpoints.request import Request
+from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
 from lowerpines.exceptions import InvalidOperationException
 
+if TYPE_CHECKING:
+    from lowerpines.gmi import GMI
+    from lowerpines.message import ComplexMessage  # noqa: F401
+
+AttachmentType = Dict[str, Any]
+
 
 class Message(AbstractObject, RetrievableObject):
-    message_id = Field(api_name="id")
-    source_guid = Field()
-    created_at = Field()
-    user_id = Field()
-    group_id = Field()
-    name = Field()
-    avatar_url = Field()
-    text = Field()
-    system = Field()
-    favorited_by = Field()
-    attachments = Field()
-    sender_type = Field()
-    sender_id = Field()
+    message_id: Optional[str] = Field(api_name="id")  # type: ignore
+    source_guid: str = Field()  # type: ignore
+    created_at: str = Field()  # type: ignore
+    user_id: str = Field()  # type: ignore
+    group_id: str = Field()  # type: ignore
+    name: str = Field()  # type: ignore
+    avatar_url: str = Field()  # type: ignore
+    text: str = Field()  # type: ignore
+    system: str = Field()  # type: ignore
+    favorited_by: str = Field()  # type: ignore
+    attachments: List[AttachmentType] = Field()  # type: ignore
+    sender_type: Optional[str] = Field()  # type: ignore
+    sender_id: str = Field()  # type: ignore
+
+    complex_text: Optional["ComplexMessage"] = None
 
     def __init__(
-        self, gmi, group_id=None, source_guid=None, text=None, attachments=None
-    ):
+        self,
+        gmi: "GMI",
+        group_id: Optional[str] = None,
+        source_guid: Optional[str] = None,
+        text: Optional[str] = None,
+        attachments: Optional[List[AttachmentType]] = None,
+    ) -> None:
         self.gmi = gmi
-        self.group_id = group_id
-        self.source_guid = source_guid
-        self.text = text
+        self.group_id = group_id  # type: ignore
+        self.source_guid = source_guid  # type: ignore
+        self.text = text  # type: ignore
         self.attachments = attachments or []
         self.message_id = None
 
-    def save(self):
+    def save(self) -> None:
         if self.message_id:
             raise InvalidOperationException(
                 "You cannot change a message that has already been sent"
@@ -40,21 +56,20 @@ class Message(AbstractObject, RetrievableObject):
             ).result
             self._refresh_from_other(new_data)
 
-    def refresh(self):
-        if self.message_id:
-            new_data = MessagesShowRequest(
-                self.gmi, self.group_id, self.message_id
-            ).result
+    def refresh(self) -> None:
+        message_id = self.message_id
+        if message_id:
+            new_data = MessagesShowRequest(self.gmi, self.group_id, message_id).result
             self._refresh_from_other(new_data)
         else:
             raise InvalidOperationException(
                 "Must have a message_id to pull data from the server"
             )
 
-    def on_fields_loaded(self):
+    def on_fields_loaded(self) -> None:
         if self.text is None:
             self.text = ""
-        from lowerpines.message import ComplexMessage, RefAttach
+        from lowerpines.message import ComplexMessage, RefAttach  # noqa: F811
 
         self.complex_text = ComplexMessage("")
         doing_mentions = False
@@ -77,27 +92,39 @@ class Message(AbstractObject, RetrievableObject):
         if not doing_mentions:
             self.complex_text = ComplexMessage(self.text)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.text
 
     @staticmethod
-    def get(gmi, group_id, message_id):
+    def get(gmi: "GMI", group_id: str, message_id: str) -> "Message":  # type: ignore
         return MessagesShowRequest(gmi, group_id, message_id).result
 
-    def like(self):
-        LikeCreateRequest(self.gmi, self.group_id, self.message_id)
+    def like(self) -> None:
+        message_id = self.message_id
+        if message_id is None:
+            raise ValueError("Message must be saved before it can be liked")
+        LikeCreateRequest(self.gmi, self.group_id, message_id)
 
-    def unlike(self):
-        LikeDestroyRequest(self.gmi, self.group_id, self.message_id)
+    def unlike(self) -> None:
+        message_id = self.message_id
+        if message_id is None:
+            raise ValueError("Message must be saved before it can be unliked")
+        LikeDestroyRequest(self.gmi, self.group_id, message_id)
 
 
-class MessagesIndexRequest(Request):
+class MessagesIndexRequest(Request[List[Message]]):
     def __init__(
-        self, gmi, group_id, before_id=None, since_id=None, after_id=None, limit=20
-    ):
+        self,
+        gmi: "GMI",
+        group_id: str,
+        before_id: Optional[str] = None,
+        since_id: Optional[str] = None,
+        after_id: Optional[str] = None,
+        limit: int = 20,
+    ) -> None:
         self.group_id = group_id
         self.before_id = before_id
         self.since_id = since_id
@@ -118,13 +145,13 @@ class MessagesIndexRequest(Request):
             )
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups/" + str(self.group_id) + "/messages"
 
-    def args(self):
+    def args(self) -> JsonType:
         args_dict = {}
         if self.before_id is not None:
             args_dict["before_id"] = self.before_id
@@ -133,10 +160,10 @@ class MessagesIndexRequest(Request):
         if self.after_id is not None:
             args_dict["after_id"] = self.after_id
         if self.limit != 20:
-            args_dict["limit"] = self.limit
+            args_dict["limit"] = self.limit  # type: ignore
         return args_dict
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> List[Message]:
         # count = int(response['count'])
         messages = []
         for message_json in response["messages"]:
@@ -144,21 +171,28 @@ class MessagesIndexRequest(Request):
         return messages
 
 
-class MessagesCreateRequest(Request):
-    def __init__(self, gmi, group_id, source_guid, text, attachments=None):
+class MessagesCreateRequest(Request[Message]):
+    def __init__(
+        self,
+        gmi: "GMI",
+        group_id: str,
+        source_guid: str,
+        text: str,
+        attachments: Optional[List[AttachmentType]] = None,
+    ) -> None:
         self.group_id = group_id
         self.source_guid = source_guid
         self.text = text
         self.attachments = attachments
         super().__init__(gmi)
 
-    def mode(self):
+    def mode(self) -> str:
         return "POST"
 
-    def url(self):
+    def url(self) -> str:
         return self.base_url + "/groups/" + str(self.group_id) + "/messages"
 
-    def args(self):
+    def args(self) -> JsonType:
         return {
             "message": {
                 "source_guid": self.source_guid,
@@ -167,20 +201,20 @@ class MessagesCreateRequest(Request):
             }
         }
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> Message:
         return Message.from_json(self.gmi, response["message"])
 
 
 # --- Undocumented ---
 
 
-class MessagesShowRequest(Request):
-    def __init__(self, gmi, group_id, message_id):
+class MessagesShowRequest(Request[Message]):
+    def __init__(self, gmi: "GMI", group_id: str, message_id: str) -> None:
         self.group_id = group_id
         self.message_id = message_id
         super().__init__(gmi)
 
-    def url(self):
+    def url(self) -> str:
         return (
             self.base_url
             + "/groups/"
@@ -189,8 +223,8 @@ class MessagesShowRequest(Request):
             + str(self.message_id)
         )
 
-    def mode(self):
+    def mode(self) -> str:
         return "GET"
 
-    def parse(self, response):
+    def parse(self, response: JsonType) -> Message:
         return Message.from_json(self.gmi, response["message"])

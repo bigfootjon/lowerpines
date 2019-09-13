@@ -1,10 +1,12 @@
-from typing import Any, Dict
+# pyre-strict
+
+from typing import Any, Dict, Optional
 
 from lowerpines.gmi import GMI
-from lowerpines.endpoints.request import Request
+from lowerpines.endpoints.request import Request, JsonType
 
 
-class SmsCreateRequest(Request):
+class SmsCreateRequest(Request[None]):
     def __init__(self, gmi: GMI, duration: int, registration_id: str) -> None:
         if duration > 48:
             raise ValueError(
@@ -17,7 +19,7 @@ class SmsCreateRequest(Request):
     def mode(self) -> str:
         return "POST"
 
-    def parse(self, response: dict) -> Any:
+    def parse(self, response: Optional[JsonType]) -> None:
         return None
 
     def args(self) -> Dict[str, Any]:
@@ -27,11 +29,11 @@ class SmsCreateRequest(Request):
         return self.base_url + "/users/sms_mode"
 
 
-class SmsDeleteRequest(Request):
+class SmsDeleteRequest(Request[None]):
     def mode(self) -> str:
         return "POST"
 
-    def parse(self, response: dict) -> Any:
+    def parse(self, response: Optional[JsonType]) -> None:
         return None
 
     def url(self) -> str:

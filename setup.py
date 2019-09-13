@@ -1,7 +1,7 @@
 # pyre-ignore-all-errors
 from distutils.core import setup
 
-import setuptools
+import setuptools  # type: ignore
 
 import lowerpines
 

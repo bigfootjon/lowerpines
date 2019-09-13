@@ -2,3 +2,4 @@ requests
 pyre-check
 black
 flake8
+mypy

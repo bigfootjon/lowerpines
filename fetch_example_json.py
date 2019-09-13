@@ -15,7 +15,7 @@ IMPORT_ERROR_TEXT = "To use this script create a 'test_access_token.py' file wit
 
 try:
     # noinspection PyUnresolvedReferences
-    from test_access_token import TEST_ACCESS_TOKEN
+    from test_access_token import TEST_ACCESS_TOKEN  # type: ignore
 except ModuleNotFoundError:
     print(IMPORT_ERROR_TEXT)
     exit(1)

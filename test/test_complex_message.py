@@ -1,3 +1,5 @@
+# pyre-strict
+
 from unittest import TestCase
 
 from lowerpines.message import (
@@ -12,7 +14,7 @@ from lowerpines.message import (
 
 
 class ComplexMessageTest(TestCase):
-    def test_manual_creation(self):
+    def test_manual_creation(self) -> None:
         message = ComplexMessage(["Hello, ", RefAttach("user_id_here", "@world")])
 
         self.assertEqual(message.get_text(), "Hello, @world")
@@ -21,7 +23,7 @@ class ComplexMessageTest(TestCase):
             [{"loci": [[7, 6]], "type": "mentions", "user_ids": ["user_id_here"]}],
         )
 
-    def test_dynamic_creation(self):
+    def test_dynamic_creation(self) -> None:
         message = "Hello, " + RefAttach("user_id_here", "@world")
 
         self.assertEqual(message.get_text(), "Hello, @world")
@@ -30,7 +32,7 @@ class ComplexMessageTest(TestCase):
             [{"loci": [[7, 6]], "type": "mentions", "user_ids": ["user_id_here"]}],
         )
 
-    def test_dynamic_creation_reverse_order(self):
+    def test_dynamic_creation_reverse_order(self) -> None:
         message = RefAttach("user_id_here", "@world") + " how are you?"
 
         self.assertEqual(message.get_text(), "@world how are you?")
@@ -41,7 +43,7 @@ class ComplexMessageTest(TestCase):
 
 
 class SmartSplitComplexMessage(TestCase):
-    def test_complex_message(self):
+    def test_complex_message(self) -> None:
         message = ComplexMessage(["Hello, ", RefAttach("user_id_here", "@world")])
         text, attachments = smart_split_complex_message(message)
         self.assertEqual(text, "Hello, @world")
@@ -50,14 +52,14 @@ class SmartSplitComplexMessage(TestCase):
             [{"loci": [[7, 6]], "type": "mentions", "user_ids": ["user_id_here"]}],
         )
 
-    def test_str_message(self):
+    def test_str_message(self) -> None:
         text, attachments = smart_split_complex_message("Hello!")
         self.assertEqual(text, "Hello!")
         self.assertEqual(attachments, [])
 
 
 class MessageAttachTest(TestCase):
-    def test_mixing_together(self):
+    def test_mixing_together(self) -> None:
         message = (
             RefAttach("user1")
             + ImageAttach("http://image.url")
@@ -79,7 +81,7 @@ class MessageAttachTest(TestCase):
 
 
 class RefAttachTest(TestCase):
-    def test_hidden(self):
+    def test_hidden(self) -> None:
         message = "Test" + RefAttach("user_id_here")
         self.assertEqual(message.get_text(), "Test")
         self.assertEqual(
@@ -87,7 +89,7 @@ class RefAttachTest(TestCase):
             [{"loci": [[4, 0]], "type": "mentions", "user_ids": ["user_id_here"]}],
         )
 
-    def test_visible(self):
+    def test_visible(self) -> None:
         message = "Test " + RefAttach("user_id_here", "@all")
         self.assertEqual(message.get_text(), "Test @all")
         self.assertEqual(
@@ -95,7 +97,7 @@ class RefAttachTest(TestCase):
             [{"loci": [[5, 4]], "type": "mentions", "user_ids": ["user_id_here"]}],
         )
 
-    def test_multiple_in_order(self):
+    def test_multiple_in_order(self) -> None:
         message = (
             "Test "
             + RefAttach("user1", "@1")
@@ -114,7 +116,7 @@ class RefAttachTest(TestCase):
             ],
         )
 
-    def test_multiple_split(self):
+    def test_multiple_split(self) -> None:
         message = RefAttach("red_id", "@red") + " vs. " + RefAttach("blue_id", "@blue")
         self.assertEqual(message.get_text(), "@red vs. @blue")
         self.assertEqual(
@@ -130,7 +132,7 @@ class RefAttachTest(TestCase):
 
 
 class ImageAttachTest(TestCase):
-    def test_order_independence(self):
+    def test_order_independence(self) -> None:
         message1 = ImageAttach("image_url_here") + "Check out my cool image!"
         message2 = "Check out my cool image!" + ImageAttach("image_url_here")
 
