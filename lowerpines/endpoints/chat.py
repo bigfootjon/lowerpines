@@ -252,9 +252,7 @@ class DirectMessageCreateRequest(Request[DirectMessage]):
         super().__init__(gmi)
 
     def parse(self, response: JsonType) -> DirectMessage:
-        # return DirectMessage.from_json(self.gmi, response['direct_message'])
-        # TODO: Fix this
-        return None  # type: ignore
+        return DirectMessage.from_json(self.gmi, response['direct_message'])
 
     def url(self) -> str:
         return self.base_url + "/direct_messages"
