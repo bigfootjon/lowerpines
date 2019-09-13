@@ -4,5 +4,6 @@ MANIFEST
 dist/*
 *.egg-info/
 .pyre/
+.mypy_cache/
 build/
 test_access_token.py
