@@ -1,0 +1,30 @@
+{
+    "request": {
+        "args": {
+            "bot": {
+                "group_id": "53558966",
+                "name": "TestBot"
+            }
+        },
+        "init": {
+            "avatar_url": null,
+            "callback_url": null,
+            "dm_notification": null,
+            "group_id": "53558966",
+            "name": "TestBot"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/bots"
+    },
+    "response": {
+        "bot": {
+            "avatar_url": {},
+            "bot_id": "e097458da8f3ed43fa530cec22",
+            "callback_url": {},
+            "dm_notification": {},
+            "group_id": "53558966",
+            "group_name": "2f4e1da02810503212eca8699a54c603d10738b0",
+            "name": "b07550c7a536b8194545cbef43a7a27a63a3f02b"
+        }
+    }
+}

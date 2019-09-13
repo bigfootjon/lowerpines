@@ -1,0 +1,38 @@
+{
+    "request": {
+        "args": {},
+        "init": {},
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/users/me"
+    },
+    "response": {
+        "created_at": {},
+        "email": "f2b17f990fcfc692bf9ce7e158d41851daa59b52",
+        "facebook_connected": {},
+        "id": "30038058",
+        "image_url": "https://i.groupme.com/750x700.jpeg.5a9d0e4a11ae8779494826901cd08d15f0a024b0",
+        "locale": "en",
+        "mfa": {
+            "channels": [
+                {
+                    "created_at": {},
+                    "type": "phone_number"
+                }
+            ],
+            "enabled": {}
+        },
+        "name": "cbfe58e610520c638ed3899e834942755a8a3c51",
+        "phone_number": "ebb866c6af911421a0b4a0cb8e7a399cbb569cb0",
+        "prompt_for_survey": {},
+        "share_qr_code_url": {},
+        "share_url": {},
+        "sms": {},
+        "tags": [
+            {}
+        ],
+        "twitter_connected": {},
+        "updated_at": {},
+        "user_id": "30038058",
+        "zip_code": {}
+    }
+}
