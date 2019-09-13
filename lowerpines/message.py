@@ -161,7 +161,9 @@ class ComplexMessage:
             if isinstance(part, RefAttach):
                 # pyre-ignore
                 mentions["user_ids"].append(part.user_id)  # type: ignore
-                mentions["loci"].append([len(content_frag), len(part.display)])  # type: ignore
+                mentions["loci"].append(
+                    [len(content_frag), len(part.display)]
+                )  # type: ignore
                 if mentions not in attach_list:
                     attach_list.append(mentions)
             elif isinstance(part, ImageAttach):

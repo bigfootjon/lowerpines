@@ -42,7 +42,9 @@ class AbstractManager(Generic[T]):
         self.lazy_fill_content()
         filtered = self._content
         for arg, value in kwargs.items():
-            filtered = [item for item in filtered if getattr(item, arg) == value]  # type: ignore
+            filtered = [
+                item for item in filtered if getattr(item, arg) == value
+            ]  # type: ignore
         return self.__class__(self.gmi, filtered)
 
     def lazy_fill_content(self) -> List[T]:
