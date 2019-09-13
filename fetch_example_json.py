@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# pyre-ignore-all-errors
+
 import os
 import shutil
 
