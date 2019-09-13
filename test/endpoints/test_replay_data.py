@@ -2,21 +2,21 @@
 import json
 import os
 from importlib import import_module
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Type, Union
 from unittest import TestCase, mock
 
+from lowerpines.endpoints.object import AbstractObject
+from lowerpines.endpoints.request import JsonType
 from lowerpines.gmi import GMI
 
 
 class MockRequestsResponse:
-    # pyre-ignore
-    def __init__(self, response_json: Any) -> None:
+    def __init__(self, response_json: JsonType) -> None:
         self.response_json = response_json
         self.status_code = 200
         self.content = bytes()
 
-    # pyre-ignore
-    def json(self) -> Any:
+    def json(self) -> JsonType:
         return {"response": self.response_json}
 
 
@@ -56,4 +56,37 @@ class TestReplayAll(TestCase):
         else:
             patch_func = "post"
         with mock.patch("requests." + patch_func, side_effect=mocked_requests_api_call):
-            klass(GMI("test_gmi"), **recorded_data["request"]["init"])
+            results = klass(GMI("test_gmi"), **recorded_data["request"]["init"]).result
+            if isinstance(results, list):
+                [self.check_types(result) for result in results]
+            elif results is None or type(results) in [bool]:
+                pass
+            else:
+                self.check_types(results)
+
+    def check_types(self, klass: Type[AbstractObject]) -> None:
+        for key, expected in klass.__annotations__.items():
+            actual = type(getattr(klass, key))
+
+            # Make sure the key we're looking at is actually a Field
+            if len(list(filter(lambda k: k.name == key, klass._fields))) == 0:
+                continue
+
+            matching_types = [expected]
+            # Unions need to be deconstructed
+            if expected.__class__ == Union.__class__:
+                matching_types = expected.__args__
+
+            # typing module types don't == with their runtime equivalents, need to clean those up
+            matching_types_cleaned = []
+            for matching_type in matching_types:
+                if matching_type.__name__ == List.__name__:
+                    matching_types_cleaned.append(list)
+                elif matching_type.__name__ == Dict.__name__:
+                    matching_types_cleaned.append(dict)
+                else:
+                    matching_types_cleaned.append(matching_type)
+            self.assertTrue(
+                actual in matching_types_cleaned,
+                f"{klass.__class__.__name__}.{key} expected {matching_types_cleaned} but got {type(getattr(klass, key))}",
+            )
