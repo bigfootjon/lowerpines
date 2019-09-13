@@ -12,7 +12,7 @@ from lowerpines.message import smart_split_complex_message
 
 if TYPE_CHECKING:
     from lowerpines.gmi import GMI
-    from lowerpines.message import ComplexMessage
+    from lowerpines.message import ComplexMessage  # noqa: F401
     from lowerpines.endpoints.bot import Bot
     from lowerpines.manager import AbstractManager
 

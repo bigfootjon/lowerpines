@@ -8,7 +8,7 @@ from lowerpines.exceptions import InvalidOperationException
 
 if TYPE_CHECKING:
     from lowerpines.gmi import GMI
-    from lowerpines.message import ComplexMessage
+    from lowerpines.message import ComplexMessage  # noqa: F401
 
 AttachmentType = Dict[str, Any]
 
@@ -69,7 +69,7 @@ class Message(AbstractObject, RetrievableObject):
     def on_fields_loaded(self) -> None:
         if self.text is None:
             self.text = ""
-        from lowerpines.message import ComplexMessage, RefAttach
+        from lowerpines.message import ComplexMessage, RefAttach  # noqa: F811
 
         self.complex_text = ComplexMessage("")
         doing_mentions = False
