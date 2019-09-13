@@ -1,3 +1,4 @@
+# pyre-check
 import hashlib
 import inspect
 import json
