@@ -1,5 +1,4 @@
 {
-  "binary": "/usr/local/bin/pyre.bin",
   "source_directories": [
     "."
   ],

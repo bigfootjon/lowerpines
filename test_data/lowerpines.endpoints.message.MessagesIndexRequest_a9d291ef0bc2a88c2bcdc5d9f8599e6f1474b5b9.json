@@ -1,0 +1,79 @@
+{
+    "request": {
+        "args": {
+            "limit": 100
+        },
+        "init": {
+            "after_id": null,
+            "before_id": null,
+            "group_id": "53558966",
+            "limit": 100,
+            "since_id": null
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/groups/53558966/messages"
+    },
+    "response": {
+        "count": {},
+        "messages": [
+            {
+                "attachments": [],
+                "avatar_url": "6fb28142ca8bea563a32c6616bc4155751645a4f",
+                "created_at": {},
+                "favorited_by": [],
+                "group_id": "53558966",
+                "id": "156840491399088127",
+                "name": "12a6b602e79808d55e2a42b5b22964a9e2efaf0e",
+                "platform": "gm",
+                "sender_id": "30038058",
+                "sender_type": "user",
+                "source_guid": "2019-09-13 15:01:56.017863",
+                "system": {},
+                "text": "22a296f1a4daa3d5755774e12744da007112e668",
+                "user_id": "30038058"
+            },
+            {
+                "attachments": [],
+                "avatar_url": {},
+                "created_at": {},
+                "favorited_by": [],
+                "group_id": "53558966",
+                "id": "156840491346206108",
+                "name": "665f97b716dd75c223a421a4dc4e847caff550b7",
+                "platform": "gm",
+                "sender_id": "816326",
+                "sender_type": "bot",
+                "source_guid": "414f0a80b88f0137572422000a6fc1f3",
+                "system": {},
+                "text": "30642e39d40f2814650bcba91358cf2a07286583",
+                "user_id": "816326"
+            },
+            {
+                "attachments": [],
+                "avatar_url": {},
+                "created_at": {},
+                "event": {
+                    "data": {
+                        "bot": "TestBot",
+                        "user": {
+                            "id": {},
+                            "nickname": "64c543f70008e9ebd64d1ba6423a15754017957e"
+                        }
+                    },
+                    "type": "bot.add"
+                },
+                "favorited_by": [],
+                "group_id": "53558966",
+                "id": "156840491313397097",
+                "name": "1e815f530c8e78453b059240eb95956bb7f12c5f",
+                "platform": "gm",
+                "sender_id": "system",
+                "sender_type": "system",
+                "source_guid": "411cf910b88f01378c0a22000b0b866c",
+                "system": {},
+                "text": "fd559e771bc0d39beb9883eeee88a36119de4a6a",
+                "user_id": "system"
+            }
+        ]
+    }
+}

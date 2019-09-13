@@ -84,4 +84,12 @@ class Request:
             )
 
     def extract_response(self, response):
-        return response.json()["response"]
+        response = response.json()["response"]
+
+        json_dump_dir = self.gmi.write_json_to
+        if json_dump_dir is not None:
+            from test.dump_json import dump_json
+
+            dump_json(json_dump_dir, self, response)
+
+        return response

@@ -1,0 +1,19 @@
+{
+    "request": {
+        "args": {},
+        "init": {},
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/bots"
+    },
+    "response": [
+        {
+            "avatar_url": {},
+            "bot_id": "e097458da8f3ed43fa530cec22",
+            "callback_url": {},
+            "dm_notification": {},
+            "group_id": "53558966",
+            "group_name": "f19c7d73195a1ae524bc3c57963a94af3b780a87",
+            "name": "17b158383c701886f41c06c93341a9af2ad4456b"
+        }
+    ]
+}

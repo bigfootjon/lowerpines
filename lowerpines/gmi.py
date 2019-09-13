@@ -1,3 +1,5 @@
+from typing import Optional
+
 import requests
 
 _gmi_objects = []
@@ -20,6 +22,8 @@ class GMI:
         self.bots = None
         self.chats = None
         self.user = None
+
+        self.write_json_to: Optional[str] = None
 
         self.refresh()
 
