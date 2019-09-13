@@ -122,12 +122,7 @@ class Group(AbstractObject, RetrievableObject):
         return GroupsRejoinRequest(gmi, group_id).result
 
     def change_owner(self, owner_id: str) -> JsonType:
-        return GroupsChangeOwnersRequest(  # type: ignore
-            # TODO use proper schema here
-            self.gmi,
-            # pyre-ignore
-            [{"group_id": self.group_id, "owner_id": owner_id}],
-        ).result
+        return GroupsChangeOwnersRequest(self.gmi, self.group_id, owner_id).result
 
     def __str__(self) -> str:
         return self.name
@@ -383,8 +378,9 @@ class GroupsRejoinRequest(Request[Group]):
 
 
 class GroupsChangeOwnersRequest(Request[JsonType]):
-    def __init__(self, gmi: "GMI", requests: JsonType) -> None:
-        self.requests = requests
+    def __init__(self, gmi: "GMI", group_id: str, owner_id: str) -> None:
+        self.group_id = group_id
+        self.owner_id = owner_id
         super().__init__(gmi)
 
     def mode(self) -> str:
@@ -397,4 +393,4 @@ class GroupsChangeOwnersRequest(Request[JsonType]):
         return response
 
     def args(self) -> JsonType:
-        return {"requests": self.requests}
+        return {"requests": [{"group_id": self.group_id, "owner_id": self.owner_id}]}
