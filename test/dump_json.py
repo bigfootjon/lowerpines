@@ -46,6 +46,8 @@ def dump_json(json_dump_dir: str, req: "Request", response: Any) -> None:
                     new_tree[key] = recursive_descend(value)
         elif isinstance(tree, list):
             new_tree = [recursive_descend(t) for t in tree]  # type: ignore
+        else:
+            new_tree = tree
         return new_tree
 
     hasher.update(json.dumps(req.args()).encode("utf-8"))

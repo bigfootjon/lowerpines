@@ -10,12 +10,12 @@
     },
     "response": [
         {
-            "created_at": {},
+            "created_at": 1510897723,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "477fb6a88a12c8b637836ef3974647b50cffd552",
                 "conversation_id": "30038058+51547012",
-                "created_at": {},
+                "created_at": 1568085408,
                 "favorited_by": [],
                 "id": "156808540854343974",
                 "name": "1f45a4b3d42ce9d9eca608fe9a07c6dd77ce0b0f",
@@ -26,21 +26,21 @@
                 "text": "9d26813533f2dfe32f45efa3aa920a92b4d156f1",
                 "user_id": "51547012"
             },
-            "messages_count": {},
+            "messages_count": 8,
             "other_user": {
                 "avatar_url": "e2e025842dbd8ae654e9accdba39722c63299c2b",
                 "id": "51547012",
                 "name": "f7d13e29ffd2cf479ee30ed7c3bdf612f2708715"
             },
-            "updated_at": {}
+            "updated_at": 1568085408
         },
         {
-            "created_at": {},
+            "created_at": 1567995036,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "8ba969ce3ae442a8508835321f555550e55f9cdd",
                 "conversation_id": "30038058+32533340",
-                "created_at": {},
+                "created_at": 1568004635,
                 "favorited_by": [],
                 "id": "156800463549023974",
                 "name": "79bd9c5a66d37f85d440d7f3a8f8d7d938f5a6da",
@@ -51,21 +51,21 @@
                 "text": "4f98e67399842305edfe0b6378bdb36e8ba6040a",
                 "user_id": "32533340"
             },
-            "messages_count": {},
+            "messages_count": 10,
             "other_user": {
                 "avatar_url": "2195d015948955cea8ba2a575f9bdf39a897b1e5",
                 "id": "32533340",
                 "name": "007b5c0218192fe779f5f7fc220092667c548b74"
             },
-            "updated_at": {}
+            "updated_at": 1568004635
         },
         {
-            "created_at": {},
+            "created_at": 1563306757,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "74826d720f67698679d2ada171826adbd490de10",
                 "conversation_id": "30038058+50315801",
-                "created_at": {},
+                "created_at": 1567284385,
                 "favorited_by": [],
                 "id": "156728438568096810",
                 "name": "fe846c0f937e51438d3b7effeca6e070a57c0492",
@@ -76,21 +76,21 @@
                 "text": "2b55e50c14708233dbe6722be5f981776570e602",
                 "user_id": "30038058"
             },
-            "messages_count": {},
+            "messages_count": 4,
             "other_user": {
                 "avatar_url": "e2ea21e4fb1d2e9aa0fe384345eab6bb201d0953",
                 "id": "50315801",
                 "name": "03d3a70863d9cc96060fe7490329f10d80556378"
             },
-            "updated_at": {}
+            "updated_at": 1567284385
         },
         {
-            "created_at": {},
+            "created_at": 1558890998,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "3dac2e256c5b72bb2063f45f9092f81c9fc9e358",
                 "conversation_id": "30038058+62339548",
-                "created_at": {},
+                "created_at": 1567121065,
                 "favorited_by": [],
                 "id": "156712106583023475",
                 "name": "203ebd349e2429418a7e7f9bb81f9904576c73d9",
@@ -101,21 +101,21 @@
                 "text": "2429f1b176457676bad55320c2ee882a81d4ff2f",
                 "user_id": "62339548"
             },
-            "messages_count": {},
+            "messages_count": 15,
             "other_user": {
                 "avatar_url": "d77378231ee7a8b89967c7f09d312414698c94cc",
                 "id": "62339548",
                 "name": "e8eeec76d76055473672685f249dd429b6a63bae"
             },
-            "updated_at": {}
+            "updated_at": 1567121065
         },
         {
-            "created_at": {},
+            "created_at": 1558891161,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "3ddcdf355348d1e43563d68e91461b73cc8e55ef",
                 "conversation_id": "20310252+30038058",
-                "created_at": {},
+                "created_at": 1558895494,
                 "favorited_by": [],
                 "id": "155889549482068754",
                 "name": "5a094521b4064191f0f079bd99e5205f572229dc",
@@ -126,21 +126,21 @@
                 "text": "cf7ca0afa11266bdb06287c6ecb8515c2e830dad",
                 "user_id": "30038058"
             },
-            "messages_count": {},
+            "messages_count": 9,
             "other_user": {
                 "avatar_url": "685ef4ad97390844649d3bc6577074d37d202fc4",
                 "id": "20310252",
                 "name": "078c8ed9eae66251cbd2a0f56aaa8cf2c23826fa"
             },
-            "updated_at": {}
+            "updated_at": 1558895494
         },
         {
-            "created_at": {},
+            "created_at": 1554323104,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "7d5396b92cefefe7e1da4c2bba85bfbb6093c75f",
                 "conversation_id": "12503785+30038058",
-                "created_at": {},
+                "created_at": 1556500449,
                 "favorited_by": [],
                 "id": "155650044949041063",
                 "name": "e27dc483682840e4cfd57f360808fab8f5447ab8",
@@ -151,21 +151,21 @@
                 "text": "b19d397e489281571cf3fd0dc01d3ae0fe1ff144",
                 "user_id": "12503785"
             },
-            "messages_count": {},
+            "messages_count": 25,
             "other_user": {
                 "avatar_url": "09917ef705f2c75411795a6a006c6876becb34cd",
                 "id": "12503785",
                 "name": "42feaa7057bbcef1f4f9609d6f7d41c1935c0598"
             },
-            "updated_at": {}
+            "updated_at": 1556500449
         },
         {
-            "created_at": {},
+            "created_at": 1554503130,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "6fa8a7bfe88acc6dc3003304fee8f4a45be1c1c9",
                 "conversation_id": "28351200+30038058",
-                "created_at": {},
+                "created_at": 1554503575,
                 "favorited_by": [],
                 "id": "155450357570215947",
                 "name": "4f25ce85d1bc5b3cd30d7aa6115ced5c735bf8c5",
@@ -176,21 +176,21 @@
                 "text": "5c8b7de5854603b3a2471d90efc5f2a07d4bb6b8",
                 "user_id": "30038058"
             },
-            "messages_count": {},
+            "messages_count": 4,
             "other_user": {
                 "avatar_url": "5850cbb18c96295cf432abbd780a8750e19382ed",
                 "id": "28351200",
                 "name": "82ddb0c589898b6a147d149b9fe31bdf87811386"
             },
-            "updated_at": {}
+            "updated_at": 1554503575
         },
         {
-            "created_at": {},
+            "created_at": 1551378860,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "f979200c0acc512f4d2c412fecabb51b5485537d",
                 "conversation_id": "27504224+30038058",
-                "created_at": {},
+                "created_at": 1551378894,
                 "favorited_by": [],
                 "id": "155137889402987997",
                 "name": "b13a9e3cc8060ed471a5d2e3bc2ac6e7aa2c1e69",
@@ -201,21 +201,21 @@
                 "text": "e552e55fd9a2b7a6b56ae33f6491f15e7f9947f9",
                 "user_id": "27504224"
             },
-            "messages_count": {},
+            "messages_count": 4,
             "other_user": {
                 "avatar_url": "da9004617a7036f403039bd6419491018f849b89",
                 "id": "27504224",
                 "name": "0fc6b8d23280a1063fb2425e5b4e92aad3f15770"
             },
-            "updated_at": {}
+            "updated_at": 1551378894
         },
         {
-            "created_at": {},
+            "created_at": 1550850167,
             "last_message": {
                 "attachments": [],
                 "avatar_url": "89ac3b65498c03ff8541807fc637e335ca89b8a7",
                 "conversation_id": "16711958+30038058",
-                "created_at": {},
+                "created_at": 1551111674,
                 "favorited_by": [],
                 "id": "155111167481088318",
                 "name": "ec66a3453d7dd1b5454edcb7fdb112f762219a12",
@@ -226,16 +226,16 @@
                 "text": "626b417c83853346d3c97eb3cc1ca67ea0340429",
                 "user_id": "16711958"
             },
-            "messages_count": {},
+            "messages_count": 7,
             "other_user": {
                 "avatar_url": "7feebf6c7e4d0114d50fbba9fd95c29bbb36113b",
                 "id": "16711958",
                 "name": "2dfd4ad216a65463d3446cb3e9f505e2f19dc1eb"
             },
-            "updated_at": {}
+            "updated_at": 1551111674
         },
         {
-            "created_at": {},
+            "created_at": 1543679884,
             "last_message": {
                 "attachments": [
                     {
@@ -245,7 +245,7 @@
                 ],
                 "avatar_url": "e050f758b61d14a4f9e135a679fe88ec87cbd6c7",
                 "conversation_id": "30038058+38565549",
-                "created_at": {},
+                "created_at": 1543679889,
                 "favorited_by": [],
                 "id": "154367988987437014",
                 "name": "b3016841cdf338b4822445273b1c06526a25be77",
@@ -253,16 +253,16 @@
                 "sender_id": "38565549",
                 "sender_type": "user",
                 "source_guid": "99EE845B-3A9D-4F6D-9BEE-212E052BA93F",
-                "text": {},
+                "text": null,
                 "user_id": "38565549"
             },
-            "messages_count": {},
+            "messages_count": 2,
             "other_user": {
                 "avatar_url": "5ca0019d8f5a83ebe71ea4e2d03a332a3b0c156d",
                 "id": "38565549",
                 "name": "609eb556724d255b3760c6156f192401de057a8d"
             },
-            "updated_at": {}
+            "updated_at": 1543679889
         }
     ]
 }

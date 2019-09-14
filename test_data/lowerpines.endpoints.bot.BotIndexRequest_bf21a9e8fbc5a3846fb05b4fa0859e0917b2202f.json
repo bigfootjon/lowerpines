@@ -7,13 +7,22 @@
     },
     "response": [
         {
-            "avatar_url": {},
-            "bot_id": "e097458da8f3ed43fa530cec22",
-            "callback_url": {},
-            "dm_notification": {},
-            "group_id": "53558966",
-            "group_name": "f19c7d73195a1ae524bc3c57963a94af3b780a87",
-            "name": "17b158383c701886f41c06c93341a9af2ad4456b"
+            "avatar_url": null,
+            "bot_id": "f7cbfffe487c93c50c6cd200e3",
+            "callback_url": "https://jonjanzen.com/",
+            "dm_notification": false,
+            "group_id": "32560981",
+            "group_name": "04d1159b753066b1e394da5a3f23808da7694511",
+            "name": "eefe6e339f2852e9178585373ba3736c049d9443"
+        },
+        {
+            "avatar_url": null,
+            "bot_id": "b04f1d364c0717bd0e0180da49",
+            "callback_url": null,
+            "dm_notification": false,
+            "group_id": "53577308",
+            "group_name": "34f27c9f8e7642e35ca3c94329617bfff411b823",
+            "name": "191ed255bd3d05cda845d30c4f18a8dd7348a661"
         }
     ]
 }

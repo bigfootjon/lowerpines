@@ -6,33 +6,33 @@
         "url": "https://api.groupme.com/v3/users/me"
     },
     "response": {
-        "created_at": {},
+        "created_at": 1440264614,
         "email": "f2b17f990fcfc692bf9ce7e158d41851daa59b52",
-        "facebook_connected": {},
+        "facebook_connected": true,
         "id": "30038058",
         "image_url": "https://i.groupme.com/750x700.jpeg.5a9d0e4a11ae8779494826901cd08d15f0a024b0",
         "locale": "en",
         "mfa": {
             "channels": [
                 {
-                    "created_at": {},
+                    "created_at": 1534791957,
                     "type": "phone_number"
                 }
             ],
-            "enabled": {}
+            "enabled": false
         },
         "name": "cbfe58e610520c638ed3899e834942755a8a3c51",
         "phone_number": "ebb866c6af911421a0b4a0cb8e7a399cbb569cb0",
-        "prompt_for_survey": {},
-        "share_qr_code_url": {},
-        "share_url": {},
-        "sms": {},
+        "prompt_for_survey": false,
+        "share_qr_code_url": null,
+        "share_url": null,
+        "sms": false,
         "tags": [
-            {}
+            "phone-us"
         ],
-        "twitter_connected": {},
-        "updated_at": {},
+        "twitter_connected": false,
+        "updated_at": 1549801824,
         "user_id": "30038058",
-        "zip_code": {}
+        "zip_code": null
     }
 }
