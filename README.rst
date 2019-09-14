@@ -1,21 +1,21 @@
 .. image:: https://img.shields.io/circleci/build/github/Bigfootjon/lowerpines/master
     :target: https://circleci.com/gh/Bigfootjon/lowerpines
-.. image:: https://img.shields.io/pypi/l/lowerpines
-    :target: https://pypi.org/project/lowerpines/
-.. image:: https://img.shields.io/pypi/v/lowerpines
-    :target: https://pypi.org/project/lowerpines/
 .. image:: https://img.shields.io/pypi/pyversions/lowerpines
     :target: https://pypi.org/project/lowerpines/
 .. image:: https://img.shields.io/pypi/wheel/lowerpines
     :target: https://pypi.org/project/lowerpines/
 .. image:: https://img.shields.io/pypi/status/lowerpines
     :target: https://pypi.org/project/lowerpines/
+.. image:: https://img.shields.io/pypi/v/lowerpines
+    :target: https://pypi.org/project/lowerpines/
+.. image:: https://img.shields.io/pypi/l/lowerpines
+    :target: https://pypi.org/project/lowerpines/
 
-==================
-LowerPines Project
-==================
+==========================================
+LowerPines: GroupMe API Wrapper for Python
+==========================================
 
-This project provides a Python wrapper around the `GroupMe <http://groupme.com>`_ v3 API.
+This library provides a Python wrapper around the `GroupMe <http://groupme.com>`_ v3 API.
 
 ============
 Installation
@@ -51,7 +51,7 @@ GMI objects also provide common functions::
         print(chat, chat.other_user)
 
     test_group = gmi.groups.get(name='Testing Group')
-    test_bot = gmi.bots.filter(group_id=test_group.group_id)
+    test_bot = gmi.bots.get(group_id=test_group.group_id)
     test_bot.post('Hello, world!')
 
 GroupMe supports complex message structures, such as including GroupMe-specific emoji, pictures, etc. This information
@@ -82,4 +82,4 @@ Viewing messages for groups is also available::
 
 Each message's text is also available as a ``ComplexMessage`` object through ``message.complex_text``
 
-Please see the `doc <doc/>`_ directory for more information.
+Please see the `docs <doc/>`_ directory for more information.
