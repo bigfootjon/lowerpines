@@ -1,0 +1,25 @@
+{
+    "request": {
+        "args": {
+            "bot": {
+                "avatar_url": "https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+                "bot_id": "8f3c7d15e80694f293ab665530",
+                "callback_url": "http://example.com",
+                "dm_notification": false,
+                "group_id": "53582388",
+                "name": "TestBot"
+            }
+        },
+        "init": {
+            "avatar_url": "https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+            "bot_id": "8f3c7d15e80694f293ab665530",
+            "callback_url": "http://example.com",
+            "dm_notification": false,
+            "group_id": "53582388",
+            "name": "TestBot"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/bots/update"
+    },
+    "response": null
+}

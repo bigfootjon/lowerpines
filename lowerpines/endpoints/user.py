@@ -5,7 +5,7 @@ from lowerpines.endpoints.object import AbstractObject, Field, RetrievableObject
 from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.endpoints.sms import SmsCreateRequest, SmsDeleteRequest
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 

@@ -5,7 +5,7 @@ from typing import List, Optional, TYPE_CHECKING
 from lowerpines.manager import AbstractManager
 from lowerpines.endpoints.bot import Bot
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.endpoints.group import Group
 
 

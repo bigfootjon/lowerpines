@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, List
 from lowerpines.endpoints.object import AbstractObject, Field
 from lowerpines.endpoints.request import Request, JsonType
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 

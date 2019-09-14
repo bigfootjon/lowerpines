@@ -1,0 +1,11 @@
+{
+    "request": {
+        "args": {},
+        "init": {
+            "group_id": "53582388"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/groups/53582388/destroy"
+    },
+    "response": null
+}

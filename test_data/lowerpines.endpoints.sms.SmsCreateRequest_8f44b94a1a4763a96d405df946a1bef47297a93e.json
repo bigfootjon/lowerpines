@@ -1,0 +1,15 @@
+{
+    "request": {
+        "args": {
+            "duration": 15,
+            "registration_id": "test"
+        },
+        "init": {
+            "duration": 15,
+            "registration_id": "test"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/users/sms_mode"
+    },
+    "response": null
+}

@@ -3,7 +3,7 @@ from typing import List, TypeVar, Generic, Iterator, Optional, TYPE_CHECKING, An
 
 from lowerpines.exceptions import NoneFoundException, MultipleFoundException
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 T = TypeVar("T")
@@ -27,7 +27,7 @@ class AbstractManager(Generic[T]):
         self._content = content
 
     def _all(self) -> List[T]:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def get(self, **kwargs: Any) -> T:
         filtered = self.filter(**kwargs)

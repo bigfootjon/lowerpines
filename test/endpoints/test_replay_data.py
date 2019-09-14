@@ -56,9 +56,15 @@ class TestReplayAll(TestCase):
         else:
             patch_func = "post"
         with mock.patch("requests." + patch_func, side_effect=mocked_requests_api_call):
-            results = klass(GMI("test_gmi"), **recorded_data["request"]["init"]).result
+            try:
+                results = klass(
+                    GMI("test_gmi"), **recorded_data["request"]["init"]
+                ).result
+            except AttributeError:
+                results = None
             if isinstance(results, list):
-                [self.check_types(result) for result in results]
+                for result in results:
+                    self.check_types(result)
             elif results is None or type(results) in [bool]:
                 pass
             else:
@@ -78,9 +84,10 @@ class TestReplayAll(TestCase):
                 matching_types = expected.__args__
 
             # typing module types don't == with their runtime equivalents, need to clean those up
-            matching_types_cleaned = []
+            # pyre-ignore
+            matching_types_cleaned: List[Type[Any]] = []
             for matching_type in matching_types:
-                if matching_type.__name__ == List.__name__:
+                if matching_type.__name__ == List.__name__:  # type: ignore
                     matching_types_cleaned.append(list)
                 elif matching_type.__name__ == Dict.__name__:
                     matching_types_cleaned.append(dict)

@@ -6,7 +6,7 @@ from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.endpoints.like import LikeCreateRequest, LikeDestroyRequest
 from lowerpines.exceptions import InvalidOperationException
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
     from lowerpines.message import ComplexMessage  # noqa: F401
 

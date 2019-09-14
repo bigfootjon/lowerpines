@@ -1,0 +1,13 @@
+{
+    "request": {
+        "args": {
+            "bot_id": "8f3c7d15e80694f293ab665530"
+        },
+        "init": {
+            "bot_id": "8f3c7d15e80694f293ab665530"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/bots/destroy"
+    },
+    "response": null
+}

@@ -7,7 +7,7 @@ from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
     from lowerpines.message import ComplexMessage  # noqa: F401
     from lowerpines.endpoints.group import Group
@@ -53,7 +53,7 @@ class Bot(AbstractObject, RetrievableObject):
             ).result
             self._refresh_from_other(new_data)
         else:
-            BotsUpdateRequest(
+            BotUpdateRequest(
                 self.gmi,
                 self.bot_id,
                 self.group_id,
@@ -195,7 +195,7 @@ class BotDestroyRequest(Request[None]):
 # --- Undocumented ---
 
 
-class BotsUpdateRequest(Request[None]):
+class BotUpdateRequest(Request[None]):
     def __init__(
         self,
         gmi: "GMI",

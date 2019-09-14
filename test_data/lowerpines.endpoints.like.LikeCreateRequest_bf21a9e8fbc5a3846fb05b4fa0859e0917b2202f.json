@@ -1,0 +1,12 @@
+{
+    "request": {
+        "args": {},
+        "init": {
+            "conversation_id": "53582388",
+            "message_id": "156848682584195123"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/messages/53582388/156848682584195123/like"
+    },
+    "response": null
+}

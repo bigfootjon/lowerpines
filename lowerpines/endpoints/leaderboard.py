@@ -4,7 +4,7 @@ from typing import List, TYPE_CHECKING
 from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.endpoints.message import Message
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 

@@ -3,7 +3,7 @@ from typing import Dict, TYPE_CHECKING, Type, List, Tuple, Optional, TypeVar, An
 
 from lowerpines.endpoints.request import JsonType
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 
@@ -72,7 +72,7 @@ class AbstractObject(metaclass=AbstractObjectType):
         for field in obj._fields:
             json_val = json_dict
             api_name = field.api_name
-            if api_name is None:
+            if api_name is None:  # pragma: no cover
                 raise ValueError("api_name should be known by this point")
             for val in api_name.split("."):
                 json_val = json_val.get(val, None)
@@ -83,11 +83,11 @@ class AbstractObject(metaclass=AbstractObjectType):
 
 class RetrievableObject:
     def save(self) -> None:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def refresh(self) -> None:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     @staticmethod
     def get(gmi: "GMI", *args: JsonType) -> Type["RetrievableObject"]:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover

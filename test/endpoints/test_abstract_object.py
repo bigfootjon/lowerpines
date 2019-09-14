@@ -46,7 +46,7 @@ class TestAbstractObjectType(TestCase):
                 self.assertEqual(f.api_name, "field1")
             elif f.name == "field2":
                 self.assertEqual(f.api_name, "id")
-            else:
+            else:  # pragma: no cover
                 self.assertFalse(True)  # There shouldn't be any other fields
 
 

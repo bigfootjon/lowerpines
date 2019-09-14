@@ -1,10 +1,10 @@
 # pyre-strict
-from typing import TYPE_CHECKING, Union, List, Tuple, Dict, Any
+from typing import TYPE_CHECKING, Union, List, Tuple, Dict
 
 from lowerpines.endpoints.message import Message
 
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 
@@ -21,7 +21,7 @@ class MessageAttach:
         self, other: Union["ComplexMessage", str, "MessageAttach"]
     ) -> "ComplexMessage":
         if isinstance(other, ComplexMessage):
-            other.contents.append(self)
+            other.contents.insert(0, self)
             return other
         else:
             return ComplexMessage([self, other])
@@ -29,11 +29,7 @@ class MessageAttach:
     def __radd__(
         self, other: Union["ComplexMessage", str, "MessageAttach"]
     ) -> "ComplexMessage":
-        if isinstance(other, ComplexMessage):
-            other.contents.append(self)
-            return other
-        else:
-            return ComplexMessage([other, self])
+        return ComplexMessage([other, self])
 
 
 class RefAttach(MessageAttach):
@@ -121,10 +117,10 @@ class ComplexMessage:
     contents: List[Union[MessageAttach, str]]
 
     # pyre-ignore
-    def __init__(self, data: Any) -> None:
+    def __init__(self, data: Union[list, str]) -> None:
         if isinstance(data, list):
             self.contents = data
-        else:
+        elif isinstance(data, str):
             self.contents = [data]
 
     def __add__(
@@ -139,10 +135,7 @@ class ComplexMessage:
     def __radd__(
         self, other: Union["ComplexMessage", str, "MessageAttach"]
     ) -> "ComplexMessage":
-        if isinstance(other, self.__class__):
-            self.contents = other.contents + self.contents
-        else:
-            self.contents.insert(0, other)  # type: ignore
+        self.contents.insert(0, other)  # type: ignore
         return self
 
     def __str__(self) -> str:

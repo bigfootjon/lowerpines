@@ -10,7 +10,9 @@ jobs:
           command: sudo pip3 install --requirement requirements.txt
       - run:
           name: Run Tests
-          command: python3 -m unittest --verbose
+          command: |
+              coverage run -m unittest --verbose
+              coveralls
       - run:
           name: Check Types - Pyre
           command: pyre check

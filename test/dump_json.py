@@ -6,7 +6,7 @@ import os
 
 from typing import TYPE_CHECKING, Any
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.endpoints.request import Request
 
 

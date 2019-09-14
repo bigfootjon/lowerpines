@@ -1,0 +1,9 @@
+{
+    "request": {
+        "args": {},
+        "init": {},
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/users/sms_mode/delete"
+    },
+    "response": null
+}

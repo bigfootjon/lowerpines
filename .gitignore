@@ -7,3 +7,5 @@ dist/*
 .mypy_cache/
 build/
 test_access_token.py
+.coverage
+htmlcov

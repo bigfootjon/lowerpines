@@ -1,0 +1,17 @@
+{
+    "request": {
+        "args": {
+            "attachments": [],
+            "bot_id": "8f3c7d15e80694f293ab665530",
+            "text": "BotMessage"
+        },
+        "init": {
+            "attachments": [],
+            "bot_id": "8f3c7d15e80694f293ab665530",
+            "text": "BotMessage"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/bots/post"
+    },
+    "response": null
+}

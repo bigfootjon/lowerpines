@@ -12,7 +12,7 @@ from lowerpines.exceptions import (
     UnauthorizedException,
 )
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
 T = TypeVar("T")
@@ -27,17 +27,23 @@ class Request(Generic[T]):
         nullable_result = self.execute()
         if nullable_result is not None:
             self.result: T = self.parse(nullable_result)
+        else:
+            json_dump_dir = self.gmi.write_json_to
+            if json_dump_dir is not None:
+                from test.dump_json import dump_json
+
+                dump_json(json_dump_dir, self, nullable_result)
 
     base_url = "https://api.groupme.com/v3"
 
     def url(self) -> str:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def mode(self) -> str:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def parse(self, response: JsonType) -> T:
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def args(self) -> Union[JsonType, bytes]:
         return {}

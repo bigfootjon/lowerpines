@@ -7,7 +7,7 @@ from lowerpines.endpoints.request import Request, JsonType
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
     from lowerpines.message import ComplexMessage
 

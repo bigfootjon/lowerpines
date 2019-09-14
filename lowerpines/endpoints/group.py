@@ -10,7 +10,7 @@ from lowerpines.endpoints.message import Message
 from lowerpines.exceptions import InvalidOperationException
 from lowerpines.message import smart_split_complex_message
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
     from lowerpines.message import ComplexMessage  # noqa: F401
     from lowerpines.endpoints.bot import Bot
@@ -29,16 +29,16 @@ class Group(AbstractObject, RetrievableObject):
     share_url: Optional[str] = Field()  # type: ignore
     share_qr_code_url: Optional[str] = Field()  # type: ignore
     office_mode: bool = Field()  # type: ignore
-    phone_number: str = Field()  # type: ignore
+    phone_number: Optional[str] = Field()  # type: ignore
     members: List[Member]
     members_raw: List[JsonType] = Field().set_api_name("members")  # type: ignore
     messages_count_raw: int = Field().set_api_name("messages.count")  # type: ignore
-    messages_last_message_id_raw: str = Field().set_api_name(  # type: ignore
+    messages_last_message_id_raw: Optional[str] = Field().set_api_name(  # type: ignore
         "messages.last_message_id"
     )
-    messages_last_message_created_at_raw: int = Field().set_api_name(  # type: ignore
-        api_name="messages.last_message_created_at"
-    )
+    messages_last_message_created_at_raw: Optional[  # type: ignore
+        int
+    ] = Field().set_api_name(api_name="messages.last_message_created_at")
 
     def __init__(
         self,
@@ -137,8 +137,8 @@ class Group(AbstractObject, RetrievableObject):
 class GroupMessagesManager:
     count = 0
 
-    last_id = str()
-    last_created_at = int()
+    last_id: Optional[str] = str()
+    last_created_at: Optional[int] = int()
 
     def __init__(self, group: Group) -> None:
         self.group = group

@@ -1,0 +1,62 @@
+{
+    "request": {
+        "args": {
+            "description": "",
+            "name": "TestGroup"
+        },
+        "init": {
+            "description": "",
+            "group_id": "53582388",
+            "image_url": null,
+            "name": "TestGroup",
+            "office_mode": null,
+            "share": null
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/groups/53582388/update"
+    },
+    "response": {
+        "created_at": 1568486808,
+        "creator_user_id": "30038058",
+        "description": "",
+        "group_id": "53582388",
+        "id": "53582388",
+        "image_url": null,
+        "max_members": 5000,
+        "max_memberships": 5000,
+        "members": [
+            {
+                "autokicked": false,
+                "id": "481818583",
+                "image_url": "https://i.groupme.com/750x700.jpeg.aa76285248e775864c60b1590968e04d41cab173",
+                "muted": false,
+                "name": "1717c04bc556ad8474e62d382897365c8b994097",
+                "nickname": "0ffdac966d11d8dc4b6ffeeae2f7a8afb05568eb",
+                "roles": [
+                    "admin",
+                    "owner"
+                ],
+                "user_id": "30038058"
+            }
+        ],
+        "messages": {
+            "count": 3,
+            "last_message_created_at": 1568486811,
+            "last_message_id": "156848681162039962",
+            "preview": {
+                "attachments": [],
+                "image_url": "https://i.groupme.com/750x700.jpeg.4d1bfb6be6ecc558ddf4fdbda290697cad915648",
+                "nickname": "025e43ae7a3061f96d45a4f7d78870149bb39111",
+                "text": "abcc94e8acd7772f0cd7fd650be03e4f69598030"
+            }
+        },
+        "name": "d6cde4d871da133acb1d2294261f4708e6e39ada",
+        "office_mode": false,
+        "phone_number": null,
+        "share_qr_code_url": null,
+        "share_url": null,
+        "thread_id": null,
+        "type": "private",
+        "updated_at": 1568486825
+    }
+}
