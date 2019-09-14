@@ -14,7 +14,7 @@ class TestField(TestCase):
         self.name_varname = "varname"
 
         self.basic_field = Field()
-        self.api_field = Field(api_name=self.name_api_field)
+        self.api_field = Field().set_api_name(self.name_api_field)
 
     def test_basic_field(self) -> None:
         self.basic_field.set_name(self.name_varname)
@@ -29,7 +29,7 @@ class TestField(TestCase):
 
 class MockAbstractObjectTypeObject(metaclass=AbstractObjectType):
     field1 = Field()
-    field2 = Field(api_name="id")
+    field2: Field = Field().set_api_name("id")
 
 
 class TestAbstractObjectType(TestCase):
@@ -53,8 +53,8 @@ class TestAbstractObjectType(TestCase):
 class MockAbstractObject(AbstractObject):
     field1 = Field()
     field2 = Field()
-    field3 = Field(api_name="id")
-    field4 = Field(api_name="foo.bar")
+    field3: Field = Field().set_api_name("id")
+    field4: Field = Field().set_api_name("foo.bar")
 
     def __init__(self, gmi: GMI) -> None:
         self.gmi = gmi

@@ -1,0 +1,17 @@
+{
+    "request": {
+        "args": {
+            "otherUser": "6911718",
+            "user": "30038058"
+        },
+        "init": {
+            "other_user_id": "6911718",
+            "user_id": "30038058"
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/blocks/between"
+    },
+    "response": {
+        "between": true
+    }
+}

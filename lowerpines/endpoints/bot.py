@@ -19,7 +19,7 @@ class Bot(AbstractObject, RetrievableObject):
     name: str = Field()  # type: ignore
     avatar_url: Optional[str] = Field()  # type: ignore
     callback_url: Optional[str] = Field()  # type: ignore
-    dm_notification: Optional[str] = Field()  # type: ignore
+    dm_notification: Optional[bool] = Field()  # type: ignore
 
     def __init__(
         self,
@@ -28,7 +28,7 @@ class Bot(AbstractObject, RetrievableObject):
         name: Optional[str] = None,
         avatar_url: Optional[str] = None,
         callback_url: Optional[str] = None,
-        dm_notification: Optional[str] = None,
+        dm_notification: Optional[bool] = None,
     ) -> None:
         self.gmi = gmi
         self.group_id = group_id  # type: ignore
@@ -99,7 +99,7 @@ class BotCreateRequest(Request[Bot]):
         name: str,
         callback_url: Optional[str] = None,
         avatar_url: Optional[str] = None,
-        dm_notification: Optional[str] = None,
+        dm_notification: Optional[bool] = None,
     ) -> None:
         self.name = name
         self.group_id = group_id
@@ -118,7 +118,7 @@ class BotCreateRequest(Request[Bot]):
         return self.base_url + "/bots"
 
     def args(self) -> JsonType:
-        post_dict = {"bot": {"name": self.name, "group_id": self.group_id}}
+        post_dict: JsonType = {"bot": {"name": self.name, "group_id": self.group_id}}
         avatar_url = self.avatar_url
         if avatar_url is not None:
             post_dict["bot"]["avatar_url"] = avatar_url
@@ -204,7 +204,7 @@ class BotsUpdateRequest(Request[None]):
         name: Optional[str] = None,
         callback_url: Optional[str] = None,
         avatar_url: Optional[str] = None,
-        dm_notification: Optional[str] = None,
+        dm_notification: Optional[bool] = None,
     ) -> None:
         self.group_id = group_id
         self.name = name
@@ -221,7 +221,7 @@ class BotsUpdateRequest(Request[None]):
         return "POST"
 
     def args(self) -> JsonType:
-        post_dict = {"bot": {"bot_id": self.bot_id}}
+        post_dict: JsonType = {"bot": {"bot_id": self.bot_id}}
         group_id = self.group_id
         if group_id is not None:
             post_dict["bot"]["group_id"] = group_id

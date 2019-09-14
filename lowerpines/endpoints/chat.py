@@ -13,11 +13,11 @@ if TYPE_CHECKING:
 
 
 class Chat(AbstractObject):
-    created_at: str = Field()  # type: ignore
-    updated_at: str = Field()  # type: ignore
-    messages_count: str = Field()  # type: ignore
-    last_message_raw: JsonType = Field(api_name="last_message")  # type: ignore
-    other_user_raw: JsonType = Field(api_name="other_user")  # type: ignore
+    created_at: int = Field()  # type: ignore
+    updated_at: int = Field()  # type: ignore
+    messages_count: int = Field()  # type: ignore
+    last_message_raw: JsonType = Field().set_api_name("last_message")  # type: ignore
+    other_user_raw: JsonType = Field().set_api_name("other_user")  # type: ignore
 
     last_message: Optional["DirectMessage"] = None
     other_user: "DirectMessageUser" = None  # type: ignore
@@ -67,7 +67,7 @@ class DirectMessage(AbstractObject):
     conversation_id: str = Field()  # type: ignore
     created_at: str = Field()  # type: ignore
     favorited_by: str = Field()  # type: ignore
-    direct_message_id: str = Field(api_name="id")  # type: ignore
+    direct_message_id: str = Field().set_api_name("id")  # type: ignore
     name: str = Field()  # type: ignore
     recipient_id: str = Field()  # type: ignore
     sender_id: str = Field()  # type: ignore

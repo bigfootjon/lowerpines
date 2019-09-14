@@ -14,10 +14,10 @@ class User(AbstractObject, RetrievableObject):
     phone_number: str = Field()  # type: ignore
     image_url: str = Field()  # type: ignore
     name: str = Field()  # type: ignore
-    created_at: str = Field()  # type: ignore
-    updated_at: str = Field()  # type: ignore
+    created_at: int = Field()  # type: ignore
+    updated_at: int = Field()  # type: ignore
     email: str = Field()  # type: ignore
-    sms: str = Field()  # type: ignore
+    sms: bool = Field()  # type: ignore
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi

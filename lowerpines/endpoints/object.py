@@ -8,9 +8,13 @@ if TYPE_CHECKING:
 
 
 class Field:
-    def __init__(self, api_name: Optional[str] = None) -> None:
+    def __init__(self) -> None:
         self.name = ""
+        self.api_name: Optional[str] = None
+
+    def set_api_name(self, api_name: str) -> "Field":
         self.api_name = api_name
+        return self
 
     def set_name(self, name: str) -> None:
         self.name = name

@@ -18,22 +18,25 @@ if TYPE_CHECKING:
 
 
 class Group(AbstractObject, RetrievableObject):
-    group_id: str = Field(api_name="id")  # type: ignore
+    group_id: str = Field().set_api_name("id")  # type: ignore
     name: str = Field()  # type: ignore
     type: str = Field()  # type: ignore
     description: Optional[str] = Field()  # type: ignore
     image_url: Optional[str] = Field()  # type: ignore
-    creator_user_id: str = Field()  # type: ignore
-    created_at: str = Field()  # type: ignore
-    updated_at: str = Field()  # type: ignore
-    share_url: str = Field()  # type: ignore
+    creator_user_id = Field()  # type: ignore
+    created_at: int = Field()  # type: ignore
+    updated_at: int = Field()  # type: ignore
+    share_url: Optional[str] = Field()  # type: ignore
+    share_qr_code_url: Optional[str] = Field()  # type: ignore
+    office_mode: bool = Field()  # type: ignore
+    phone_number: str = Field()  # type: ignore
     members: List[Member]
-    members_raw: List[JsonType] = Field(api_name="members")  # type: ignore
-    messages_count_raw: int = Field(api_name="messages.count")  # type: ignore
-    messages_last_message_id_raw: str = Field(  # type: ignore
-        api_name="messages.last_message_id"
+    members_raw: List[JsonType] = Field().set_api_name("members")  # type: ignore
+    messages_count_raw: int = Field().set_api_name("messages.count")  # type: ignore
+    messages_last_message_id_raw: str = Field().set_api_name(  # type: ignore
+        "messages.last_message_id"
     )
-    messages_last_message_created_at_raw: str = Field(  # type: ignore
+    messages_last_message_created_at_raw: int = Field().set_api_name(  # type: ignore
         api_name="messages.last_message_created_at"
     )
 
@@ -135,7 +138,7 @@ class GroupMessagesManager:
     count = 0
 
     last_id = str()
-    last_created_at = str()
+    last_created_at = int()
 
     def __init__(self, group: Group) -> None:
         self.group = group

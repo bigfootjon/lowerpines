@@ -1,0 +1,17 @@
+{
+    "request": {
+        "args": {},
+        "init": {
+            "other_user_id": "6911718",
+            "user_id": "30038058"
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/blocks?user=30038058&otherUser=6911718"
+    },
+    "response": {
+        "block": {
+            "blocked_user_id": "6911718",
+            "user_id": "30038058"
+        }
+    }
+}

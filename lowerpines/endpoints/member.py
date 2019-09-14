@@ -10,13 +10,13 @@ if TYPE_CHECKING:
 
 
 class Member(AbstractObject, RetrievableObject):
-    member_id: str = Field(api_name="id")  # type: ignore
+    member_id: str = Field().set_api_name("id")  # type: ignore
     user_id: str = Field()  # type: ignore
     nickname: str = Field()  # type: ignore
-    muted: str = Field()  # type: ignore
-    image_url: str = Field()  # type: ignore
-    autokicked: str = Field()  # type: ignore
-    app_installed: str = Field()  # type: ignore
+    muted: bool = Field()  # type: ignore
+    image_url: Optional[str] = Field()  # type: ignore
+    autokicked: bool = Field()  # type: ignore
+    app_installed: bool = Field()  # type: ignore
     guid: str = Field()  # type: ignore
     phone_number: str = Field()  # type: ignore
     email: str = Field()  # type: ignore

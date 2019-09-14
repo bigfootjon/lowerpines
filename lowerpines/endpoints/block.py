@@ -11,7 +11,6 @@ if TYPE_CHECKING:
 class Block(AbstractObject):
     user_id: str = Field()  # type: ignore
     blocked_user_id: str = Field()  # type: ignore
-    created_at: str = Field()  # type: ignore
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
@@ -20,7 +19,7 @@ class Block(AbstractObject):
         return BlockIndexRequest(self.gmi, user_id).result
 
     @staticmethod
-    def block_exists(gmi: "GMI", user_id: str, other_user_id: str) -> str:
+    def block_exists(gmi: "GMI", user_id: str, other_user_id: str) -> bool:
         return BlockBetweenRequest(gmi, user_id, other_user_id).result
 
     @staticmethod
@@ -53,7 +52,7 @@ class BlockIndexRequest(Request[List[Block]]):
         return self.base_url + "/blocks"
 
 
-class BlockBetweenRequest(Request[str]):
+class BlockBetweenRequest(Request[bool]):
     def __init__(self, gmi: "GMI", user_id: str, other_user_id: str) -> None:
         self.user_id = user_id
         self.other_user_id = other_user_id
@@ -62,7 +61,7 @@ class BlockBetweenRequest(Request[str]):
     def mode(self) -> str:
         return "GET"
 
-    def parse(self, response: JsonType) -> str:
+    def parse(self, response: JsonType) -> bool:
         return response["between"]
 
     def args(self) -> JsonType:
@@ -85,10 +84,16 @@ class BlockCreateRequest(Request[None]):
         return None
 
     def args(self) -> JsonType:
-        return {"user": self.user_id, "otherUser": self.other_user_id}
+        return {}
 
     def url(self) -> str:
-        return self.base_url + "/blocks"
+        return (
+            self.base_url
+            + "/blocks?user="
+            + self.user_id
+            + "&otherUser="
+            + self.other_user_id
+        )
 
 
 class BlockUnblockRequest(Request[None]):
@@ -104,7 +109,14 @@ class BlockUnblockRequest(Request[None]):
         return None
 
     def args(self) -> JsonType:
-        return {"user": self.user_id, "otherUser": self.other_user_id}
+        return {}
 
     def url(self) -> str:
-        return self.base_url + "/blocks/delete"
+        return (
+            self.base_url
+            + "/blocks/delete"
+            + "/blocks?user="
+            + self.user_id
+            + "&otherUser="
+            + self.other_user_id
+        )

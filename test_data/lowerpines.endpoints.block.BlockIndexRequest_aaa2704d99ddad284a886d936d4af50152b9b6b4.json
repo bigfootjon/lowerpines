@@ -1,0 +1,24 @@
+{
+    "request": {
+        "args": {
+            "user": "30038058"
+        },
+        "init": {
+            "user_id": "30038058"
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/blocks"
+    },
+    "response": {
+        "blocks": [
+            {
+                "blocked_user_id": "19586835",
+                "user_id": "30038058"
+            },
+            {
+                "blocked_user_id": "6911718",
+                "user_id": "30038058"
+            }
+        ]
+    }
+}

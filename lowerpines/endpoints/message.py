@@ -14,16 +14,16 @@ AttachmentType = Dict[str, Any]
 
 
 class Message(AbstractObject, RetrievableObject):
-    message_id: Optional[str] = Field(api_name="id")  # type: ignore
+    message_id: Optional[str] = Field().set_api_name("id")  # type: ignore
     source_guid: str = Field()  # type: ignore
-    created_at: str = Field()  # type: ignore
+    created_at: int = Field()  # type: ignore
     user_id: str = Field()  # type: ignore
     group_id: str = Field()  # type: ignore
     name: str = Field()  # type: ignore
-    avatar_url: str = Field()  # type: ignore
+    avatar_url: Optional[str] = Field()  # type: ignore
     text: str = Field()  # type: ignore
-    system: str = Field()  # type: ignore
-    favorited_by: str = Field()  # type: ignore
+    system: bool = Field()  # type: ignore
+    favorited_by: List[str] = Field()  # type: ignore
     attachments: List[AttachmentType] = Field()  # type: ignore
     sender_type: Optional[str] = Field()  # type: ignore
     sender_id: str = Field()  # type: ignore
