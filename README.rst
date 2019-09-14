@@ -1,5 +1,15 @@
-.. image:: https://circleci.com/gh/Bigfootjon/lowerpines.svg?style=svg
+.. image:: https://img.shields.io/circleci/build/github/Bigfootjon/lowerpines/master
     :target: https://circleci.com/gh/Bigfootjon/lowerpines
+.. image:: https://img.shields.io/pypi/l/lowerpines
+    :target: https://pypi.org/project/lowerpines/
+.. image:: https://img.shields.io/pypi/v/lowerpines
+    :target: https://pypi.org/project/lowerpines/
+.. image:: https://img.shields.io/pypi/pyversions/lowerpines
+    :target: https://pypi.org/project/lowerpines/
+.. image:: https://img.shields.io/pypi/wheel/lowerpines
+    :target: https://pypi.org/project/lowerpines/
+.. image:: https://img.shields.io/pypi/status/lowerpines
+    :target: https://pypi.org/project/lowerpines/
 
 ==================
 LowerPines Project
