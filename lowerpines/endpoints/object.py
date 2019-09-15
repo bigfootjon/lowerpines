@@ -6,20 +6,28 @@ from lowerpines.endpoints.request import JsonType
 if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
 
+T = TypeVar("T")
+
 
 class Field:
     def __init__(self) -> None:
         self.name = ""
         self.api_name: Optional[str] = None
 
-    def set_api_name(self, api_name: str) -> "Field":
+    def with_api_name(self, api_name: str) -> "Field":
         self.api_name = api_name
         return self
 
-    def set_name(self, name: str) -> None:
+    def with_type(self, _: Type[T]) -> T:
+        # This is intentional, it allows us to trick type-checkers into asserting that the field type is T,
+        # which will be true at runtime, since Field types are erased by the metaclass
+        return self  # type: ignore
+
+    def with_field_name(self, name: str) -> "Field":
         self.name = name
         if self.api_name is None:
             self.api_name = name
+        return self
 
 
 class AbstractObjectType(type):
@@ -33,7 +41,7 @@ class AbstractObjectType(type):
         fields = []
         for attr_name, attr_value in attrs.items():
             if type(attr_value) == Field:
-                attr_value.set_name(attr_name)
+                attr_value.with_field_name(attr_name)
                 fields.append(attr_value)
                 new_attrs[attr_name] = None
             else:

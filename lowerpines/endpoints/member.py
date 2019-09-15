@@ -10,16 +10,16 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class Member(AbstractObject, RetrievableObject):
-    member_id: str = Field().set_api_name("id")  # type: ignore
-    user_id: str = Field()  # type: ignore
-    nickname: str = Field()  # type: ignore
-    muted: bool = Field()  # type: ignore
-    image_url: Optional[str] = Field()  # type: ignore
-    autokicked: bool = Field()  # type: ignore
-    app_installed: bool = Field()  # type: ignore
-    guid: str = Field()  # type: ignore
-    phone_number: str = Field()  # type: ignore
-    email: str = Field()  # type: ignore
+    member_id: str = Field().with_api_name("id").with_type(str)
+    user_id: str = Field().with_type(str)
+    nickname: str = Field().with_type(str)
+    muted: bool = Field().with_type(bool)
+    image_url: Optional[str] = Field().with_type(str)
+    autokicked: bool = Field().with_type(bool)
+    app_installed: bool = Field().with_type(bool)
+    guid: str = Field().with_type(str)
+    phone_number: str = Field().with_type(str)
+    email: str = Field().with_type(str)
 
     def __init__(
         self,

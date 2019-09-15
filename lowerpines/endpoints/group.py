@@ -18,27 +18,29 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class Group(AbstractObject, RetrievableObject):
-    group_id: str = Field().set_api_name("id")  # type: ignore
-    name: str = Field()  # type: ignore
-    type: str = Field()  # type: ignore
-    description: Optional[str] = Field()  # type: ignore
-    image_url: Optional[str] = Field()  # type: ignore
-    creator_user_id = Field()  # type: ignore
-    created_at: int = Field()  # type: ignore
-    updated_at: int = Field()  # type: ignore
-    share_url: Optional[str] = Field()  # type: ignore
-    share_qr_code_url: Optional[str] = Field()  # type: ignore
-    office_mode: bool = Field()  # type: ignore
-    phone_number: Optional[str] = Field()  # type: ignore
+    group_id: str = Field().with_api_name("id").with_type(str)
+    name: str = Field().with_type(str)
+    type: str = Field().with_type(str)
+    description: Optional[str] = Field().with_type(str)
+    image_url: Optional[str] = Field().with_type(str)
+    creator_user_id: str = Field().with_type(str)
+    created_at: int = Field().with_type(int)
+    updated_at: int = Field().with_type(int)
+    share_url: Optional[str] = Field().with_type(str)
+    share_qr_code_url: Optional[str] = Field().with_type(str)
+    office_mode: bool = Field().with_type(bool)
+    phone_number: Optional[str] = Field().with_type(str)
     members: List[Member]
-    members_raw: List[JsonType] = Field().set_api_name("members")  # type: ignore
-    messages_count_raw: int = Field().set_api_name("messages.count")  # type: ignore
-    messages_last_message_id_raw: Optional[str] = Field().set_api_name(  # type: ignore
-        "messages.last_message_id"
+    members_raw: List[JsonType] = Field().with_api_name("members").with_type(
+        List[JsonType]
     )
+    messages_count_raw: int = Field().with_api_name("messages.count").with_type(int)
+    messages_last_message_id_raw: Optional[str] = Field().with_api_name(
+        "messages.last_message_id"
+    ).with_type(str)
     messages_last_message_created_at_raw: Optional[  # type: ignore
         int
-    ] = Field().set_api_name(api_name="messages.last_message_created_at")
+    ] = Field().with_api_name("messages.last_message_created_at")
 
     def __init__(
         self,

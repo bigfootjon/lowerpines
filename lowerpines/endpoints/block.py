@@ -9,8 +9,8 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class Block(AbstractObject):
-    user_id: str = Field()  # type: ignore
-    blocked_user_id: str = Field()  # type: ignore
+    user_id: str = Field().with_type(str)
+    blocked_user_id: str = Field().with_type(str)
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi

@@ -16,8 +16,8 @@ class Chat(AbstractObject):
     created_at: int = Field()  # type: ignore
     updated_at: int = Field()  # type: ignore
     messages_count: int = Field()  # type: ignore
-    last_message_raw: JsonType = Field().set_api_name("last_message")  # type: ignore
-    other_user_raw: JsonType = Field().set_api_name("other_user")  # type: ignore
+    last_message_raw: JsonType = Field().with_api_name("last_message")  # type: ignore
+    other_user_raw: JsonType = Field().with_api_name("other_user")  # type: ignore
 
     last_message: Optional["DirectMessage"] = None
     other_user: "DirectMessageUser" = None  # type: ignore
@@ -62,19 +62,20 @@ class DirectMessage(AbstractObject):
     def refresh(self) -> None:
         raise InvalidOperationException("This is non-trivial to implement")
 
-    attachments: List[AttachmentType] = Field()  # type: ignore
-    avatar_url: str = Field()  # type: ignore
-    conversation_id: str = Field()  # type: ignore
-    created_at: str = Field()  # type: ignore
-    favorited_by: str = Field()  # type: ignore
-    direct_message_id: str = Field().set_api_name("id")  # type: ignore
-    name: str = Field()  # type: ignore
-    recipient_id: str = Field()  # type: ignore
-    sender_id: str = Field()  # type: ignore
-    sender_type: str = Field()  # type: ignore
-    source_guid: str = Field()  # type: ignore
-    text: str = Field()  # type: ignore
-    user_id: str = Field()  # type: ignore
+    # pyre-ignore
+    attachments: List[AttachmentType] = Field().with_type(List[AttachmentType])
+    avatar_url: str = Field().with_type(str)
+    conversation_id: str = Field().with_type(str)
+    created_at: str = Field().with_type(str)
+    favorited_by: str = Field().with_type(str)
+    direct_message_id: str = Field().with_api_name("id").with_type(str)
+    name: str = Field().with_type(str)
+    recipient_id: str = Field().with_type(str)
+    sender_id: str = Field().with_type(str)
+    sender_type: str = Field().with_type(str)
+    source_guid: str = Field().with_type(str)
+    text: str = Field().with_type(str)
+    user_id: str = Field().with_type(str)
 
     def __init__(
         self,

@@ -14,12 +14,12 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class Bot(AbstractObject, RetrievableObject):
-    bot_id: str = Field()  # type: ignore
-    group_id: str = Field()  # type: ignore
-    name: str = Field()  # type: ignore
-    avatar_url: Optional[str] = Field()  # type: ignore
-    callback_url: Optional[str] = Field()  # type: ignore
-    dm_notification: Optional[bool] = Field()  # type: ignore
+    bot_id: str = Field().with_type(str)
+    group_id: str = Field().with_type(str)
+    name: str = Field().with_type(str)
+    avatar_url: Optional[str] = Field().with_type(str)
+    callback_url: Optional[str] = Field().with_type(str)
+    dm_notification: Optional[bool] = Field().with_type(bool)
 
     def __init__(
         self,

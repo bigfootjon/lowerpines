@@ -10,23 +10,25 @@ if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.gmi import GMI
     from lowerpines.message import ComplexMessage  # noqa: F401
 
+# TODO model attachments better
 AttachmentType = Dict[str, Any]
 
 
 class Message(AbstractObject, RetrievableObject):
-    message_id: Optional[str] = Field().set_api_name("id")  # type: ignore
-    source_guid: str = Field()  # type: ignore
-    created_at: int = Field()  # type: ignore
-    user_id: str = Field()  # type: ignore
-    group_id: str = Field()  # type: ignore
-    name: str = Field()  # type: ignore
-    avatar_url: Optional[str] = Field()  # type: ignore
-    text: str = Field()  # type: ignore
-    system: bool = Field()  # type: ignore
-    favorited_by: List[str] = Field()  # type: ignore
-    attachments: List[AttachmentType] = Field()  # type: ignore
-    sender_type: Optional[str] = Field()  # type: ignore
-    sender_id: str = Field()  # type: ignore
+    message_id: Optional[str] = Field().with_api_name("id").with_type(str)
+    source_guid: str = Field().with_type(str)
+    created_at: int = Field().with_type(int)
+    user_id: str = Field().with_type(str)
+    group_id: str = Field().with_type(str)
+    name: str = Field().with_type(str)
+    avatar_url: Optional[str] = Field().with_type(str)
+    text: str = Field().with_type(str)
+    system: bool = Field().with_type(bool)
+    favorited_by: List[str] = Field().with_type(List[str])
+    # pyre-ignore
+    attachments: List[AttachmentType] = Field().with_type(List[AttachmentType])
+    sender_type: Optional[str] = Field().with_type(str)
+    sender_id: str = Field().with_type(str)
 
     complex_text: Optional["ComplexMessage"] = None
 

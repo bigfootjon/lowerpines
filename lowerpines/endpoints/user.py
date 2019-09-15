@@ -10,14 +10,14 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class User(AbstractObject, RetrievableObject):
-    user_id: str = Field()  # type: ignore
-    phone_number: str = Field()  # type: ignore
-    image_url: str = Field()  # type: ignore
-    name: str = Field()  # type: ignore
-    created_at: int = Field()  # type: ignore
-    updated_at: int = Field()  # type: ignore
-    email: str = Field()  # type: ignore
-    sms: bool = Field()  # type: ignore
+    user_id: str = Field().with_type(str)
+    phone_number: str = Field().with_type(str)
+    image_url: str = Field().with_type(str)
+    name: str = Field().with_type(str)
+    created_at: int = Field().with_type(int)
+    updated_at: int = Field().with_type(int)
+    email: str = Field().with_type(str)
+    sms: bool = Field().with_type(bool)
 
     def __init__(self, gmi: "GMI") -> None:
         self.gmi = gmi
