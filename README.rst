@@ -4,8 +4,6 @@
     :target: https://coveralls.io/github/Bigfootjon/lowerpines
 .. image:: https://img.shields.io/pypi/pyversions/lowerpines
     :target: https://pypi.org/project/lowerpines/
-.. image:: https://img.shields.io/pypi/wheel/lowerpines
-    :target: https://pypi.org/project/lowerpines/
 .. image:: https://img.shields.io/pypi/status/lowerpines
     :target: https://pypi.org/project/lowerpines/
 .. image:: https://img.shields.io/pypi/v/lowerpines
