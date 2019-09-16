@@ -2,12 +2,12 @@
     "request": {
         "args": {
             "attachments": [],
-            "bot_id": "8f3c7d15e80694f293ab665530",
+            "bot_id": "e4a7eede4fcc92ea05ee705a37",
             "text": "BotMessage"
         },
         "init": {
             "attachments": [],
-            "bot_id": "8f3c7d15e80694f293ab665530",
+            "bot_id": "e4a7eede4fcc92ea05ee705a37",
             "text": "BotMessage"
         },
         "mode": "POST",

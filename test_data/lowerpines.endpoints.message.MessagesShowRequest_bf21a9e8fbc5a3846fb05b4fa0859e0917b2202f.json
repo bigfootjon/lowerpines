@@ -1,0 +1,30 @@
+{
+    "request": {
+        "args": {},
+        "init": {
+            "group_id": "53616101",
+            "message_id": "156859308846257387"
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/groups/53616101/messages/156859308846257387"
+    },
+    "response": {
+        "message": {
+            "attachments": [],
+            "avatar_url": "95b44d21337d1427ec01c3652807d8b17c117472",
+            "created_at": 1568593088,
+            "favorited_by": [
+                "30038058"
+            ],
+            "group_id": "53616101",
+            "id": "156859308846257387",
+            "name": "b020cbe53d4eddbd5b2b4330e2ec783aaccc4eff",
+            "sender_id": "30038058",
+            "sender_type": "user",
+            "source_guid": "2019-09-15 19:18:11.674009",
+            "system": false,
+            "text": "9cbb88d132a4cbda1f9268325282f86a208358d7",
+            "user_id": "30038058"
+        }
+    }
+}

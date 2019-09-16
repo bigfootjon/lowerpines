@@ -1,11 +1,12 @@
 {
     "request": {
         "args": {
+            "before_id": "156859308846257387",
             "limit": 100
         },
         "init": {
             "after_id": null,
-            "before_id": null,
+            "before_id": "156859308846257387",
             "group_id": "53616101",
             "limit": 100,
             "since_id": null
@@ -18,36 +19,18 @@
         "messages": [
             {
                 "attachments": [],
-                "avatar_url": "6fb28142ca8bea563a32c6616bc4155751645a4f",
-                "created_at": 1568593088,
-                "favorited_by": [
-                    "30038058"
-                ],
-                "group_id": "53616101",
-                "id": "156859308846257387",
-                "name": "12a6b602e79808d55e2a42b5b22964a9e2efaf0e",
-                "platform": "gm",
-                "sender_id": "30038058",
-                "sender_type": "user",
-                "source_guid": "2019-09-15 19:18:11.674009",
-                "system": false,
-                "text": "22a296f1a4daa3d5755774e12744da007112e668",
-                "user_id": "30038058"
-            },
-            {
-                "attachments": [],
-                "avatar_url": "61d15cc5150f56478624c84c4d2af9d074f7db0e",
+                "avatar_url": "0712bfa750c840a5edd3fd90b1f57733afe3c68f",
                 "created_at": 1568593088,
                 "favorited_by": [],
                 "group_id": "53616101",
                 "id": "156859308806781716",
-                "name": "17dc6dac65815748540c195ea0e5c0c5a9358a63",
+                "name": "cea65fd9d31b9f97fa23a8cacaf5791528232bc9",
                 "platform": "gm",
                 "sender_id": "816508",
                 "sender_type": "bot",
                 "source_guid": "621d3620ba450137139422000aa87b2c",
                 "system": false,
-                "text": "ac89423b20998e488eb966dad3456a4d6e841256",
+                "text": "cefd054cff95fde4c4b5339f1db20d53a99f175d",
                 "user_id": "816508"
             },
             {
@@ -59,7 +42,7 @@
                         "bot": "TestBot",
                         "user": {
                             "id": 30038058,
-                            "nickname": "77211567f0cb630f914ff153548639446c81c20c"
+                            "nickname": "330c67b0dbce2b92d25804772f74963563b3875b"
                         }
                     },
                     "type": "bot.add"
@@ -67,13 +50,13 @@
                 "favorited_by": [],
                 "group_id": "53616101",
                 "id": "156859308710073974",
-                "name": "86766ab9770f92aaa4d070efe10eebabc8526b97",
+                "name": "d8372dcf468e898cd22f41b79b05ad28cbec9312",
                 "platform": "gm",
                 "sender_id": "system",
                 "sender_type": "system",
                 "source_guid": "6189a4a0ba450137b2b722000ba9801a",
                 "system": true,
-                "text": "61c5f1e081c2119ff9dc43f6046a4f7a5e7e9854",
+                "text": "cbde17e041f32d37fe001d89e2408f61b46fe3c3",
                 "user_id": "system"
             }
         ]

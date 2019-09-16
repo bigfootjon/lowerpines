@@ -13,11 +13,13 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class Chat(AbstractObject):
-    created_at: int = Field()  # type: ignore
-    updated_at: int = Field()  # type: ignore
-    messages_count: int = Field()  # type: ignore
-    last_message_raw: JsonType = Field().with_api_name("last_message")  # type: ignore
-    other_user_raw: JsonType = Field().with_api_name("other_user")  # type: ignore
+    created_at: int = Field().with_type(int)
+    updated_at: int = Field().with_type(int)
+    messages_count: int = Field().with_type(int)
+    last_message_raw: JsonType = Field().with_api_name("last_message").with_type(
+        JsonType
+    )
+    other_user_raw: JsonType = Field().with_api_name("other_user").with_type(JsonType)
 
     last_message: Optional["DirectMessage"] = None
     other_user: "DirectMessageUser" = None  # type: ignore

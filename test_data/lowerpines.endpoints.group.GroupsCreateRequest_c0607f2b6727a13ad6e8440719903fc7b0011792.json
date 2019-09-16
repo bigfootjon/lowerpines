@@ -1,0 +1,61 @@
+{
+    "request": {
+        "args": {
+            "description": "Here is the description",
+            "image_url": "https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+            "name": "TestGroup"
+        },
+        "init": {
+            "description": "Here is the description",
+            "image_url": "https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+            "name": "TestGroup",
+            "share": null
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/groups"
+    },
+    "response": {
+        "created_at": 1568593086,
+        "creator_user_id": "30038058",
+        "description": "Here is the description",
+        "group_id": "53616101",
+        "id": "53616101",
+        "image_url": "https://i.groupme.com/750x700.jpeg.19d58ac1e9f2a3c193f3de72971e1945a0cbdf68",
+        "max_members": 5000,
+        "max_memberships": 5000,
+        "members": [
+            {
+                "autokicked": false,
+                "id": "482251665",
+                "image_url": "https://i.groupme.com/750x700.jpeg.b8241d73b261587043c663086215bf1bea8d1125",
+                "muted": false,
+                "name": "4035635d1498af96a354352271574474383499d3",
+                "nickname": "b1f8947f09b90ce083432a29569db4798f498277",
+                "roles": [
+                    "admin",
+                    "owner"
+                ],
+                "user_id": "30038058"
+            }
+        ],
+        "messages": {
+            "count": 0,
+            "last_message_created_at": null,
+            "last_message_id": null,
+            "preview": {
+                "attachments": [],
+                "image_url": null,
+                "nickname": null,
+                "text": null
+            }
+        },
+        "name": "8f733130fb38bfdb65a8703fa15533d7afac9f7b",
+        "office_mode": false,
+        "phone_number": "5079f30f1207c87dfd39cfc157349795bb59586b",
+        "share_qr_code_url": null,
+        "share_url": null,
+        "thread_id": null,
+        "type": "private",
+        "updated_at": 1568593086
+    }
+}

@@ -40,7 +40,12 @@ if __name__ == "__main__":
         try:
             test_group = gmi.groups.get(name=TEST_GROUP_NAME)
         except NoneFoundException:
-            test_group = Group(gmi, name=TEST_GROUP_NAME)
+            test_group = Group(
+                gmi,
+                name=TEST_GROUP_NAME,
+                description="Here is the description",
+                image_url="https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+            )
             test_group.save()
 
         TEST_BOT_NAME = "TestBot"
@@ -53,24 +58,29 @@ if __name__ == "__main__":
                 name=TEST_BOT_NAME,
                 callback_url="http://example.com",
                 avatar_url="https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+                dm_notification=False,
             )
             test_bot.save()
 
         test_bot.save()
         test_group.save()
+        test_group.refresh()
 
         test_bot.post("BotMessage")
         test_group.post("UserMessage")
         message = test_group.messages.recent()[0]
         message.like()
+        message.refresh()
 
         gmi.user.get().enable_sms(15, "test")
         gmi.user.get().disable_sms()
+        gmi.user.get().save()
 
     gmi.refresh()
 
     gmi.user.filter()
     gmi.groups.filter()
+    gmi.groups.former()
     gmi.bots.filter()
     gmi.chats.filter()
 

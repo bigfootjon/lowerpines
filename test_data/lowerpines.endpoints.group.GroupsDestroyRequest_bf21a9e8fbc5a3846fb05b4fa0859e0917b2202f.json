@@ -2,10 +2,10 @@
     "request": {
         "args": {},
         "init": {
-            "group_id": "53582388"
+            "group_id": "53616101"
         },
         "mode": "POST",
-        "url": "https://api.groupme.com/v3/groups/53582388/destroy"
+        "url": "https://api.groupme.com/v3/groups/53616101/destroy"
     },
     "response": null
 }

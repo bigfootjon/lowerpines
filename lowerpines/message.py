@@ -1,19 +1,5 @@
 # pyre-strict
-from typing import TYPE_CHECKING, Union, List, Tuple, Dict
-
-from lowerpines.endpoints.message import Message
-
-
-if TYPE_CHECKING:  # pragma: no cover
-    from lowerpines.gmi import GMI
-
-
-class MessageManager:
-    def __init__(self, gmi: "GMI") -> None:
-        self.gmi = gmi
-
-    def get(self, group_id: str, message_id: str) -> Message:
-        return Message.get(self.gmi, group_id, message_id)
+from typing import Union, List, Tuple, Dict
 
 
 class MessageAttach:

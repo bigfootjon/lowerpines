@@ -1,0 +1,37 @@
+{
+    "request": {
+        "args": {
+            "avatar_url": "https://i.groupme.com/750x700.jpeg.b32bf1f0210f4dc4a74ffa50524d75d2",
+            "email": "jjjonjanzen@gmail.com",
+            "name": "Jon Janzen"
+        },
+        "init": {
+            "avatar_url": "https://i.groupme.com/750x700.jpeg.b32bf1f0210f4dc4a74ffa50524d75d2",
+            "email": "jjjonjanzen@gmail.com",
+            "name": "Jon Janzen",
+            "zip_code": null
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/users/update"
+    },
+    "response": {
+        "admin": false,
+        "created_at": 1440264614,
+        "email": "d5dfa8cfa432c1fc96bdd54ea73c5f02f449ad34",
+        "evicted_at": null,
+        "facebook_connected": true,
+        "id": "30038058",
+        "image_url": "https://i.groupme.com/750x700.jpeg.c6f5c1797db7b5a0f14c4d88519ed0244513c16d",
+        "locale": "en",
+        "mfa": {
+            "enabled": false
+        },
+        "name": "4951be487cbcaafaac5c9e72382f4600b4de6990",
+        "phone_number": "5500ecd860792c2118c88abeabd3f1752ea905b7",
+        "sms": false,
+        "twitter_connected": false,
+        "updated_at": 1440264614,
+        "user_id": "30038058",
+        "zip_code": null
+    }
+}

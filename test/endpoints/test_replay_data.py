@@ -56,16 +56,17 @@ class TestReplayAll(TestCase):
         else:
             patch_func = "post"
         with mock.patch("requests." + patch_func, side_effect=mocked_requests_api_call):
+            instance = klass(GMI("test_gmi"), **recorded_data["request"]["init"])
             try:
-                results = klass(
-                    GMI("test_gmi"), **recorded_data["request"]["init"]
-                ).result
+                results = instance.result
             except AttributeError:
                 results = None
             if isinstance(results, list):
                 for result in results:
                     self.check_types(result)
-            elif results is None or type(results) in [bool]:
+            elif results is None:
+                self.assertEqual(instance.parse(recorded_data["response"]), None)
+            elif type(results) in [bool]:
                 pass
             else:
                 self.check_types(results)

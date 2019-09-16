@@ -1,0 +1,63 @@
+{
+    "request": {
+        "args": {
+            "description": "Here is the description",
+            "image_url": "https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+            "name": "TestGroup"
+        },
+        "init": {
+            "description": "Here is the description",
+            "group_id": "53616101",
+            "image_url": "https://i.groupme.com/750x700.jpeg.bda7c13e72f00b58193bd6af2114cb24c3919d1a",
+            "name": "TestGroup",
+            "office_mode": null,
+            "share": null
+        },
+        "mode": "POST",
+        "url": "https://api.groupme.com/v3/groups/53616101/update"
+    },
+    "response": {
+        "created_at": 1568593086,
+        "creator_user_id": "30038058",
+        "description": "Here is the description",
+        "group_id": "53616101",
+        "id": "53616101",
+        "image_url": "https://i.groupme.com/750x700.jpeg.d2342d1fcdc319d172dd6ac9658828f69905d113",
+        "max_members": 5000,
+        "max_memberships": 5000,
+        "members": [
+            {
+                "autokicked": false,
+                "id": "482251665",
+                "image_url": "https://i.groupme.com/750x700.jpeg.b2e5153b2583e73956c4f0963ed8026e1fec5356",
+                "muted": false,
+                "name": "fa1aef78e402fafed2fa6d1a43432fa1e50b8217",
+                "nickname": "516496b5905842c5ceeba62ddd7385e22e1baa52",
+                "roles": [
+                    "admin",
+                    "owner"
+                ],
+                "user_id": "30038058"
+            }
+        ],
+        "messages": {
+            "count": 1,
+            "last_message_created_at": 1568593087,
+            "last_message_id": "156859308710073974",
+            "preview": {
+                "attachments": [],
+                "image_url": null,
+                "nickname": null,
+                "text": null
+            }
+        },
+        "name": "8f733130fb38bfdb65a8703fa15533d7afac9f7b",
+        "office_mode": false,
+        "phone_number": null,
+        "share_qr_code_url": null,
+        "share_url": null,
+        "thread_id": null,
+        "type": "private",
+        "updated_at": 1568593087
+    }
+}

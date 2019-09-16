@@ -2,11 +2,11 @@
     "request": {
         "args": {},
         "init": {
-            "conversation_id": "53582388",
-            "message_id": "156848682584195123"
+            "conversation_id": "53616101",
+            "message_id": "156859308846257387"
         },
         "mode": "POST",
-        "url": "https://api.groupme.com/v3/messages/53582388/156848682584195123/like"
+        "url": "https://api.groupme.com/v3/messages/53616101/156859308846257387/like"
     },
     "response": null
 }

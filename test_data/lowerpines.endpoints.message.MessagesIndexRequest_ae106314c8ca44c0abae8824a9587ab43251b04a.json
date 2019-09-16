@@ -1,0 +1,56 @@
+{
+    "request": {
+        "args": {
+            "limit": 100,
+            "since_id": "156859308710073974"
+        },
+        "init": {
+            "after_id": null,
+            "before_id": null,
+            "group_id": "53616101",
+            "limit": 100,
+            "since_id": "156859308710073974"
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/groups/53616101/messages"
+    },
+    "response": {
+        "count": 3,
+        "messages": [
+            {
+                "attachments": [],
+                "avatar_url": "02331f3b387e540538eb22f5e79d5ca0714ffb61",
+                "created_at": 1568593088,
+                "favorited_by": [
+                    "30038058"
+                ],
+                "group_id": "53616101",
+                "id": "156859308846257387",
+                "name": "1e42404c6f26d5e200c3fc58d1b40dedb52a3f3a",
+                "platform": "gm",
+                "sender_id": "30038058",
+                "sender_type": "user",
+                "source_guid": "2019-09-15 19:18:11.674009",
+                "system": false,
+                "text": "8a7c3cff21cc0262842ef2b2c9930232adcaa764",
+                "user_id": "30038058"
+            },
+            {
+                "attachments": [],
+                "avatar_url": "c8c0407c0b59ddc159b988e9a2a517d82036e2f5",
+                "created_at": 1568593088,
+                "favorited_by": [],
+                "group_id": "53616101",
+                "id": "156859308806781716",
+                "name": "83dcb4c3dc4219c31129b5ef0ad8c5569ad5f39a",
+                "platform": "gm",
+                "sender_id": "816508",
+                "sender_type": "bot",
+                "source_guid": "621d3620ba450137139422000aa87b2c",
+                "system": false,
+                "text": "23ab44cab93c5b25c2205f4a98cd6c72509a2f9a",
+                "user_id": "816508"
+            }
+        ]
+    }
+}

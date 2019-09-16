@@ -1,0 +1,52 @@
+{
+    "request": {
+        "args": {},
+        "init": {
+            "group_id": "53616101"
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/groups/53616101"
+    },
+    "response": {
+        "created_at": 1568593086,
+        "creator_user_id": "30038058",
+        "description": "Here is the description",
+        "group_id": "53616101",
+        "id": "53616101",
+        "image_url": "https://i.groupme.com/750x700.jpeg.02bb432a576a3f189136ffd9a32a580d416f5ed2",
+        "max_members": 500,
+        "members": [
+            {
+                "autokicked": false,
+                "id": "482251665",
+                "image_url": "https://i.groupme.com/750x700.jpeg.0abb5be17e72889fd2b9bbb44d15ba2c6ff58ac3",
+                "muted": false,
+                "name": "5dc504c953ae276bad5ef6bfe6e798756393be50",
+                "nickname": "298644c6025c194b5f5737a5975e5261497a59e4",
+                "roles": [
+                    "admin",
+                    "owner"
+                ],
+                "user_id": "30038058"
+            }
+        ],
+        "messages": {
+            "count": 1,
+            "last_message_created_at": 0,
+            "last_message_id": "156859308710073974",
+            "preview": {
+                "attachments": [],
+                "image_url": null,
+                "nickname": null,
+                "text": null
+            }
+        },
+        "name": "feab45562a1a2f9fe669df02c2df2a1b633f6ee8",
+        "office_mode": false,
+        "phone_number": "3069137dd6fef55450d0abb3b8e994ffd2287b50",
+        "share_qr_code_url": null,
+        "share_url": null,
+        "type": "private",
+        "updated_at": 1568593087
+    }
+}

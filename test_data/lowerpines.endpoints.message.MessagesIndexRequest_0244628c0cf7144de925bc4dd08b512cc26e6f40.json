@@ -1,0 +1,21 @@
+{
+    "request": {
+        "args": {
+            "after_id": "156859308846257387",
+            "limit": 100
+        },
+        "init": {
+            "after_id": "156859308846257387",
+            "before_id": null,
+            "group_id": "53616101",
+            "limit": 100,
+            "since_id": null
+        },
+        "mode": "GET",
+        "url": "https://api.groupme.com/v3/groups/53616101/messages"
+    },
+    "response": {
+        "count": 3,
+        "messages": []
+    }
+}
