@@ -10,7 +10,8 @@ with open("README.rst", "r") as readme_file:
 
 setup(
     name="lowerpines",
-    packages=setuptools.find_packages(),
+    package_data={"lowerpines": ["py.typed"]},
+    packages=setuptools.find_packages(exclude=["test", "test.*"]),
     version=lowerpines.VERSION,
     python_requires=">=3.6",
     description="Library wrapper for GroupMe API",
@@ -28,6 +29,7 @@ setup(
         "Development Status :: 4 - Beta",
         "Operating System :: OS Independent",
         "Topic :: Communications :: Chat",
+        "Topic :: Internet",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Natural Language :: English",
@@ -37,5 +39,6 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3 :: Only",
+        "Typing :: Typed",
     ],
 )

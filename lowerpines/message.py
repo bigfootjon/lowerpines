@@ -12,9 +12,7 @@ class MessageAttach:
         else:
             return ComplexMessage([self, other])
 
-    def __radd__(
-        self, other: Union["ComplexMessage", str, "MessageAttach"]
-    ) -> "ComplexMessage":
+    def __radd__(self, other: Union[str, "MessageAttach"]) -> "ComplexMessage":
         return ComplexMessage([other, self])
 
 
@@ -103,7 +101,7 @@ class ComplexMessage:
     contents: List[Union[MessageAttach, str]]
 
     # pyre-ignore
-    def __init__(self, data: Union[list, str]) -> None:
+    def __init__(self, data: Union[list, str, MessageAttach]) -> None:
         if isinstance(data, list):
             self.contents = data
         elif isinstance(data, str):
