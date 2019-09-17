@@ -1,5 +1,5 @@
 # pyre-strict
-from typing import Union, List, Tuple, Dict, Type
+from typing import Union, List, Tuple, Dict
 
 
 class MessageAttach:
