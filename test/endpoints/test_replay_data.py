@@ -2,7 +2,7 @@
 import json
 import os
 from importlib import import_module
-from typing import Any, Dict, List, Optional, Type, Union
+from typing import Any, Dict, List, Optional, Type
 from unittest import TestCase, mock
 
 from lowerpines.endpoints.object import AbstractObject
