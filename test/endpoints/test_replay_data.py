@@ -2,7 +2,7 @@
 import json
 import os
 from importlib import import_module
-from typing import Any, Dict, List, Optional, Type, Union
+from typing import Any, Dict, List, Optional, Type
 from unittest import TestCase, mock
 
 from lowerpines.endpoints.object import AbstractObject
@@ -81,16 +81,16 @@ class TestReplayAll(TestCase):
 
             matching_types = [expected]
             # Unions need to be deconstructed
-            if expected.__class__ == Union.__class__:
+            if repr(expected).startswith("typing.Union"):
                 matching_types = expected.__args__
 
             # typing module types don't == with their runtime equivalents, need to clean those up
             # pyre-ignore
             matching_types_cleaned: List[Type[Any]] = []
             for matching_type in matching_types:
-                if matching_type.__name__ == List.__name__:  # type: ignore
+                if repr(matching_type).startswith("typing.List"):
                     matching_types_cleaned.append(list)
-                elif matching_type.__name__ == Dict.__name__:
+                elif repr(matching_type).startswith("typing.Dict"):
                     matching_types_cleaned.append(dict)
                 else:
                     matching_types_cleaned.append(matching_type)
