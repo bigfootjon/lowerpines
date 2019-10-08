@@ -19,6 +19,7 @@ build_common: &build_common
             which python3.6 || echo "n/a"
             which python3.7 || echo "n/a"
             which python3.8 || echo "n/a"
+            echo $CIRCLE_JOB
     - run:
         name: Check Types - Pyre
         command: pyre check
