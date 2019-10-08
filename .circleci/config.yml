@@ -12,14 +12,7 @@ build_common: &build_common
         name: Run Tests
         command: |
             coverage run -m unittest --verbose
-            coveralls
-    - run:
-        name: Temporary
-        command: |
-            which python3.6 || echo "n/a"
-            which python3.7 || echo "n/a"
-            which python3.8 || echo "n/a"
-            echo $CIRCLE_JOB
+            if [[ "$CIRCLE_JOB" = python37 ]]; then coveralls; fi
     - run:
         name: Check Types - Pyre
         command: pyre check
