@@ -14,6 +14,12 @@ build_common: &build_common
             coverage run -m unittest --verbose
             coveralls
     - run:
+        name: Temporary
+        command: |
+            which python3.6 || echo "n/a"
+            which python3.7 || echo "n/a"
+            which python3.8 || echo "n/a"
+    - run:
         name: Check Types - Pyre
         command: pyre check
     - run:
