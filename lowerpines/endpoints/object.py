@@ -36,7 +36,7 @@ class AbstractObjectType(type):
         name: str,
         bases: Tuple[Type["AbstractObjectType"]],
         attrs: Dict[str, Field],
-    ) -> Type["AbstractObjectType"]:
+    ) -> "AbstractObjectType":
         new_attrs = {}  # type: ignore
         fields = []
         for attr_name, attr_value in attrs.items():
@@ -48,8 +48,9 @@ class AbstractObjectType(type):
                 new_attrs[attr_name] = attr_value
         new_attrs["_fields"] = fields  # type: ignore
 
-        # pyre-ignore
-        return super(AbstractObjectType, mcs).__new__(mcs, name, bases, new_attrs)
+        return super(AbstractObjectType, mcs).__new__(  # type: ignore
+            mcs, name, bases, new_attrs
+        )
 
 
 TAbstractObject = TypeVar("TAbstractObject", bound="AbstractObject")

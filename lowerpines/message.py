@@ -150,8 +150,8 @@ class ComplexMessage:
                     {  # type: ignore
                         "type": "location",
                         "name": part.name,
-                        "lat": part.lat,
-                        "long": part.long,
+                        "lat": part.lat,  # type: ignore
+                        "long": part.long,  # type: ignore
                     }
                 )
             elif isinstance(part, SplitAttach):

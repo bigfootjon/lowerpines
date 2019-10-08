@@ -64,7 +64,6 @@ class DirectMessage(AbstractObject):
     def refresh(self) -> None:
         raise InvalidOperationException("This is non-trivial to implement")
 
-    # pyre-ignore
     attachments: List[AttachmentType] = Field().with_type(List[AttachmentType])
     avatar_url: str = Field().with_type(str)
     conversation_id: str = Field().with_type(str)
