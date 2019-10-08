@@ -110,16 +110,19 @@ class ComplexMessage:
     def __add__(
         self, other: Union["ComplexMessage", str, "MessageAttach"]
     ) -> "ComplexMessage":
-        if isinstance(other, self.__class__):
+        if isinstance(other, ComplexMessage):
             self.contents.extend(other.contents)
         else:
-            self.contents.append(other)  # type: ignore
+            self.contents.append(other)
         return self
 
     def __radd__(
         self, other: Union["ComplexMessage", str, "MessageAttach"]
     ) -> "ComplexMessage":
-        self.contents.insert(0, other)  # type: ignore
+        if isinstance(other, ComplexMessage):
+            self.contents[0:0] = other.contents
+        else:
+            self.contents.insert(0, other)
         return self
 
     def __str__(self) -> str:

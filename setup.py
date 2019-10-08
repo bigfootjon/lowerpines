@@ -1,4 +1,3 @@
-# pyre-ignore-all-errors
 from distutils.core import setup
 
 import setuptools  # type: ignore

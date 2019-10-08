@@ -23,7 +23,7 @@ class MockRequestsResponse:
 class TestReplayAll(TestCase):
     def setUp(self) -> None:
         test_data_dir = "test_data"
-        self.json_data = {}  # type: ignore
+        self.json_data: Dict[str, Any] = {}
         for file_name in os.listdir(test_data_dir):
             klass, _ = file_name.split("_")
             with open(os.path.join(test_data_dir, file_name), "r") as file_contents:

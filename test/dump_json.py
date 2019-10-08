@@ -4,7 +4,7 @@ import inspect
 import json
 import os
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Dict, List, Union
 
 if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.endpoints.request import Request
@@ -35,7 +35,7 @@ def dump_json(json_dump_dir: str, req: "Request", response: Any) -> None:
         return value
 
     def recursive_descend(tree: Any) -> Any:
-        new_tree = {}
+        new_tree: Union[List[Any], Dict[str, Any]] = {}
         if isinstance(tree, dict):
             for key, value in tree.items():
                 if isinstance(value, str):
@@ -45,7 +45,7 @@ def dump_json(json_dump_dir: str, req: "Request", response: Any) -> None:
                 else:
                     new_tree[key] = recursive_descend(value)
         elif isinstance(tree, list):
-            new_tree = [recursive_descend(t) for t in tree]  # type: ignore
+            new_tree = [recursive_descend(t) for t in tree]
         else:
             new_tree = tree
         return new_tree

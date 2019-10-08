@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# pyre-ignore-all-errors
 
 import os
 import shutil
@@ -34,6 +33,9 @@ if __name__ == "__main__":
     gmi.write_json_to = TEST_DATA_FOLDER
     if os.path.exists(TEST_DATA_FOLDER):
         shutil.rmtree(TEST_DATA_FOLDER)
+
+    test_bot = None
+    test_group = None
 
     if allow_non_deterministic:
         TEST_GROUP_NAME = "TestGroup"
@@ -91,5 +93,7 @@ if __name__ == "__main__":
     Block.block_exists(gmi, my_user_id, "6911718")
 
     if allow_non_deterministic:
-        test_bot.delete()
-        test_group.delete()
+        if test_bot is not None:
+            test_bot.delete()
+        if test_group is not None:
+            test_group.delete()
