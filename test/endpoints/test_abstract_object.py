@@ -4,6 +4,8 @@ import json
 import os
 from unittest import TestCase
 
+from typing import List
+
 from lowerpines.endpoints.object import Field, AbstractObjectType, AbstractObject
 from lowerpines.gmi import GMI
 
@@ -28,6 +30,8 @@ class TestField(TestCase):
 
 
 class MockAbstractObjectTypeObject(metaclass=AbstractObjectType):
+    _fields: List[Field] = []
+
     field1 = Field()
     field2: Field = Field().with_api_name("id")
 
@@ -41,7 +45,7 @@ class TestAbstractObjectType(TestCase):
         self.assertEqual(self.mock.field2, None)
 
     def test_fields_set(self) -> None:
-        for f in self.mock._fields:  # type: ignore
+        for f in self.mock._fields:
             if f.name == "field1":
                 self.assertEqual(f.api_name, "field1")
             elif f.name == "field2":

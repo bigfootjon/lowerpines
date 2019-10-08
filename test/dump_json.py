@@ -1,16 +1,23 @@
-# pyre-check
+# pyre-strict
 import hashlib
 import inspect
 import json
 import os
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Dict, List, Union, TypeVar, Optional
+
+from requests import Response
 
 if TYPE_CHECKING:  # pragma: no cover
     from lowerpines.endpoints.request import Request
 
+T = TypeVar("T")
+_tree_type = Union[List[Any], Dict[str, Any]]  # pyre-ignore
 
-def dump_json(json_dump_dir: str, req: "Request", response: Any) -> None:
+
+def dump_json(
+    json_dump_dir: str, req: "Request[T]", response: Optional[Response]
+) -> None:
     hasher = hashlib.sha1()
 
     def hash_user_keys(key: str, value: str) -> str:
@@ -34,9 +41,10 @@ def dump_json(json_dump_dir: str, req: "Request", response: Any) -> None:
                 return hasher.hexdigest()
         return value
 
-    def recursive_descend(tree: Any) -> Any:
-        new_tree = {}
+    def recursive_descend(tree: _tree_type) -> _tree_type:
+        new_tree: _tree_type = {}
         if isinstance(tree, dict):
+            assert isinstance(new_tree, dict)
             for key, value in tree.items():
                 if isinstance(value, str):
                     new_tree[key] = hash_user_keys(key, value)
@@ -45,7 +53,7 @@ def dump_json(json_dump_dir: str, req: "Request", response: Any) -> None:
                 else:
                     new_tree[key] = recursive_descend(value)
         elif isinstance(tree, list):
-            new_tree = [recursive_descend(t) for t in tree]  # type: ignore
+            new_tree = [recursive_descend(t) for t in tree]
         else:
             new_tree = tree
         return new_tree
