@@ -48,7 +48,9 @@ class AbstractObjectType(type):
                 new_attrs[attr_name] = attr_value
         new_attrs["_fields"] = fields  # type: ignore
 
-        return super(AbstractObjectType, mcs).__new__(mcs, name, bases, new_attrs) # type: ignore
+        return super(AbstractObjectType, mcs).__new__(  # type: ignore
+            mcs, name, bases, new_attrs
+        )
 
 
 TAbstractObject = TypeVar("TAbstractObject", bound="AbstractObject")
