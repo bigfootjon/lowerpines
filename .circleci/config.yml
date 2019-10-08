@@ -12,10 +12,10 @@ build_common: &build_common
         name: Run Tests
         command: |
             coverage run -m unittest --verbose
-            if [[ "$CIRCLE_JOB" = python37 ]]; then coveralls; fi
+            if [[ "$CIRCLE_JOB" = "python37" ]]; then coveralls; fi
     - run:
         name: Check Types - Pyre
-        command: pyre check
+        command: if [[ "$CIRCLE_JOB" != "python38" ]]; then pyre check; else echo "Skipped for Python 3.8"; fi
     - run:
         name: Check Types - Mypy
         command: mypy .
