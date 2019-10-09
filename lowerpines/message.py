@@ -116,13 +116,8 @@ class ComplexMessage:
             self.contents.append(other)
         return self
 
-    def __radd__(
-        self, other: Union["ComplexMessage", str, "MessageAttach"]
-    ) -> "ComplexMessage":
-        if isinstance(other, ComplexMessage):
-            self.contents[0:0] = other.contents
-        else:
-            self.contents.insert(0, other)
+    def __radd__(self, other: Union[str, "MessageAttach"]) -> "ComplexMessage":
+        self.contents.insert(0, other)
         return self
 
     def __str__(self) -> str:
