@@ -32,5 +32,7 @@ class TestImage(TestCase):
     def test_extract_response(self) -> None:
         fake_response = Response()
         fake_response.encoding = "UTF-8"
-        fake_response._content = bytes('{"a": 1}', fake_response.encoding)
+        fake_response._content = bytes(  # type: ignore
+            '{"a": 1}', fake_response.encoding
+        )
         self.assertEqual(self.instance.extract_response(fake_response), {"a": 1})
