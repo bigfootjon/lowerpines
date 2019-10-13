@@ -36,7 +36,7 @@ jobs:
     <<: *build_common
   python38:
     docker:
-      - image: circleci/python:3.8-rc
+      - image: circleci/python:3.8
     <<: *build_common
 workflows:
   version: 2
