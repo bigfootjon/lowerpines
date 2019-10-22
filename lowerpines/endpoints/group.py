@@ -38,9 +38,11 @@ class Group(AbstractObject, RetrievableObject):
     messages_last_message_id_raw: Optional[str] = Field().with_api_name(
         "messages.last_message_id"
     ).with_type(str)
-    messages_last_message_created_at_raw: Optional[  # type: ignore
+    messages_last_message_created_at_raw: Optional[  # pyre-ignore
         int
-    ] = Field().with_api_name("messages.last_message_created_at")
+    ] = Field().with_api_name(  # type: ignore
+        "messages.last_message_created_at"
+    )
 
     def __init__(
         self,
