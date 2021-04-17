@@ -73,7 +73,8 @@ class Request(Generic[T]):
         else:
             raise InvalidOperationException()
         self.error_check(r)
-        if r.content.decode("utf-8").isspace():
+        string_content = r.content.decode("utf-8")
+        if not string_content or string_content.isspace():
             return None
         else:
             return self.extract_response(r)
