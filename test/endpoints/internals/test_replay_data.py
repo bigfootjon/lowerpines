@@ -14,7 +14,7 @@ class MockRequestsResponse:
     def __init__(self, response_json: JsonType) -> None:
         self.response_json = response_json
         self.status_code = 200
-        self.content = bytes()
+        self.content = json.dumps(response_json).encode("utf-8")
 
     def json(self) -> JsonType:
         return {"response": self.response_json}
