@@ -134,7 +134,6 @@ class ComplexMessage:
         content_frag = ""
         for part in self.contents:
             if isinstance(part, RefAttach):
-                # pyre-ignore
                 mentions["user_ids"].append(part.user_id)  # type: ignore
                 mentions["loci"].append(  # type: ignore
                     [len(content_frag), len(part.display)]

@@ -3,6 +3,7 @@ import hashlib
 import inspect
 import json
 import os
+from hashlib import _Hash
 
 from typing import TYPE_CHECKING, Any, Dict, List, Union, TypeVar, Optional
 
@@ -18,7 +19,7 @@ _tree_type = Union[List[Any], Dict[str, Any]]  # pyre-ignore
 def dump_json(
     json_dump_dir: str, req: "Request[T]", response: Optional[Response]
 ) -> None:
-    hasher = hashlib.sha1()
+    hasher: _Hash = hashlib.sha1()
 
     def hash_user_keys(key: str, value: str) -> str:
         if key in [

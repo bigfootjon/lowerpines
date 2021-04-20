@@ -72,7 +72,7 @@ class Message(AbstractObject, RetrievableObject):
             self.text = ""
         from lowerpines.message import ComplexMessage, RefAttach  # noqa: F811
 
-        self.complex_text = ComplexMessage("")
+        complex_text = ComplexMessage("")
         doing_mentions = False
         for attachment in self.attachments:
             if attachment["type"] == "mentions":
@@ -83,15 +83,14 @@ class Message(AbstractObject, RetrievableObject):
                         attachment["loci"], attachment["user_ids"]
                     ):
                         if loci[0] == i:
-                            self.complex_text += self.text[
-                                prev_index : loci[0]
-                            ] + RefAttach(
+                            complex_text += self.text[prev_index : loci[0]] + RefAttach(
                                 user_id, self.text[loci[0] : loci[0] + loci[1]]
                             )
                             prev_index = loci[0] + loci[1]
-                self.complex_text = self.complex_text + self.text[prev_index:]
+                complex_text = complex_text + self.text[prev_index:]
         if not doing_mentions:
-            self.complex_text = ComplexMessage(self.text)
+            complex_text = ComplexMessage(self.text)
+        self.complex_text = complex_text
 
     def __repr__(self) -> str:
         return str(self)

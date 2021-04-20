@@ -94,6 +94,8 @@ if __name__ == "__main__":
 
     if allow_non_deterministic:
         if test_bot is not None:
+            # pyre-ignore[16] wtf pyre
             test_bot.delete()
         if test_group is not None:
+            # pyre-ignore[16] wtf pyre
             test_group.delete()

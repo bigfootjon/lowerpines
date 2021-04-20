@@ -47,6 +47,8 @@ class AbstractManager(Generic[T]):
         return self.__class__(self.gmi, filtered)
 
     def lazy_fill_content(self) -> List[T]:
-        if self._content is None:
-            self._content = self._all()
-        return self._content
+        content = self._content
+        if content is None:
+            content = self._all()
+            self._content = content
+        return content
