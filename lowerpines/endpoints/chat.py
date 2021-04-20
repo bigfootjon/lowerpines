@@ -16,8 +16,8 @@ class Chat(AbstractObject):
     created_at: int = Field().with_type(int)
     updated_at: int = Field().with_type(int)
     messages_count: int = Field().with_type(int)
-    last_message_raw: JsonType = Field().with_api_name("last_message").with_type(
-        JsonType
+    last_message_raw: JsonType = (
+        Field().with_api_name("last_message").with_type(JsonType)
     )
     other_user_raw: JsonType = Field().with_api_name("other_user").with_type(JsonType)
 
