@@ -92,6 +92,8 @@ class TestReplayAll(TestCase):
                     matching_types_cleaned.append(list)
                 elif repr(matching_type).startswith("typing.Dict"):
                     matching_types_cleaned.append(dict)
+                elif repr(matching_type).startswith("typing.Optional"):
+                    matching_types_cleaned.extend(matching_type.__args__)
                 else:
                     matching_types_cleaned.append(matching_type)
             self.assertTrue(

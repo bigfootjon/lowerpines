@@ -31,16 +31,16 @@ class Group(AbstractObject, RetrievableObject):
     office_mode: bool = Field().with_type(bool)
     phone_number: Optional[str] = Field().with_type(str)
     members: List[Member]
-    members_raw: List[JsonType] = Field().with_api_name("members").with_type(
-        List[JsonType]
+    members_raw: List[JsonType] = (
+        Field().with_api_name("members").with_type(List[JsonType])
     )
     messages_count_raw: int = Field().with_api_name("messages.count").with_type(int)
-    messages_last_message_id_raw: Optional[str] = Field().with_api_name(
-        "messages.last_message_id"
-    ).with_type(str)
-    messages_last_message_created_at_raw: Optional[int] = Field().with_api_name(
-        "messages.last_message_created_at"
-    ).with_type(int)
+    messages_last_message_id_raw: Optional[str] = (
+        Field().with_api_name("messages.last_message_id").with_type(str)
+    )
+    messages_last_message_created_at_raw: Optional[int] = (
+        Field().with_api_name("messages.last_message_created_at").with_type(int)
+    )
 
     def __init__(
         self,
