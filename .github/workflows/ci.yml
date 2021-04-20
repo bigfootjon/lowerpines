@@ -25,8 +25,8 @@ jobs:
         run: |
           PYTHONPATH=$PYTHONPATH:`pwd` coverage run -m unittest --verbose
       #          coveralls
-      - name: Check Types - Pyre
-        run: if [[ "$CIRCLE_JOB" != "python38" ]]; then pyre check; else echo "Skipped for Python 3.8"; fi
+#      - name: Check Types - Pyre
+#        run: if [[ "$CIRCLE_JOB" != "python38" ]]; then pyre check; else echo "Skipped for Python 3.8"; fi
       - name: Check Types - MyPy
         run: mypy .
       - name: Check Lint - Flake8
