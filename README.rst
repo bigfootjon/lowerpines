@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/circleci/build/github/bigfootjon/lowerpines/master
-    :target: https://circleci.com/gh/bigfootjon/lowerpines
+.. image:: https://img.shields.io/github/checks-status/bigfootjon/lowerpines/main
+    :target: https://github.com/bigfootjon/lowerpines/commmits/HEAD
 .. image:: https://img.shields.io/coveralls/github/bigfootjon/lowerpines
     :target: https://coveralls.io/github/bigfootjon/lowerpines
 .. image:: https://img.shields.io/pypi/pyversions/lowerpines
