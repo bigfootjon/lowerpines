@@ -23,8 +23,8 @@ jobs:
         run: |
           PYTHONPATH=$PYTHONPATH:`pwd` coverage run -m unittest --verbose
       #          coveralls
-#      - name: Check Types - Pyre
-#        run: pyre check
+      - name: Check Types - Pyre
+        run: pyre check
       - name: Check Types - MyPy
         run: mypy .
       - name: Check Lint - Flake8
