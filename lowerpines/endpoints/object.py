@@ -40,7 +40,7 @@ class AbstractObjectType(type):
         new_attrs = {}  # type: ignore
         fields = []
         for attr_name, attr_value in attrs.items():
-            if type(attr_value) == Field:
+            if isinstance(attr_value, Field):
                 attr_value.with_field_name(attr_name)
                 fields.append(attr_value)
                 new_attrs[attr_name] = None
