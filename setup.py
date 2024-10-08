@@ -1,4 +1,4 @@
-import setuptools # types: ignore
+import setuptools # type: ignore
 
 import lowerpines
 
