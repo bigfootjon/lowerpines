@@ -1,13 +1,11 @@
-from distutils.core import setup
-
-import setuptools  # type: ignore
+import setuptools
 
 import lowerpines
 
 with open("README.rst", "r") as readme_file:
     long_description = readme_file.read()
 
-setup(
+setuptools.setup(
     name="lowerpines",
     package_data={"lowerpines": ["py.typed"]},
     packages=setuptools.find_packages(exclude=["test", "test.*"]),
