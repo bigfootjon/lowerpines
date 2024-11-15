@@ -7,4 +7,4 @@ coverage==7.6.5
 python-coveralls==2.9.3
 types-requests==2.32.0.20241016
 setuptools==75.5.0
-types-setuptools==75.3.0.20241112
+types-setuptools==75.4.0.20241115
