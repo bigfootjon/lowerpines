@@ -9,3 +9,4 @@ build/
 test_access_token.py
 .coverage
 htmlcov
+.venv

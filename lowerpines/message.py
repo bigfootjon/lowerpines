@@ -170,7 +170,7 @@ class ComplexMessage:
 
 
 def smart_split_complex_message(
-    message: Union[ComplexMessage, str]
+    message: Union[ComplexMessage, str],
 ) -> Tuple[str, List[Dict[str, str]]]:
     if isinstance(message, ComplexMessage):
         return message.get_text(), message.get_attachments()
