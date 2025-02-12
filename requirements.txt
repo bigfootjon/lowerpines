@@ -3,7 +3,7 @@ pyre-check==0.9.23
 black==24.10.0
 flake8==7.1.1
 mypy==1.15.0
-coverage==7.6.11
+coverage==7.6.12
 python-coveralls==2.9.3
 types-requests==2.32.0.20241016
 setuptools==75.8.0
