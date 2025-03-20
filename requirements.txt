@@ -6,5 +6,5 @@ mypy==1.15.0
 coverage==7.7.0
 python-coveralls==2.9.3
 types-requests==2.32.0.20250306
-setuptools==77.0.1
+setuptools==77.0.3
 types-setuptools==76.0.0.20250313
