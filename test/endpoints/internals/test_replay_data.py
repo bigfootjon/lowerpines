@@ -72,7 +72,13 @@ class TestReplayAll(TestCase):
                 self.check_types(results)
 
     def check_types(self, klass: Type[AbstractObject]) -> None:
-        for key, expected in klass.__annotations__.items():
+        annotations = getattr(klass, "__annotations__", None)
+        if annotations is None:
+            from annotationslib import get_annotations
+
+            annotations = get_annotations(klass)
+
+        for key, expected in annotations.items():
             actual = type(getattr(klass, key))
 
             # Make sure the key we're looking at is actually a Field
