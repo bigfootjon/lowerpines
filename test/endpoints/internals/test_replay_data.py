@@ -74,7 +74,7 @@ class TestReplayAll(TestCase):
     def check_types(self, klass: Type[AbstractObject]) -> None:
         annotations = getattr(klass, "__annotations__", None)
         if annotations is None:
-            from annotationslib import get_annotations
+            from annotationlib import get_annotations  # pyre-ignore
 
             annotations = get_annotations(klass)
 
