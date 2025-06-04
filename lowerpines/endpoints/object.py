@@ -79,7 +79,7 @@ class AbstractObject(metaclass=AbstractObjectType):
         obj = cls(gmi, *args)
 
         for field in obj._fields:
-            json_val: Any = json_dict # pyre-ignore
+            json_val: Any = json_dict  # pyre-ignore
             api_name = field.api_name
             if api_name is None:  # pragma: no cover
                 raise ValueError("api_name should be known by this point")
