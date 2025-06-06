@@ -76,7 +76,10 @@ class TestReplayAll(TestCase):
         if annotations is None:
             from annotationlib import get_annotations  # type: ignore
 
-            annotations = get_annotations(klass)
+            try:
+                annotations = get_annotations(klass)
+            except TypeError:
+                annotations = {}
 
         for key, expected in annotations.items():
             actual = type(getattr(klass, key))
