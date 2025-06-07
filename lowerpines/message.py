@@ -1,5 +1,5 @@
 # pyre-strict
-from typing import Union, List, Tuple, Dict
+from typing import Union, List, Tuple, Dict, Any
 
 
 class MessageAttach:
@@ -127,7 +127,7 @@ class ComplexMessage:
         return "".join([str(part) for part in self.contents])
 
     def get_attachments(self) -> List[Dict[str, str]]:
-        attach_list = []  # type: ignore
+        attach_list: list[Any] = []  # type: ignore
         mentions = {"type": "mentions", "user_ids": list(), "loci": list()}
         emojis = {"type": "emoji", "placeholder": EMOJI_PLACEHOLDER, "charmap": []}
         queued = {"type": "postprocessing", "queues": []}

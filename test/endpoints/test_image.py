@@ -10,6 +10,7 @@ from lowerpines.gmi import GMI
 
 class TestImage(TestCase):
     @mock.patch("lowerpines.endpoints.request.Request.__init__")
+    # pyrefly: ignore  # bad-override
     def setUp(self, request_init: MagicMock) -> None:
         self.data = bytes(123)
         self.instance = ImageConvertRequest(GMI("image_test"), self.data)
