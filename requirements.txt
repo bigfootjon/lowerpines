@@ -3,7 +3,7 @@ pyrefly==0.22.1
 black==25.1.0
 flake8==7.3.0
 mypy==1.16.1
-coverage==7.9.1
+coverage==7.9.2
 python-coveralls==2.9.3
 types-requests==2.32.4.20250611
 setuptools==80.9.0
