@@ -46,7 +46,7 @@ class Chat(AbstractObject):
         ).result
 
     def on_fields_loaded(self) -> None:
-        self.last_message = DirectMessage.from_json(self.gmi, self.last_message_raw)
+        self.last_message = DirectMessage.from_json(self.gmi, self.last_message_raw)  # type: ignore
         self.other_user = DirectMessageUser.from_json(self.gmi, self.other_user_raw)
 
     def __str__(self) -> str:
