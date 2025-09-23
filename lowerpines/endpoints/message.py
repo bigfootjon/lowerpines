@@ -42,7 +42,7 @@ class Message(AbstractObject, RetrievableObject):
         self.gmi = gmi
         self.group_id = group_id  # type: ignore
         self.source_guid = source_guid  # type: ignore
-        self.text = text  # type: ignore
+        self.text = text or ""  # type: ignore
         self.attachments = attachments or []
         self.message_id = None
 
@@ -68,8 +68,6 @@ class Message(AbstractObject, RetrievableObject):
             )
 
     def on_fields_loaded(self) -> None:
-        if self.text is None:
-            self.text = ""
         from lowerpines.message import ComplexMessage, RefAttach  # noqa: F811
 
         complex_text = ComplexMessage("")
